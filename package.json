@@ -1,0 +1,14 @@
+{
+  "name": "curriculo",
+  "private": true,
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "corepack pnpm --filter @curriculo/web dev",
+    "build": "corepack pnpm --filter @curriculo/web build",
+    "lint": "corepack pnpm --filter @curriculo/web lint",
+    "typecheck": "corepack pnpm --filter @curriculo/web typecheck"
+  }
+}

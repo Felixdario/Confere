@@ -1,0 +1,38 @@
+name: curriculo
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: curriculo
+      POSTGRES_USER: curriculo
+      POSTGRES_PASSWORD: curriculo
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U curriculo -d curriculo"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+# Os uploads ficam em ./data/arquivos (PASTA_ARQUIVOS), no disco do host e fora do git:
+# a API roda no host nesta fase. Quando ela entrar no Compose, a pasta vira bind mount.
+volumes:
+  postgres:
+  redis:

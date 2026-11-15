@@ -1,0 +1,34 @@
+# Notas da dupla Planejador/Executor
+.dupla/
+
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+.coverage
+htmlcov/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Dados locais (uploads, modelos de embeddings, volumes)
+data/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

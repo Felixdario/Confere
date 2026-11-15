@@ -1,0 +1,26 @@
+:root {
+  color-scheme: light dark;
+  --fundo: #fafaf9;
+  --texto: #1c1917;
+  font-family: system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #1c1917;
+    --texto: #fafaf9;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+.placeholder {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+  line-height: 1.6;
+}
