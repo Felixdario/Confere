@@ -1,0 +1,23 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Recrutamento e seleção, entrevista por competências, Gupy, onboarding e diversidade estão
+  comprovados. People analytics, obrigatório, não aparece, e as planilhas citadas são em Google
+  Planilhas, relacionado ao Excel pedido.
+lacunas:
+  - requisito: People analytics
+    comentario: Não há análise de indicadores de pessoas no currículo.
+  - requisito: Excel intermediário
+    comentario: O currículo cita Google Planilhas, não Excel.
+palavras_chave_ats:
+  - Recrutamento e seleção
+  - Entrevista por competências
+  - Gupy
+  - Onboarding
+  - People analytics
+reescritas:
+  - antes: Desenhei o programa de onboarding de novos colaboradores.
+    depois: Desenhei e conduzo o programa de onboarding dos novos colaboradores do hospital.
+    competencias: [Onboarding]
+o_que_aprender:
+  - competencia: People analytics
+    sugestao: Montar um painel simples de indicadores de recrutamento (tempo de fechamento, fonte).

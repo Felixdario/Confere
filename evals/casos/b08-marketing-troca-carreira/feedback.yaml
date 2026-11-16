@@ -1,0 +1,28 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  A transição de carreira está bem sustentada em redes sociais, copywriting e Google Analytics. A
+  mídia paga aparece em Meta Ads, relacionada ao Google Ads pedido; SEO, obrigatório, não tem
+  evidência.
+lacunas:
+  - requisito: SEO
+    comentario: Não há menção a SEO.
+  - requisito: Mídia paga no Google Ads
+    comentario: As campanhas citadas são de Meta Ads.
+  - requisito: HubSpot
+    comentario: Não há menção a HubSpot.
+palavras_chave_ats:
+  - SEO
+  - Google Analytics
+  - Google Ads
+  - Copywriting
+  - Gestão de redes sociais
+reescritas:
+  - antes: Relatórios de resultado com Google Analytics e planilhas em Excel.
+    depois: >-
+      Relatórios de resultado das campanhas com Google Analytics e planilhas em Excel.
+    competencias: [Google Analytics, Excel]
+o_que_aprender:
+  - competencia: SEO
+    sugestao: Otimizar o SEO de um dos sites dos seus clientes e registrar o antes e depois.
+  - competencia: Google Ads
+    sugestao: Fazer a certificação gratuita do Google Ads.

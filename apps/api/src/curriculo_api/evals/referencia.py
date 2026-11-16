@@ -39,17 +39,15 @@ def intervalo_em_meses(inicio: str, fim: str | None, referencia: date) -> tuple[
     """Intervalo fechado [início, fim] em índices de mês; os dois meses das pontas contam.
 
     Sem mês: janeiro no início, dezembro no fim ("2024" = 12 meses). Sem fim (emprego atual): vai
-    até o mês da data de referência, inclusive.
+    até o mês da data de referência, inclusive. O fim nunca passa do mês da referência (rodada 1
+    da fase 3); um início depois dela dá um intervalo vazio (fim < início), que a união ignora.
     """
     comeco = data_parcial(inicio).indice_inicio()
-    final = (
-        referencia.year * 12 + referencia.month - 1
-        if fim is None
-        else data_parcial(fim).indice_fim()
-    )
+    mes_referencia = referencia.year * 12 + referencia.month - 1
+    final = mes_referencia if fim is None else data_parcial(fim).indice_fim()
     if final < comeco:
         raise ValueError(f"fim antes do início: {inicio} → {fim}")
-    return comeco, final
+    return comeco, min(final, mes_referencia)
 
 
 def meses_da_uniao(intervalos: Iterable[tuple[int, int]]) -> int:
@@ -57,7 +55,7 @@ def meses_da_uniao(intervalos: Iterable[tuple[int, int]]) -> int:
     consecutivos (jul → ago) se emendam sem buraco (ADR 0003)."""
     total = 0
     atual: tuple[int, int] | None = None
-    for comeco, final in sorted(intervalos):
+    for comeco, final in sorted((a, b) for a, b in intervalos if b >= a):
         if atual is None or comeco > atual[1] + 1:
             if atual is not None:
                 total += atual[1] - atual[0] + 1

@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b04-devops-senior",
   "extrair_curriculo": {
     "entrada_sha256": "481f884d7f45b03756d08b3ae639ae7d384f3c3b176f9032669856e1f5c914ea",
@@ -13,7 +13,8 @@
             "mes": 8
           },
           "fim": null,
-          "trecho": "Engenheiro de Infraestrutura Sênior — Tecnologia Nimbo Tatupeba — ago/2020 – atual"
+          "trecho": "Engenheiro de Infraestrutura Sênior — Tecnologia Nimbo Tatupeba — ago/2020 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Analista de Infraestrutura",
@@ -26,13 +27,15 @@
             "ano": 2020,
             "mes": 9
           },
-          "trecho": "Analista de Infraestrutura — Datacenter Ipê Trapezoidal — mar/2016 – set/2020"
+          "trecho": "Analista de Infraestrutura — Datacenter Ipê Trapezoidal — mar/2016 – set/2020",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "k8s",
           "trecho": "clusters k8s de produção",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "AWS",
           "trecho": "de produção na AWS",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "Terraform",
           "trecho": "infraestrutura em Terraform",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "CI/CD",
           "trecho": "pipelines de CI/CD no GitLab",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "GitLab",
           "trecho": "CI/CD no GitLab",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -68,6 +75,7 @@
         {
           "nome": "Prometheus",
           "trecho": "monitoração com Prometheus e Grafana",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -75,6 +83,7 @@
         {
           "nome": "Grafana",
           "trecho": "Prometheus e Grafana",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -82,6 +91,7 @@
         {
           "nome": "Python",
           "trecho": "scripts em Python",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -89,6 +99,7 @@
         {
           "nome": "Linux",
           "trecho": "servidores Linux",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -96,6 +107,7 @@
         {
           "nome": "VMware",
           "trecho": "virtualização com VMware",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -103,6 +115,7 @@
         {
           "nome": "Shell script",
           "trecho": "tarefas com shell script",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -121,11 +134,13 @@
         {
           "nome": "AWS Certified Solutions Architect – Associate",
           "emissor": null,
+          "competencia": null,
           "trecho": "AWS Certified Solutions Architect – Associate"
         },
         {
           "nome": "Certified Kubernetes Administrator (CKA)",
           "emissor": null,
+          "competencia": null,
           "trecho": "Certified Kubernetes Administrator (CKA)"
         }
       ]
@@ -139,7 +154,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -154,49 +171,57 @@
           "descricao": "Kubernetes em produção",
           "tipo": "obrigatorio",
           "competencia": "Kubernetes",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Terraform",
           "tipo": "obrigatorio",
           "competencia": "Terraform",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "AWS",
           "tipo": "obrigatorio",
           "competencia": "AWS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "CI/CD",
           "tipo": "obrigatorio",
           "competencia": "CI/CD",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Linux",
           "tipo": "obrigatorio",
           "competencia": "Linux",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Prometheus",
           "tipo": "desejavel",
           "competencia": "Prometheus",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Python para automação",
           "tipo": "desejavel",
           "competencia": "Python",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Go",
           "tipo": "desejavel",
           "competencia": "Go",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -209,8 +234,58 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "481f884d7f45b03756d08b3ae639ae7d384f3c3b176f9032669856e1f5c914ea",
+    "saida": {
+      "resumo": "Aderência muito alta: Kubernetes em produção, Terraform, AWS, CI/CD e Linux aparecem com evidência clara, assim como Prometheus e Python para automação. O único desejável sem evidência é Go.",
+      "lacunas": [
+        {
+          "requisito": "Go",
+          "comentario": "A vaga cita Go como desejável e o currículo não menciona a linguagem."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Kubernetes",
+        "Terraform",
+        "AWS",
+        "CI/CD",
+        "Linux",
+        "Prometheus"
+      ],
+      "reescritas": [
+        {
+          "antes": "Mantenho pipelines de CI/CD no GitLab para 40 times.",
+          "depois": "Mantenho pipelines de CI/CD no GitLab para 40 times, com revisão por pull request.",
+          "competencias": [
+            "CI/CD",
+            "GitLab"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Go",
+          "sugestao": "Reescrever em Go um dos scripts de automação de plantão e citar o projeto."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

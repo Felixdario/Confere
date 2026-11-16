@@ -1,0 +1,32 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  O currículo cobre todos os obrigatórios da vaga com evidência direta: React, TypeScript, Next.js,
+  testes com Jest e fluxo com Git e code review. Entre os desejáveis, a auditoria WCAG conta a favor;
+  GraphQL não aparece e o inglês declarado está abaixo do avançado pedido.
+lacunas:
+  - requisito: GraphQL
+    comentario: A vaga cita GraphQL como desejável e o currículo não menciona a tecnologia.
+  - requisito: Inglês avançado
+    comentario: O currículo declara inglês intermediário; a vaga pede avançado.
+palavras_chave_ats:
+  - React
+  - TypeScript
+  - Next.js
+  - Jest
+  - code review
+  - WCAG
+reescritas:
+  - antes: Migrei o front-end para TypeScript e reduzi os erros em produção.
+    depois: >-
+      Migrei o front-end para TypeScript, com testes com Jest e Testing Library, e reduzi os erros
+      em produção.
+    competencias: [TypeScript, Jest, Testing Library]
+  - antes: Escrevi testes com Jest e Testing Library para os componentes críticos.
+    depois: >-
+      Escrevi os testes dos componentes críticos com Jest e Testing Library, em todas as entregas.
+    competencias: [Jest, Testing Library]
+o_que_aprender:
+  - competencia: GraphQL
+    sugestao: Construir um projeto pequeno que consuma uma API GraphQL e publicá-lo no portfólio.
+  - competencia: Inglês
+    sugestao: Praticar conversação técnica e buscar uma certificação de nível avançado.

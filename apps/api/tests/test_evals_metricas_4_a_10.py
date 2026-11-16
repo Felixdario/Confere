@@ -239,8 +239,13 @@ def test_contrafactual_amplitude_e_max_menos_min_do_grupo(
 
 
 def test_reescrita_com_competencia_sem_evidencia(dataset: Dataset, taxonomia: Taxonomia) -> None:
-    boa = Reescrita(antes="a", depois="b", competencias=("ReactJS", "TypeScript"))
-    inventada = Reescrita(antes="a", depois="b", competencias=("React", "GraphQL"))
+    # O "depois" usa só palavras do currículo; a inventada declara GraphQL.
+    boa = Reescrita(
+        antes="a", depois="ReactJS em produção desde 2019", competencias=("ReactJS", "TypeScript")
+    )
+    inventada = Reescrita(
+        antes="a", depois="ReactJS em produção desde 2019", competencias=("React", "GraphQL")
+    )
 
     def mudar(caso: Caso) -> dict[str, Any]:
         if caso.id == "b01-frontend-senior":
@@ -254,7 +259,7 @@ def test_reescrita_com_competencia_sem_evidencia(dataset: Dataset, taxonomia: Ta
 
 
 def test_reescritas_so_com_evidencia_passam(dataset: Dataset, taxonomia: Taxonomia) -> None:
-    boa = Reescrita(antes="a", depois="b", competencias=("Postgres", "Node"))
+    boa = Reescrita(antes="a", depois="APIs REST em Node com Express", competencias=("Node",))
 
     def mudar(caso: Caso) -> dict[str, Any]:
         return {"reescritas_entregues": (boa,)} if caso.id == "b02-backend-pleno-node" else {}

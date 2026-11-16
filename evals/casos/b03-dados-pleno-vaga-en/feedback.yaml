@@ -1,0 +1,27 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  O currículo atende SQL, Python e testes A/B com evidência na experiência atual, e o inglês fluente
+  está declarado. Os dashboards são em Tableau, relacionado ao Power BI pedido; dbt e Airflow, que
+  são desejáveis, não aparecem.
+lacunas:
+  - requisito: Power BI dashboards
+    comentario: Os dashboards citados são em Tableau; vale mostrar Power BI se houver.
+  - requisito: dbt
+    comentario: Não há menção a dbt.
+  - requisito: Airflow
+    comentario: Não há menção a orquestração de pipelines com Airflow.
+palavras_chave_ats:
+  - Advanced SQL
+  - Python
+  - Power BI
+  - A/B testing
+reescritas:
+  - antes: Automatizo em Python (pandas) análises que antes eram feitas à mão.
+    depois: >-
+      Automatizo em Python e pandas as análises que antes eram feitas à mão.
+    competencias: [Python, pandas]
+o_que_aprender:
+  - competencia: Power BI
+    sugestao: Recriar no Power BI um dos dashboards que você já fez em Tableau.
+  - competencia: dbt
+    sugestao: Seguir o tutorial oficial do dbt com um conjunto de dados público.

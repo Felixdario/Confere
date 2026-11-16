@@ -1,0 +1,23 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Aderência muito alta: Kubernetes em produção, Terraform, AWS, CI/CD e Linux aparecem com
+  evidência clara, assim como Prometheus e Python para automação. O único desejável sem evidência é
+  Go.
+lacunas:
+  - requisito: Go
+    comentario: A vaga cita Go como desejável e o currículo não menciona a linguagem.
+palavras_chave_ats:
+  - Kubernetes
+  - Terraform
+  - AWS
+  - CI/CD
+  - Linux
+  - Prometheus
+reescritas:
+  - antes: Mantenho pipelines de CI/CD no GitLab para 40 times.
+    depois: >-
+      Mantenho pipelines de CI/CD no GitLab para 40 times, com revisão por pull request.
+    competencias: [CI/CD, GitLab]
+o_que_aprender:
+  - competencia: Go
+    sugestao: Reescrever em Go um dos scripts de automação de plantão e citar o projeto.

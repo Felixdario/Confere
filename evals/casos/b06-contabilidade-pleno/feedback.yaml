@@ -1,0 +1,27 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Fechamento contábil, conciliação bancária, apuração de impostos, Excel avançado e CRC ativo estão
+  comprovados. O ERP citado é o TOTVS Protheus, relacionado ao SAP pedido; IFRS e Power BI não
+  aparecem.
+lacunas:
+  - requisito: Experiência com SAP
+    comentario: O currículo mostra TOTVS Protheus, não SAP.
+  - requisito: Conhecimento de IFRS
+    comentario: Não há menção a IFRS.
+  - requisito: Power BI
+    comentario: Não há menção a Power BI.
+palavras_chave_ats:
+  - Fechamento contábil
+  - Conciliação bancária
+  - Apuração de impostos
+  - Excel avançado
+  - SAP
+reescritas:
+  - antes: Apuração de impostos no Lucro Real.
+    depois: Responsável pela apuração de impostos no Lucro Real e pela entrega do SPED Fiscal.
+    competencias: [Apuração de impostos, Lucro Real, SPED Fiscal]
+o_que_aprender:
+  - competencia: SAP
+    sugestao: Fazer um curso introdutório do módulo FI do SAP.
+  - competencia: IFRS
+    sugestao: Estudar os pronunciamentos do CPC alinhados às IFRS mais usados no fechamento.

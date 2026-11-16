@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b09-vendas-b2b-senior",
   "extrair_curriculo": {
     "entrada_sha256": "c82fcf41cac4b3d7dfbe063475efe23d2d519904efa571530f53049895b51a44",
@@ -13,7 +13,8 @@
             "mes": 4
           },
           "fim": null,
-          "trecho": "Consultor de Vendas Sênior — Máquinas Cambacica Ferruginosa — abr/2019 – atual"
+          "trecho": "Consultor de Vendas Sênior — Máquinas Cambacica Ferruginosa — abr/2019 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Representante Comercial",
@@ -26,13 +27,15 @@
             "ano": 2019,
             "mes": 3
           },
-          "trecho": "Representante Comercial — Distribuidora Saracura Lilás — 2015 – mar/2019"
+          "trecho": "Representante Comercial — Distribuidora Saracura Lilás — 2015 – mar/2019",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Vendas B2B",
           "trecho": "Vendas B2B de equipamentos",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Prospecção outbound",
           "trecho": "Prospecção outbound por telefone e e-mail",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "Negociação",
           "trecho": "Negociação de contratos",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "HubSpot",
           "trecho": "Funil organizado no HubSpot",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "SPIN Selling",
           "trecho": "novas contas industriais com SPIN Selling",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -92,7 +99,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -107,43 +116,50 @@
           "descricao": "Vendas B2B consultivas",
           "tipo": "obrigatorio",
           "competencia": "Vendas B2B",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Prospecção outbound",
           "tipo": "obrigatorio",
           "competencia": "Prospecção outbound",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "CRM Salesforce",
           "tipo": "obrigatorio",
           "competencia": "Salesforce",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Negociação com decisores",
           "tipo": "obrigatorio",
           "competencia": "Negociação",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Experiência com venda de SaaS",
           "tipo": "obrigatorio",
           "competencia": "Vendas de SaaS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Inglês avançado",
           "tipo": "desejavel",
           "competencia": "Inglês",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "avancado"
         },
         {
           "descricao": "Metodologia SPIN Selling",
           "tipo": "desejavel",
           "competencia": "SPIN Selling",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -156,8 +172,68 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "c82fcf41cac4b3d7dfbe063475efe23d2d519904efa571530f53049895b51a44",
+    "saida": {
+      "resumo": "Vendas B2B consultivas, prospecção outbound, negociação e SPIN Selling estão comprovados. O CRM citado é o HubSpot, relacionado ao Salesforce; falta experiência com venda de SaaS, que é obrigatória, e o inglês avançado.",
+      "lacunas": [
+        {
+          "requisito": "CRM Salesforce",
+          "comentario": "O currículo mostra HubSpot, não Salesforce."
+        },
+        {
+          "requisito": "Experiência com venda de SaaS",
+          "comentario": "As vendas citadas são de equipamentos, não de software."
+        },
+        {
+          "requisito": "Inglês avançado",
+          "comentario": "Não há idioma declarado."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Vendas B2B",
+        "Prospecção outbound",
+        "Salesforce",
+        "SaaS",
+        "SPIN Selling"
+      ],
+      "reescritas": [
+        {
+          "antes": "Negociação de contratos de até R$ 2 milhões.",
+          "depois": "Negociação de contratos de até R$ 2 milhões com indústrias de médio e grande porte.",
+          "competencias": [
+            "Negociação"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Salesforce",
+          "sugestao": "Fazer as trilhas introdutórias gratuitas do Salesforce."
+        },
+        {
+          "competencia": "Vendas de SaaS",
+          "sugestao": "Estudar métricas de SaaS (MRR, churn) e o ciclo de venda de software."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

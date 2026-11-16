@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b01-frontend-senior",
   "extrair_curriculo": {
     "entrada_sha256": "1f70d0e255aa930f038ffd921ab1cf3a492b5649969e0cfd4d8b2be1d43a0f07",
@@ -13,7 +13,8 @@
             "mes": 3
           },
           "fim": null,
-          "trecho": "Desenvolvedora Front-end Sênior — Tamanduá Violeta Comércio Digital — mar/2022 – atual"
+          "trecho": "Desenvolvedora Front-end Sênior — Tamanduá Violeta Comércio Digital — mar/2022 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Desenvolvedora Front-end",
@@ -26,7 +27,8 @@
             "ano": 2022,
             "mes": 4
           },
-          "trecho": "Desenvolvedora Front-end — Pixelgrafo Jequitibá Software — jan/2019 – abr/2022"
+          "trecho": "Desenvolvedora Front-end — Pixelgrafo Jequitibá Software — jan/2019 – abr/2022",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Estagiária de Desenvolvimento Web",
@@ -39,13 +41,15 @@
             "ano": 2018,
             "mes": 12
           },
-          "trecho": "Estagiária de Desenvolvimento Web — Agência Orvalho Quadrado — jul/2017 – dez/2018"
+          "trecho": "Estagiária de Desenvolvimento Web — Agência Orvalho Quadrado — jul/2017 – dez/2018",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "ReactJS",
           "trecho": "ReactJS em produção desde 2019",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -53,6 +57,7 @@
         {
           "nome": "Next.js",
           "trecho": "aplicação Next.js com renderização no servidor",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -60,6 +65,7 @@
         {
           "nome": "TypeScript",
           "trecho": "Migrei o front-end para TypeScript",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -67,6 +73,7 @@
         {
           "nome": "WCAG",
           "trecho": "auditoria WCAG 2.2 do checkout",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -74,6 +81,7 @@
         {
           "nome": "APIs REST",
           "trecho": "consumindo APIs REST",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -81,6 +89,7 @@
         {
           "nome": "Jest",
           "trecho": "testes com Jest e Testing Library",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -88,6 +97,7 @@
         {
           "nome": "Testing Library",
           "trecho": "Jest e Testing Library",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -95,6 +105,7 @@
         {
           "nome": "Git",
           "trecho": "fluxo com Git e code review",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -102,6 +113,7 @@
         {
           "nome": "HTML",
           "trecho": "HTML, CSS e jQuery",
+          "nivel": null,
           "experiencias": [
             2
           ]
@@ -109,6 +121,7 @@
         {
           "nome": "CSS",
           "trecho": "HTML, CSS e jQuery",
+          "nivel": null,
           "experiencias": [
             2
           ]
@@ -116,6 +129,7 @@
         {
           "nome": "jQuery",
           "trecho": "HTML, CSS e jQuery",
+          "nivel": null,
           "experiencias": [
             2
           ]
@@ -152,7 +166,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -167,49 +183,57 @@
           "descricao": "Experiência sólida com React",
           "tipo": "obrigatorio",
           "competencia": "React",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "TypeScript",
           "tipo": "obrigatorio",
           "competencia": "TypeScript",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Testes automatizados com Jest",
           "tipo": "obrigatorio",
           "competencia": "Jest",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Next.js",
           "tipo": "obrigatorio",
           "competencia": "Next.js",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Git e code review",
           "tipo": "obrigatorio",
           "competencia": "Git",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Acessibilidade (WCAG)",
           "tipo": "desejavel",
           "competencia": "Acessibilidade",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "GraphQL",
           "tipo": "desejavel",
           "competencia": "GraphQL",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Inglês avançado",
           "tipo": "desejavel",
           "competencia": "Inglês",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "avancado"
         }
       ]
     },
@@ -222,8 +246,75 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "1f70d0e255aa930f038ffd921ab1cf3a492b5649969e0cfd4d8b2be1d43a0f07",
+    "saida": {
+      "resumo": "O currículo cobre todos os obrigatórios da vaga com evidência direta: React, TypeScript, Next.js, testes com Jest e fluxo com Git e code review. Entre os desejáveis, a auditoria WCAG conta a favor; GraphQL não aparece e o inglês declarado está abaixo do avançado pedido.",
+      "lacunas": [
+        {
+          "requisito": "GraphQL",
+          "comentario": "A vaga cita GraphQL como desejável e o currículo não menciona a tecnologia."
+        },
+        {
+          "requisito": "Inglês avançado",
+          "comentario": "O currículo declara inglês intermediário; a vaga pede avançado."
+        }
+      ],
+      "palavras_chave_ats": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Jest",
+        "code review",
+        "WCAG"
+      ],
+      "reescritas": [
+        {
+          "antes": "Migrei o front-end para TypeScript e reduzi os erros em produção.",
+          "depois": "Migrei o front-end para TypeScript, com testes com Jest e Testing Library, e reduzi os erros em produção.",
+          "competencias": [
+            "TypeScript",
+            "Jest",
+            "Testing Library"
+          ]
+        },
+        {
+          "antes": "Escrevi testes com Jest e Testing Library para os componentes críticos.",
+          "depois": "Escrevi os testes dos componentes críticos com Jest e Testing Library, em todas as entregas.",
+          "competencias": [
+            "Jest",
+            "Testing Library"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "GraphQL",
+          "sugestao": "Construir um projeto pequeno que consuma uma API GraphQL e publicá-lo no portfólio."
+        },
+        {
+          "competencia": "Inglês",
+          "sugestao": "Praticar conversação técnica e buscar uma certificação de nível avançado."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

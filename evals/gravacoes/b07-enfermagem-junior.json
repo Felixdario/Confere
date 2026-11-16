@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b07-enfermagem-junior",
   "extrair_curriculo": {
     "entrada_sha256": "2cc21957b71b026eecca109c3cb56bf38ef8fb7cc1d964c36f63d2d533ad5584",
@@ -13,7 +13,8 @@
             "mes": 2
           },
           "fim": null,
-          "trecho": "Enfermeira — Clínica Anambé Turquesa — fev/2025 – atual"
+          "trecho": "Enfermeira — Clínica Anambé Turquesa — fev/2025 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Estágio supervisionado em clínica médica",
@@ -26,13 +27,15 @@
             "ano": 2024,
             "mes": null
           },
-          "trecho": "Estágio supervisionado em clínica médica — Hospital-Escola Sabiá Trigonal — 2024"
+          "trecho": "Estágio supervisionado em clínica médica — Hospital-Escola Sabiá Trigonal — 2024",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Sistematização da Assistência de Enfermagem",
           "trecho": "Sistematização da Assistência de Enfermagem (SAE)",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -41,6 +44,7 @@
         {
           "nome": "Administração de medicamentos",
           "trecho": "Administração de medicamentos sob prescrição médica",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -49,6 +53,7 @@
         {
           "nome": "Prontuário eletrônico",
           "trecho": "Registro em prontuário eletrônico",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -56,6 +61,7 @@
         {
           "nome": "Tasy",
           "trecho": "prontuário eletrônico Tasy",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -74,11 +80,13 @@
         {
           "nome": "COREN-BA",
           "emissor": null,
+          "competencia": "COREN",
           "trecho": "COREN-BA ativo"
         },
         {
           "nome": "Suporte Básico de Vida (BLS)",
           "emissor": null,
+          "competencia": "BLS",
           "trecho": "Curso de Suporte Básico de Vida (BLS) — 2024"
         }
       ]
@@ -92,7 +100,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -107,43 +117,50 @@
           "descricao": "COREN ativo",
           "tipo": "obrigatorio",
           "competencia": "COREN",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Experiência em terapia intensiva (UTI)",
           "tipo": "obrigatorio",
           "competencia": "Terapia intensiva",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Aplicação da SAE",
           "tipo": "obrigatorio",
           "competencia": "SAE",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Administração de medicamentos",
           "tipo": "obrigatorio",
           "competencia": "Administração de medicamentos",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Curso de ACLS válido",
           "tipo": "obrigatorio",
           "competencia": "ACLS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Pós-graduação em terapia intensiva",
           "tipo": "desejavel",
           "competencia": "Terapia intensiva",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Prontuário eletrônico (Tasy ou MV)",
           "tipo": "desejavel",
           "competencia": "Prontuário eletrônico",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -156,8 +173,68 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "2cc21957b71b026eecca109c3cb56bf38ef8fb7cc1d964c36f63d2d533ad5584",
+    "saida": {
+      "resumo": "COREN ativo, SAE, administração de medicamentos e prontuário eletrônico estão comprovados. A principal lacuna é a experiência em terapia intensiva, que a vaga exige; o ACLS aparece apenas em parte.",
+      "lacunas": [
+        {
+          "requisito": "Experiência em terapia intensiva (UTI)",
+          "comentario": "A experiência citada é em clínica, não em UTI."
+        },
+        {
+          "requisito": "Curso de ACLS válido",
+          "comentario": "O currículo não deixa claro um ACLS válido."
+        },
+        {
+          "requisito": "Pós-graduação em terapia intensiva",
+          "comentario": "Não há pós-graduação citada."
+        }
+      ],
+      "palavras_chave_ats": [
+        "COREN ativo",
+        "SAE",
+        "Administração de medicamentos",
+        "Tasy"
+      ],
+      "reescritas": [
+        {
+          "antes": "Registro em prontuário eletrônico Tasy.",
+          "depois": "Registro da assistência de enfermagem no prontuário eletrônico Tasy.",
+          "competencias": [
+            "Prontuário eletrônico",
+            "Tasy"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Terapia intensiva",
+          "sugestao": "Buscar estágio, plantão ou especialização em terapia intensiva."
+        },
+        {
+          "competencia": "ACLS",
+          "sugestao": "Fazer ou renovar o curso de ACLS e citar a validade."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

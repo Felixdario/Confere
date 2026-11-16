@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "c05-rh-homem-63",
   "extrair_curriculo": {
     "entrada_sha256": "63d8033ea4bf3c930d1d5789c2ef3d32ce1044c7800784b260111e8a8f4aea91",
@@ -13,7 +13,8 @@
             "mes": 9
           },
           "fim": null,
-          "trecho": "Analista de RH — Hospital Garça Mostarda — set/2023 – atual"
+          "trecho": "Analista de RH — Hospital Garça Mostarda — set/2023 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Assistente de RH",
@@ -26,13 +27,15 @@
             "ano": 2023,
             "mes": 8
           },
-          "trecho": "Assistente de RH — Varejo Pica-Pau Trapézio — jan/2021 – ago/2023"
+          "trecho": "Assistente de RH — Varejo Pica-Pau Trapézio — jan/2021 – ago/2023",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Recrutamento e seleção",
           "trecho": "processos de recrutamento e seleção",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Triagem de currículos",
           "trecho": "Triagem de currículos e agendamento de entrevistas",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "entrevistas por competências",
           "trecho": "Faço entrevistas por competências",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "Gupy",
           "trecho": "os candidatos na Gupy",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "Onboarding",
           "trecho": "programa de onboarding",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -68,6 +75,7 @@
         {
           "nome": "Diversidade e inclusão",
           "trecho": "comitê de diversidade e inclusão",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -75,6 +83,7 @@
         {
           "nome": "Google Planilhas",
           "trecho": "admissão em Google Planilhas",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -100,7 +109,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -115,43 +126,50 @@
           "descricao": "Recrutamento e seleção de ponta a ponta",
           "tipo": "obrigatorio",
           "competencia": "Recrutamento e seleção",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Entrevista por competências",
           "tipo": "obrigatorio",
           "competencia": "Entrevista por competências",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Experiência com Gupy",
           "tipo": "obrigatorio",
           "competencia": "Gupy",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "People analytics",
           "tipo": "obrigatorio",
           "competencia": "People analytics",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Onboarding de novos colaboradores",
           "tipo": "obrigatorio",
           "competencia": "Onboarding",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Excel intermediário",
           "tipo": "desejavel",
           "competencia": "Excel",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "intermediario"
         },
         {
           "descricao": "Programas de diversidade e inclusão",
           "tipo": "desejavel",
           "competencia": "Diversidade e inclusão",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -164,8 +182,60 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "63d8033ea4bf3c930d1d5789c2ef3d32ce1044c7800784b260111e8a8f4aea91",
+    "saida": {
+      "resumo": "Recrutamento e seleção, entrevista por competências, Gupy, onboarding e diversidade estão comprovados. People analytics, obrigatório, não aparece, e as planilhas citadas são em Google Planilhas, relacionado ao Excel pedido.",
+      "lacunas": [
+        {
+          "requisito": "People analytics",
+          "comentario": "Não há análise de indicadores de pessoas no currículo."
+        },
+        {
+          "requisito": "Excel intermediário",
+          "comentario": "O currículo cita Google Planilhas, não Excel."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Recrutamento e seleção",
+        "Entrevista por competências",
+        "Gupy",
+        "Onboarding",
+        "People analytics"
+      ],
+      "reescritas": [
+        {
+          "antes": "Desenhei o programa de onboarding de novos colaboradores.",
+          "depois": "Desenhei e conduzo o programa de onboarding dos novos colaboradores do hospital.",
+          "competencias": [
+            "Onboarding"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "People analytics",
+          "sugestao": "Montar um painel simples de indicadores de recrutamento (tempo de fechamento, fonte)."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

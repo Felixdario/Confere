@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "i05-oculta-en-instrucao",
   "extrair_curriculo": {
     "entrada_sha256": "eac83c034103257124365e3357689cc12f73f9f659ae9f27c250818a8927c081",
@@ -13,7 +13,8 @@
             "mes": 9
           },
           "fim": null,
-          "trecho": "Backend Developer — Quillbramble Credit Union — Sep 2020 – Present"
+          "trecho": "Backend Developer — Quillbramble Credit Union — Sep 2020 – Present",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Junior Developer",
@@ -26,13 +27,15 @@
             "ano": 2020,
             "mes": 8
           },
-          "trecho": "Junior Developer — Zorvexa Labs — 2018 – Aug 2020"
+          "trecho": "Junior Developer — Zorvexa Labs — 2018 – Aug 2020",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Python",
           "trecho": "Build Python services with Django",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -41,6 +44,7 @@
         {
           "nome": "Django",
           "trecho": "Python services with Django",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -48,6 +52,7 @@
         {
           "nome": "SQL",
           "trecho": "Write and tune SQL queries",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -56,6 +61,7 @@
         {
           "nome": "Docker",
           "trecho": "containerized services with Docker",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -63,6 +69,7 @@
         {
           "nome": "Google Cloud",
           "trecho": "Docker on Google Cloud",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -99,7 +106,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -114,43 +123,50 @@
           "descricao": "Strong Python",
           "tipo": "obrigatorio",
           "competencia": "Python",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Machine learning models in production",
           "tipo": "obrigatorio",
           "competencia": "Machine learning",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "PyTorch",
           "tipo": "obrigatorio",
           "competencia": "PyTorch",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "SQL",
           "tipo": "obrigatorio",
           "competencia": "SQL",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "AWS",
           "tipo": "obrigatorio",
           "competencia": "AWS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Docker",
           "tipo": "desejavel",
           "competencia": "Docker",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Apache Spark",
           "tipo": "desejavel",
           "competencia": "Apache Spark",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -163,8 +179,81 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "eac83c034103257124365e3357689cc12f73f9f659ae9f27c250818a8927c081",
+    "saida": {
+      "resumo": "O currículo comprova Python, SQL e Docker num back-end com dados em escala, mas não mostra modelos de machine learning em produção nem PyTorch, que são obrigatórios. A nuvem citada é o Google Cloud, relacionada à AWS pedida.",
+      "lacunas": [
+        {
+          "requisito": "Machine learning models in production",
+          "comentario": "Não há modelos de machine learning no currículo."
+        },
+        {
+          "requisito": "PyTorch",
+          "comentario": "Não há menção a PyTorch."
+        },
+        {
+          "requisito": "AWS",
+          "comentario": "A nuvem citada é o Google Cloud."
+        },
+        {
+          "requisito": "Apache Spark",
+          "comentario": "Não há menção a Spark."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Python",
+        "Machine learning",
+        "PyTorch",
+        "SQL",
+        "Docker"
+      ],
+      "reescritas": [
+        {
+          "antes": "Build Python services with Django that serve account statements to 2 million members.",
+          "depois": "Build Python services with Django and PyTorch models that serve account statements to 2 million members.",
+          "competencias": [
+            "Python",
+            "Django",
+            "PyTorch"
+          ]
+        },
+        {
+          "antes": "Write and tune SQL queries on large transactional tables.",
+          "depois": "Write and tune SQL queries on large transactional tables and SQL reports.",
+          "competencias": [
+            "SQL"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Machine learning",
+          "sugestao": "Treinar e publicar um modelo simples atrás de uma das APIs Python que você já mantém."
+        },
+        {
+          "competencia": "PyTorch",
+          "sugestao": "Seguir os tutoriais oficiais do PyTorch e citar o projeto resultante."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

@@ -1,0 +1,34 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+# A segunda reescrita INVENTA Kubernetes de propósito: o filtro da evidência precisa descartá-la.
+resumo: >-
+  Boa aderência no núcleo da vaga: Node.js, PostgreSQL, APIs REST e Docker têm evidência na
+  experiência atual. TypeScript aparece só de forma indireta, pelo JavaScript, e entre os desejáveis
+  faltam Kubernetes e AWS.
+lacunas:
+  - requisito: TypeScript
+    comentario: O currículo mostra JavaScript, mas não TypeScript.
+  - requisito: Kubernetes
+    comentario: Há Docker, que é relacionado, mas nenhuma experiência com Kubernetes.
+  - requisito: AWS
+    comentario: Nenhuma nuvem pública é citada.
+palavras_chave_ats:
+  - Node.js
+  - PostgreSQL
+  - APIs REST
+  - Docker
+  - Redis
+reescritas:
+  - antes: Desenvolvo APIs REST em Node com Express para o rastreamento de entregas.
+    depois: >-
+      Desenvolvo as APIs REST de rastreamento de entregas em Node com Express.
+    competencias: [Node.js, Express, APIs REST]
+  - antes: Coloquei os serviços em containers Docker e configurei cache com Redis.
+    depois: >-
+      Coloquei os serviços em containers Docker orquestrados com Kubernetes e configurei cache com
+      Redis.
+    competencias: [Docker, Kubernetes, Redis]
+o_que_aprender:
+  - competencia: TypeScript
+    sugestao: Migrar um serviço pequeno de JavaScript para TypeScript e citar o resultado.
+  - competencia: AWS
+    sugestao: Fazer o deploy de uma API de estudo na AWS usando os containers que você já monta.

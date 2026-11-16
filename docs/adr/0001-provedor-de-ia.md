@@ -1,6 +1,7 @@
 # ADR 0001 — Provedor de IA
 
-- **Status:** rascunho (fase 0; aceito na fase 3, com custo e latência medidos nas evals)
+- **Status:** implementado na fase 3 e validado sem rede (cliente falso do SDK); aceito depois da
+  primeira rodada `make eval PROVEDOR=anthropic`, com custo e latência medidos
 - **Data:** 2026-11-15
 
 ## Contexto
@@ -35,8 +36,22 @@ Lidos em platform.claude.com em 2026-11-15, por milhão de tokens (MTok):
 | Claude Opus 5.5 | `claude-opus-5-5` | US$ 4 | US$ 20 |
 
 O preço do Haiku 5.5 vale para prompts de até 100 mil tokens; um currículo e uma vaga ficam muito
-abaixo disso. A leitura em cache do Opus 5.5 custa US$ 0,20 por MTok. Os preços de escrita e leitura em
-cache dos outros modelos entram na tabela de preços do código na fase 3, conferidos na mesma página.
+abaixo disso. A leitura em cache do Opus 5.5 custa US$ 0,20 por MTok.
+
+Conferido de novo na fase 3 (2026-11-16, mesma página, tabela "Model pricing"), já com o cache, em
+US$/MTok:
+
+| Modelo | Entrada | Escrita 5 min | Escrita 1 h | Leitura | Saída |
+| - | - | - | - | - | - |
+| Haiku 5.5 (prompt ≤ 100 mil tokens) | 0,10 | 0,125 | 0,20 | 0,01 | 0,50 |
+| Haiku 5.5 (prompt > 100 mil tokens) | 0,50 | 0,625 | 1 | 0,05 | 2,50 |
+| Sonnet 5.5 | 2 | 2,50 | 4 | 0,10 | 10 |
+| Opus 5.5 | 4 | 5 | 8 | 0,20 | 20 |
+| Opus 5 e Opus 4.8 (reservas do fallback) | 5 | 6,25 | 10 | 0,50 | 25 |
+
+A tabela versionada do código é `curriculo_api/ia/precos.py` (`VERSAO_PRECOS = "2026-11-16"`). O
+"tamanho do prompt" da faixa do Haiku conta entrada + escrita + leitura de cache, e a requisição
+inteira é cobrada pela faixa em que cai.
 
 ## Opções
 
@@ -111,8 +126,16 @@ A escolha é feita na inicialização: sem `ANTHROPIC_API_KEY` definida (ou vazi
 
 ### Saída estruturada
 
-As extrações usam `client.messages.parse(..., output_format=ModeloPydantic)` e leem
-`response.parsed_output`.
+Planejado: `client.messages.parse(..., output_format=ModeloPydantic)` lendo
+`response.parsed_output`. **Implementado (fase 3):** `client.messages.create(...,
+output_config={"effort": ..., "format": {"type": "json_schema", "schema":
+anthropic.transform_schema(Modelo)}})`, a forma "Raw Schema" da documentação, com o mesmo schema
+que o `parse` enviaria, e a validação Pydantic feita por nós (`Modelo.model_validate_json` sobre os
+blocos `text`). Motivo: no SDK 2.8 o `parse` valida dentro da chamada e, quando a validação falha
+(resposta cortada por `max_tokens`, recusa no meio, ou uma regra nossa como "fim antes do início"),
+levanta `ValidationError` sem devolver a mensagem. Perderíamos o `usage` da tentativa (o custo
+some do registro e do teto) e o `stop_reason` (a recusa tem de ser checada antes do conteúdo). O
+resultado validado é o mesmo.
 - O schema enviado não aceita restrições como `minLength`, `maxLength`, `minimum` e `maximum`. O SDK
   as remove do schema e o Pydantic as valida do nosso lado.
 - Restrições de negócio também ficam no Pydantic, por exemplo: o `trecho` não pode ser vazio, o fim
@@ -129,8 +152,10 @@ SDK (`max_retries=2`), que são contadas à parte.
 ### Tempo limite por etapa
 
 Cada etapa tem um limite próprio, configurável:
-- extração: 20 s;
-- feedback: 40 s até o primeiro evento, sem limite de duração enquanto houver fluxo.
+- extração: 20 s (`CLAUDE_TIMEOUT_EXTRACAO_S`);
+- feedback: 40 s até o primeiro evento (`CLAUDE_TIMEOUT_FEEDBACK_PRIMEIRO_EVENTO_S`) e 40 s sem
+  nenhum evento novo (`CLAUDE_TIMEOUT_FEEDBACK_OCIOSO_S`), sem limite de duração enquanto houver
+  fluxo.
 
 Esses valores iniciais são calibrados pela latência medida na fase 3. Usamos
 `client.with_options(timeout=..., max_retries=...)`, lembrando que o tempo total pode chegar a
@@ -139,8 +164,14 @@ volta da chamada.
 
 ### Streaming do feedback
 
-O feedback usa `client.messages.stream(...)`. O texto é repassado à tela por SSE (fase 4), e a
-mensagem final (`get_final_message()`) dá o `usage` e o `stop_reason`.
+O feedback usa `client.messages.stream(...)` (no Opus, `client.beta.messages.stream(...)` com o
+fallback, abaixo) **com a mesma saída estruturada** (`output_config.format`): streaming e saída
+estruturada combinam. O texto que chega é o JSON sendo escrito; o provedor o repassa em eventos
+`texto` (um iterador assíncrono de `EventoFeedback`: `etapa`, `texto`, `final`) para o SSE da fase 4,
+e o evento `final` traz o `FeedbackIA` validado e o uso de cada chamada. A tela da fase 6 decide se
+mostra o JSON cru ou se o interpreta aos poucos; a saída que conta é só a validada. A mensagem final
+(`get_final_message()`) dá o `usage` e o `stop_reason`. Uma resposta inválida gera a mesma nova
+tentativa das extrações, com um evento `etapa` "nova tentativa do feedback".
 
 ### Recusa
 
@@ -149,7 +180,11 @@ Checamos `stop_reason` antes de ler o conteúdo. Em `"refusal"`:
 - a etapa termina com a mensagem "não foi possível analisar este conteúdo".
 
 No Opus 5.5 ligamos o fallback do servidor: beta `server-side-fallback-2026-07-01` com
-`fallbacks: "default"`. O Haiku 5.5 **não tem** fallback do servidor, então a recusa na extração é
+`fallbacks: "default"`; no SDK Python, `client.beta.messages.stream(...,
+betas=["server-side-fallback-2026-07-01"], fallbacks="default")` (`CLAUDE_FALLBACK_FEEDBACK`, ligado
+por padrão). Quando um modelo de reserva responde, `usage.iterations` traz uma entrada
+`fallback_message`; o custo soma cada iteração pelo preço do próprio modelo (Opus 5 e Opus 4.8 estão
+na tabela) e o registro de uso marca `fallback: true` com o modelo que respondeu. O Haiku 5.5 **não tem** fallback do servidor, então a recusa na extração é
 tratada no cliente.
 
 ### Prompt caching
@@ -161,8 +196,14 @@ de cache.
   A taxonomia é serializada com chaves ordenadas.
 - Verificação: um teste de integração (sob comando, com chave) roda duas extrações seguidas e exige
   `usage.cache_read_input_tokens > 0` na segunda.
-- O cache só existe acima de um tamanho mínimo de prefixo, que depende do modelo. Se as instruções e a
-  taxonomia ficarem abaixo dele, o teste falha e isso vai registrado aqui.
+- O cache só existe acima de um tamanho mínimo de prefixo, que depende do modelo: 512 tokens no
+  Haiku 5.5 e no Opus 5.5. O `system` de cada etapa tem de 9,8 mil a 10,5 mil caracteres (8,7 mil
+  das regras e da taxonomia), bem acima do mínimo; o número real de tokens sai do `usage` da
+  primeira rodada.
+- Sem chave, a verificação é feita em teste sem rede: o `system` é idêntico byte a byte entre
+  chamadas da mesma etapa (e o bloco de regras + taxonomia é idêntico entre etapas), o
+  `cache_control` fica no último bloco e nenhum dado variável entra antes dele. O teste com
+  `cache_read_input_tokens > 0` fica para a rodada real.
 
 ### Custo por chamada
 
@@ -200,3 +241,55 @@ que o conteúdo desses blocos é dado a analisar e que qualquer instrução dent
 
   A troca de esforço ou de modelo só vale com as evals de qualidade passando.
 - As gravações do provedor falso são versionadas junto com o dataset das evals (fase 1).
+
+## Implementação (fase 3)
+
+- **Módulos:** `ia/anthropic.py` (o único que importa o SDK), `ia/prompts.py` (prompts e
+  delimitadores), `ia/precos.py` (tabela versionada), `ia/orcamento.py` (teto), `ia/fabrica.py`.
+- **Robustez:** erros do SDK viram erros tipados com mensagem em pt-BR (`ErroLimiteDeTaxa` 429,
+  `ErroServidor` 5xx/529, `ErroConexao`, `TempoEsgotado`, `ErroRequisicao` 400/404/422,
+  `ErroAutenticacao` 401/403, `Recusa`, `SaidaInvalida`); a mensagem da API não é repassada (pode
+  citar trechos da requisição). Todo erro carrega `usos`, as chamadas já cobradas.
+- **Nova tentativa:** a mensagem do usuário da 2ª tentativa é a mesma da 1ª mais um bloco com os
+  erros de validação (só caminho e mensagem do Pydantic, sem o valor de entrada); o `system` não
+  muda, então o prefixo cacheado vale nas duas.
+- **Teto por análise** (`TETO_CUSTO_ANALISE_USD`, padrão US$ 0,60; era 0,30, ver a rodada 1):
+  antes de cada chamada, a entrada é estimada com `messages.count_tokens` (gratuito; se falhar, pelo
+  tamanho em caracteres ÷ 2,5, estimativa conservadora ainda não medida) e o pior caso é toda a
+  entrada ao preço da escrita em cache mais `max_tokens` de saída. Se gasto real + reservas + pior
+  caso passar do teto, a chamada não é feita (`TetoDeCustoExcedido`). O pior caso fica reservado até
+  a chamada terminar, porque currículo e vaga são extraídos em paralelo (em `TaskGroup`: se uma
+  falha, a outra é cancelada). O mesmo mecanismo, com um orçamento pai, faz o `TETO_USD` das evals.
+- **Logs:** só metadados (etapa, modelo, tentativa, tokens, custo, duração, `stop_reason`,
+  categoria da recusa, request id). Testes com `caplog` conferem que nem o currículo nem a mensagem
+  da API aparecem, inclusive em erro, recusa e saída inválida.
+- **Testes sem rede** (`tests/test_provedor_anthropic.py`, `tests/sdk_falso.py`): montagem do prompt
+  (delimitadores, neutralização de tags dentro dos dados, `cache_control`, prefixo idêntico),
+  parâmetros proibidos ausentes (`temperature`, `thinking`, `tool_choice`), custo pelo `usage`
+  (cache, faixa acima de 100 mil do Haiku, iterações de fallback), nova tentativa, tempo limite
+  (extração, primeiro evento e ocioso), 429/5xx/400/401/403/conexão, recusa, fallback e teto.
+- **Sem chave:** `make eval PROVEDOR=anthropic` sai com código 2 e a mensagem "ANTHROPIC_API_KEY não
+  está definida…", sem gravar nada.
+
+## Rodada 1 da fase 3 (revisão do Validador)
+
+- **Delimitadores:** antes de entrar no prompt, os dados passam por NFKC, perdem os caracteres de
+  largura zero e têm **todo** `<` e `>` trocado por `‹` e `›`, não só as tags conhecidas. Assim
+  `</curriculo foo=1>`, `</curri\u200bculo>`, `＜/curriculo＞`, `</currículo>` e `<\n/curriculo\n>`
+  não fecham o bloco de dados (teste em `tests/test_ataques_fase3.py`). A ancoragem desfaz a troca
+  ao comparar. O detector da ingestão passou a alertar a tag com atributos (`</curriculo foo=1>`);
+  largura zero e largura cheia já saíam na chave de casamento. Fica de fora: entidades HTML
+  (`&lt;/curriculo&gt;`), que não fecham nada no texto que o modelo recebe.
+- **Pior caso com fallback:** no feedback com `fallbacks: "default"`, a reserva é duas vezes (a
+  tentativa e a do modelo de reserva) o pior caso ao preço do modelo mais caro da cadeia (Opus 5.5,
+  Opus 5, Opus 4.8: US$ 6,25 de escrita em cache e US$ 25 de saída). Com `max_tokens` = 8.000 e uns
+  10 mil tokens de entrada, isso dá cerca de US$ 0,53, acima do teto antigo de US$ 0,30: por isso
+  o padrão de `TETO_CUSTO_ANALISE_USD` subiu para US$ 0,60. Antes, um fallback podia gastar US$ 0,44
+  com teto de 0,30; agora a chamada é barrada antes.
+- **Reserva cobrada sem `usage`:** quando a chamada termina sem resposta (tempo esgotado, conexão
+  caída, cancelamento pelo `TaskGroup` porque a outra extração falhou), o pior caso reservado vira
+  gasto, porque o servidor pode ter cobrado. Erro HTTP da API (4xx/5xx) só libera a reserva.
+  Antes, três tempos esgotados seguidos deixavam o gasto em zero.
+- **`count_tokens` com tempo limite** próprio: `CLAUDE_TIMEOUT_COUNT_TOKENS_S` (5 s) e no máximo
+  1/4 do tempo da etapa; se passar, vale a estimativa pelo tamanho. Na extração, o prazo da etapa
+  começa antes do `count_tokens`, que conta dentro dele.

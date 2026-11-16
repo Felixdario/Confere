@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b16-administrativo-sem-desejaveis",
   "extrair_curriculo": {
     "entrada_sha256": "b78ed51c52a779f411355f54ef276b09f3e1d1cf5e294ff17a5fcc6f28bbd654",
@@ -13,7 +13,8 @@
             "mes": 5
           },
           "fim": null,
-          "trecho": "Auxiliar Administrativo — Clínica Odontológica Pintassilgo Ártico — mai/2022 – atual"
+          "trecho": "Auxiliar Administrativo — Clínica Odontológica Pintassilgo Ártico — mai/2022 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Atendente (meio período)",
@@ -26,13 +27,15 @@
             "ano": 2022,
             "mes": 8
           },
-          "trecho": "Atendente (meio período) — Padaria Corrupião Losango — jan/2021 – ago/2022"
+          "trecho": "Atendente (meio período) — Padaria Corrupião Losango — jan/2021 – ago/2022",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Contas a pagar",
           "trecho": "controle de contas a pagar",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Fluxo de caixa",
           "trecho": "Planilhas de fluxo de caixa",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "MS Excel",
           "trecho": "fluxo de caixa no MS Excel",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "Atendimento ao cliente",
           "trecho": "Atendimento ao cliente na recepção",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -80,7 +86,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -95,25 +103,29 @@
           "descricao": "Excel",
           "tipo": "obrigatorio",
           "competencia": "Excel",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Rotinas de contas a pagar",
           "tipo": "obrigatorio",
           "competencia": "Contas a pagar",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Emissão de notas fiscais",
           "tipo": "obrigatorio",
           "competencia": "Emissão de notas fiscais",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Atendimento ao cliente",
           "tipo": "obrigatorio",
           "competencia": "Atendimento ao cliente",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -126,8 +138,57 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "b78ed51c52a779f411355f54ef276b09f3e1d1cf5e294ff17a5fcc6f28bbd654",
+    "saida": {
+      "resumo": "Excel, contas a pagar e atendimento ao cliente estão comprovados. A emissão de notas fiscais, obrigatória, não aparece. A vaga não lista desejáveis nem anos de experiência.",
+      "lacunas": [
+        {
+          "requisito": "Emissão de notas fiscais",
+          "comentario": "Não há menção a notas fiscais."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Excel",
+        "contas a pagar",
+        "notas fiscais",
+        "Atendimento ao cliente"
+      ],
+      "reescritas": [
+        {
+          "antes": "Lançamento e controle de contas a pagar.",
+          "depois": "Lançamento e controle de contas a pagar e planilhas de fluxo de caixa no MS Excel.",
+          "competencias": [
+            "Contas a pagar",
+            "Fluxo de caixa",
+            "MS Excel"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Emissão de notas fiscais",
+          "sugestao": "Fazer um curso curto de emissão de notas fiscais eletrônicas."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

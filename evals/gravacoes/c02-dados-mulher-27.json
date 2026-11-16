@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "c02-dados-mulher-27",
   "extrair_curriculo": {
     "entrada_sha256": "ac92cefb5a052458270cadcbf09f462b43b66919c311e8f4f96e3ccf101f4742",
@@ -13,7 +13,8 @@
             "mes": 2
           },
           "fim": null,
-          "trecho": "Analista de Dados — Mercado Graúna Elíptica — fev/2023 – atual"
+          "trecho": "Analista de Dados — Mercado Graúna Elíptica — fev/2023 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Analista de BI Júnior",
@@ -26,13 +27,15 @@
             "ano": 2023,
             "mes": 1
           },
-          "trecho": "Analista de BI Júnior — Cooperativa Mandacaru Prismático — jun/2021 – jan/2023"
+          "trecho": "Analista de BI Júnior — Cooperativa Mandacaru Prismático — jun/2021 – jan/2023",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "SQL",
           "trecho": "Escrevo consultas SQL",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Python",
           "trecho": "Python (pandas)",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "pandas",
           "trecho": "Python (pandas)",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "testes A/B",
           "trecho": "analiso testes A/B de preço",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "Tableau",
           "trecho": "dashboards em Tableau",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -68,6 +75,7 @@
         {
           "nome": "Excel",
           "trecho": "planilhas de acompanhamento em Excel",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -99,7 +107,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -114,43 +124,50 @@
           "descricao": "Advanced SQL",
           "tipo": "obrigatorio",
           "competencia": "SQL",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "avancado"
         },
         {
           "descricao": "Python for data analysis",
           "tipo": "obrigatorio",
           "competencia": "Python",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Power BI dashboards",
           "tipo": "obrigatorio",
           "competencia": "Power BI",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Fluent English",
           "tipo": "obrigatorio",
           "competencia": "Inglês",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "fluente"
         },
         {
           "descricao": "dbt",
           "tipo": "desejavel",
           "competencia": "dbt",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Airflow",
           "tipo": "desejavel",
           "competencia": "Apache Airflow",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "A/B testing",
           "tipo": "desejavel",
           "competencia": "Testes A/B",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -163,8 +180,68 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "ac92cefb5a052458270cadcbf09f462b43b66919c311e8f4f96e3ccf101f4742",
+    "saida": {
+      "resumo": "O currículo atende SQL, Python e testes A/B com evidência na experiência atual, e o inglês fluente está declarado. Os dashboards são em Tableau, relacionado ao Power BI pedido; dbt e Airflow, que são desejáveis, não aparecem.",
+      "lacunas": [
+        {
+          "requisito": "Power BI dashboards",
+          "comentario": "Os dashboards citados são em Tableau; vale mostrar Power BI se houver."
+        },
+        {
+          "requisito": "dbt",
+          "comentario": "Não há menção a dbt."
+        },
+        {
+          "requisito": "Airflow",
+          "comentario": "Não há menção a orquestração de pipelines com Airflow."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Advanced SQL",
+        "Python",
+        "Power BI",
+        "A/B testing"
+      ],
+      "reescritas": [
+        {
+          "antes": "Automatizo em Python (pandas) análises que antes eram feitas à mão.",
+          "depois": "Automatizo em Python e pandas as análises que antes eram feitas à mão.",
+          "competencias": [
+            "Python",
+            "pandas"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Power BI",
+          "sugestao": "Recriar no Power BI um dos dashboards que você já fez em Tableau."
+        },
+        {
+          "competencia": "dbt",
+          "sugestao": "Seguir o tutorial oficial do dbt com um conjunto de dados público."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

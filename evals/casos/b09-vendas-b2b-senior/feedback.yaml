@@ -1,0 +1,27 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Vendas B2B consultivas, prospecção outbound, negociação e SPIN Selling estão comprovados. O CRM
+  citado é o HubSpot, relacionado ao Salesforce; falta experiência com venda de SaaS, que é
+  obrigatória, e o inglês avançado.
+lacunas:
+  - requisito: CRM Salesforce
+    comentario: O currículo mostra HubSpot, não Salesforce.
+  - requisito: Experiência com venda de SaaS
+    comentario: As vendas citadas são de equipamentos, não de software.
+  - requisito: Inglês avançado
+    comentario: Não há idioma declarado.
+palavras_chave_ats:
+  - Vendas B2B
+  - Prospecção outbound
+  - Salesforce
+  - SaaS
+  - SPIN Selling
+reescritas:
+  - antes: Negociação de contratos de até R$ 2 milhões.
+    depois: Negociação de contratos de até R$ 2 milhões com indústrias de médio e grande porte.
+    competencias: [Negociação]
+o_que_aprender:
+  - competencia: Salesforce
+    sugestao: Fazer as trilhas introdutórias gratuitas do Salesforce.
+  - competencia: Vendas de SaaS
+    sugestao: Estudar métricas de SaaS (MRR, churn) e o ciclo de venda de software.

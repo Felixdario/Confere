@@ -10,7 +10,7 @@
 # A carga valida: nenhum termo em duas entradas, relacionadas existentes e simétricas.
 # Mantenha as entradas em ordem alfabética dentro de cada categoria.
 
-versao: 1
+versao: 2
 competencias:
   # --- front-end ---
   - canonica: Acessibilidade
@@ -220,7 +220,8 @@ competencias:
     categoria: design
   - canonica: Pesquisa com usuários
     categoria: design
-    sinonimos: [UX Research, user research, pesquisa de usuário, pesquisa com usuário]
+    sinonimos: [UX Research, user research, pesquisa de usuário, pesquisa com usuário,
+      entrevistas com usuários, user interviews]
   - canonica: Prototipação
     categoria: design
     sinonimos: [prototipagem, protótipos, protótipo, prototyping]
@@ -257,7 +258,25 @@ competencias:
   - canonica: SAP
     categoria: contabilidade
     sinonimos: [SAP ERP, SAP S/4HANA]
-    relacionadas: [TOTVS Protheus]
+    relacionadas: [TOTVS Protheus, SAP FI, SAP CO, SAP MM, SAP SD]
+  # Módulos do SAP são competências diferentes entre si (fase 3, rodada 1): relacionadas, não
+  # sinônimos, para "SAP MM" não atender "SAP FI" por similaridade.
+  - canonica: SAP FI
+    categoria: contabilidade
+    sinonimos: [SAP Finance, SAP FI/CO]
+    relacionadas: [SAP, SAP CO, SAP MM, SAP SD]
+  - canonica: SAP CO
+    categoria: contabilidade
+    sinonimos: [SAP Controlling]
+    relacionadas: [SAP, SAP FI, SAP MM, SAP SD]
+  - canonica: SAP MM
+    categoria: contabilidade
+    sinonimos: [SAP Materials Management]
+    relacionadas: [SAP, SAP FI, SAP CO, SAP SD]
+  - canonica: SAP SD
+    categoria: contabilidade
+    sinonimos: [SAP Sales and Distribution]
+    relacionadas: [SAP, SAP FI, SAP CO, SAP MM]
   - canonica: SPED
     categoria: contabilidade
     sinonimos: [SPED Fiscal, SPED Contábil]
@@ -336,6 +355,11 @@ competencias:
   - canonica: Vendas B2B
     categoria: vendas
     sinonimos: [B2B sales, venda B2B]
+    relacionadas: [Vendas B2C]
+  - canonica: Vendas B2C
+    categoria: vendas
+    sinonimos: [B2C sales, venda B2C, varejo B2C]
+    relacionadas: [Vendas B2B]
   - canonica: Vendas de SaaS
     categoria: vendas
     sinonimos: [venda de SaaS, SaaS sales]

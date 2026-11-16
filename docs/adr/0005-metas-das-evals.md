@@ -1,6 +1,9 @@
 # ADR 0005 — Metas das evals
 
-- **Status:** rascunho (fase 0; definições congeladas na fase 1, metas atingidas na fase 3)
+- **Status:** aceito para o provedor falso (fase 3: todas as metas aplicáveis passam). **As metas com
+  a API real não foram medidas**: por decisão do usuário (D-46), o projeto de portfólio não gasta com a
+  API. Com o falso, as métricas 2–4, 6 e 7 passam por construção (gravação = gabarito) e 9–10 ficam
+  "n/a"; elas só medem o modelo com `make eval PROVEDOR=anthropic TETO_USD=…` e a chave de quem rodar.
 - **Data:** 2026-11-15
 
 ## Contexto
@@ -154,3 +157,25 @@ faixa e as competências que entraram ou saíram. O comando sai com código ≠ 
   par muda 3–4 pontos percentuais. Por isso o relatório lista os pares, e não só a porcentagem.
 - A qualidade do texto do feedback (clareza, utilidade) fica fora destas metas e é revisada à mão no
   polimento (fase 7).
+- Fase 3: com o provedor falso, as métricas 4, 6, 7 e 8 deixaram de ser pendentes (o pipeline
+  completo dá nota e feedback). Numa execução com `CASOS` que não tem casos de um tipo, as métricas
+  desse tipo ficam "n/a (sem casos)" e não derrubam o código de saída; custo e latência continuam
+  "n/a (falso)" com o provedor falso.
+- Rodada 1 da fase 3:
+  - a métrica 2 conta os descartes por trecho inválido (marcador, curto, sem âncora, termo fora do
+    trecho; desde a rodada 2, data fora do trecho é corrigida, não descartada); o descarte de trecho que cai numa linha com alerta de injection
+    tem contador próprio (`itens_descartados_por_injecao`) e não entra nela;
+  - a métrica 8 usa um detector próprio no harness (`reescrita_inventa`), outra implementação, que
+    confere n-gramas da taxonomia sem evidência, números e palavras com inicial maiúscula do
+    "depois" contra o texto do currículo. Um teste desliga o filtro do feedback e exige que a
+    métrica pegue as 3 reescritas inventadas das gravações;
+  - **limitação:** com o provedor falso, as métricas 2, 3, 4, 6 e 7 são tautológicas, porque a
+    gravação é o próprio gabarito (extração perfeita, igual entre variantes). Elas provam só que o
+    código não estraga uma extração perfeita; só medem o modelo com `PROVEDOR=anthropic`.
+- Rodada 3 da fase 3: o detector da métrica 8 passou a comparar **todas** as palavras do "depois"
+  com o currículo (sem pular a primeira da frase e sem depender de caixa), com uma lista gramatical
+  e uma de radicais de afirmação próprias do harness, e a conferir nível contra o "antes". Pega
+  "kafka", "Kafka"/"Snowflake" no início da frase, "Liderei", "Reduzi", "Automatizei" e "Excel
+  avançado" onde o trecho diz básico. Teste com o filtro desligado. As reescritas de demonstração
+  das gravações usam só palavras do próprio currículo. A gravação do i02 cita a frase injetada como
+  evidência de TypeScript e AWS (um modelo enganado), e a ancoragem a descarta por injection.

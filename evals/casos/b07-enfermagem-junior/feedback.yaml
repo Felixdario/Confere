@@ -1,0 +1,26 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  COREN ativo, SAE, administração de medicamentos e prontuário eletrônico estão comprovados. A
+  principal lacuna é a experiência em terapia intensiva, que a vaga exige; o ACLS aparece apenas em
+  parte.
+lacunas:
+  - requisito: Experiência em terapia intensiva (UTI)
+    comentario: A experiência citada é em clínica, não em UTI.
+  - requisito: Curso de ACLS válido
+    comentario: O currículo não deixa claro um ACLS válido.
+  - requisito: Pós-graduação em terapia intensiva
+    comentario: Não há pós-graduação citada.
+palavras_chave_ats:
+  - COREN ativo
+  - SAE
+  - Administração de medicamentos
+  - Tasy
+reescritas:
+  - antes: Registro em prontuário eletrônico Tasy.
+    depois: Registro da assistência de enfermagem no prontuário eletrônico Tasy.
+    competencias: [Prontuário eletrônico, Tasy]
+o_que_aprender:
+  - competencia: Terapia intensiva
+    sugestao: Buscar estágio, plantão ou especialização em terapia intensiva.
+  - competencia: ACLS
+    sugestao: Fazer ou renovar o curso de ACLS e citar a validade.

@@ -1,0 +1,35 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+# A reescrita INVENTA PyTorch de propósito: o filtro da evidência precisa descartá-la.
+resumo: >-
+  O currículo comprova Python, SQL e Docker num back-end com dados em escala, mas não mostra
+  modelos de machine learning em produção nem PyTorch, que são obrigatórios. A nuvem citada é o
+  Google Cloud, relacionada à AWS pedida.
+lacunas:
+  - requisito: Machine learning models in production
+    comentario: Não há modelos de machine learning no currículo.
+  - requisito: PyTorch
+    comentario: Não há menção a PyTorch.
+  - requisito: AWS
+    comentario: A nuvem citada é o Google Cloud.
+  - requisito: Apache Spark
+    comentario: Não há menção a Spark.
+palavras_chave_ats:
+  - Python
+  - Machine learning
+  - PyTorch
+  - SQL
+  - Docker
+reescritas:
+  - antes: Build Python services with Django that serve account statements to 2 million members.
+    depois: >-
+      Build Python services with Django and PyTorch models that serve account statements to 2
+      million members.
+    competencias: [Python, Django, PyTorch]
+  - antes: Write and tune SQL queries on large transactional tables.
+    depois: Write and tune SQL queries on large transactional tables and SQL reports.
+    competencias: [SQL]
+o_que_aprender:
+  - competencia: Machine learning
+    sugestao: Treinar e publicar um modelo simples atrás de uma das APIs Python que você já mantém.
+  - competencia: PyTorch
+    sugestao: Seguir os tutoriais oficiais do PyTorch e citar o projeto resultante.

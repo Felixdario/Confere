@@ -1,6 +1,7 @@
 # ADR 0002 — Embeddings e taxonomia de competências
 
-- **Status:** rascunho (fase 0; limiares calibrados e aceito na fase 3)
+- **Status:** implementado na fase 3; τ continua 0,85/0,70 até a calibração com a primeira
+  execução real (`make calibrar-tau`)
 - **Data:** 2026-11-15
 
 ## Contexto
@@ -180,3 +181,32 @@ testes usam um embutidor falso determinístico atrás da mesma interface.
   produção baixa o modelo no build.
 - Trocar de modelo invalida os vetores guardados, e eles precisam ser recalculados. Por isso a tabela
   guarda o nome do modelo junto com cada vetor.
+
+## Implementação (fase 3)
+
+- **Código:** `analise/embeddings.py` (`EmbutidorFastEmbed`, `EmbutidorFalso`, `Comparador`) e
+  `analise/correspondencia.py`. O modelo só é carregado quando algum termo cai fora da taxonomia.
+- **Cache dos vetores da taxonomia:** em memória e em disco, em
+  `data/modelos/vetores/taxonomia-<resumo>.npz`, onde o resumo é o SHA-256 de (modelo, versão da
+  taxonomia, termos e canônicas). Mudar o modelo ou a taxonomia gera outro arquivo. O pgvector entra
+  na fase 4, para os termos já vistos.
+- **Ordem implementada** (igual à da decisão, com dois detalhes):
+  1. um requisito fora da taxonomia é mapeado para a canônica mais parecida só se o cosseno passar
+     de τ_alto; nesse caso, ele atende com um item daquela canônica, mas **não** ganha parcial por
+     "relacionada" (relação é só da taxonomia, decidida por gente);
+  2. itens do currículo com uma canônica **diferente** da pedida nunca entram na similaridade
+     direta: é o que mantém "Java" longe de "JavaScript" mesmo se o embedding os achar parecidos.
+- **Evals com o provedor falso:** usam o `EmbutidorFalso` (vetores pseudoaleatórios
+  determinísticos, sem download nem rede). Como as gravações usam nomes da taxonomia, o embedding só
+  é consultado em poucos itens fora dela (3 consultas no b04 e no i03, sem decidir nada). Com
+  `PROVEDOR=anthropic`, o fastembed real.
+- **Calibração:** a execução real das evals guarda, por caso, o currículo mantido e a vaga extraída;
+  `make calibrar-tau` refaz a correspondência e a nota para a grade τ_alto ∈ {0,75 … 0,95} ×
+  τ_baixo ∈ {0,55 … 0,80} (com τ_baixo ≤ τ_alto), sem chamar a API, e mostra status certos contra o
+  gabarito, pares-base na faixa e decisões por embedding. Nenhuma execução real foi feita ainda
+  (sem chave nesta máquina): os valores finais e os números entram aqui depois dela.
+- **Rodada 1 da fase 3:** a taxonomia foi para a versão 2 (módulos SAP FI/CO/MM/SD e Vendas B2C
+  como relacionadas; "entrevistas com usuários" e "coordenação de equipe" como sinônimos). E uma
+  regra em código impede "atende" por embedding quando os termos diferem só numa sigla ou palavra
+  curta (`sufixo_distintivo`): com o modelo real, "SAP MM" atendia "SAP FI" (0,867) e "Vendas B2C"
+  ficaria a 0,948 de "Vendas B2B".

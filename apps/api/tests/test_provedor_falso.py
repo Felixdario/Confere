@@ -1,7 +1,9 @@
 from pathlib import Path
 
 import pytest
+from pydantic import SecretStr
 
+from curriculo_api.config import Settings
 from curriculo_api.evals.dataset import Dataset
 from curriculo_api.evals.gravacoes import desatualizadas, gerar_gravacao, serializar
 from curriculo_api.evals.pipeline import ingerir_caso
@@ -14,7 +16,7 @@ from curriculo_api.ia import (
     criar_provedor,
 )
 from curriculo_api.ia.falso import Gravacao
-from curriculo_api.ia.modelos import TabelaDaNota
+from curriculo_api.ia.modelos import FeedbackIA, TabelaDaNota
 
 
 @pytest.fixture(scope="module")
@@ -73,12 +75,36 @@ async def test_texto_desconhecido_nao_tem_gravacao(provedor: ProvedorFalso) -> N
         await provedor.extrair_curriculo(TextoAnonimizado("currículo que ninguém gravou"))
 
 
-async def test_feedback_ainda_nao_gravado(provedor: ProvedorFalso, dataset: Dataset) -> None:
+async def test_feedback_gravado_sai_em_eventos(provedor: ProvedorFalso, dataset: Dataset) -> None:
+    caso = dataset.casos[0]
+    gravada = gerar_gravacao(caso)
+    texto = ingerir_caso(caso)[0].texto_para_ia
+    eventos = [
+        e
+        async for e in provedor.escrever_feedback(
+            TabelaDaNota(nota=50),
+            gravada.extrair_curriculo.saida,
+            gravada.extrair_vaga.saida,
+            texto,
+        )
+    ]
+    assert eventos[0].tipo == "etapa" and eventos[-1].tipo == "final"
+    textos = [e.texto for e in eventos if e.tipo == "texto"]
+    assert len(textos) > 1  # simula o streaming em pedaços
+    final = eventos[-1].feedback
+    assert final == gravada.escrever_feedback.saida
+    assert FeedbackIA.model_validate_json("".join(textos)) == final
+
+
+async def test_feedback_sem_gravacao(provedor: ProvedorFalso, dataset: Dataset) -> None:
     gravada = gerar_gravacao(dataset.casos[0])
     eventos = provedor.escrever_feedback(
-        TabelaDaNota(nota=50), gravada.extrair_curriculo.saida, gravada.extrair_vaga.saida
+        TabelaDaNota(nota=50),
+        gravada.extrair_curriculo.saida,
+        gravada.extrair_vaga.saida,
+        TextoAnonimizado("currículo que ninguém gravou"),
     )
-    with pytest.raises(GravacaoAusente, match="fase 3"):
+    with pytest.raises(GravacaoAusente, match="feedback"):
         await anext(eventos)
 
 
@@ -96,6 +122,8 @@ def test_gravacoes_conflitantes_sao_recusadas(dataset: Dataset, tmp_path: Path) 
         ProvedorFalso(tmp_path)
 
 
-def test_provedor_real_ainda_indisponivel(tmp_path: Path) -> None:
-    with pytest.raises(ProvedorIndisponivel, match="fase 3"):
-        criar_provedor("anthropic", pasta_gravacoes=tmp_path)
+def test_provedor_real_sem_chave_e_indisponivel(tmp_path: Path) -> None:
+    for chave in (None, ""):
+        settings = Settings(anthropic_api_key=None if chave is None else SecretStr(chave))
+        with pytest.raises(ProvedorIndisponivel, match="ANTHROPIC_API_KEY"):
+            criar_provedor("anthropic", pasta_gravacoes=tmp_path, settings=settings)

@@ -1,0 +1,30 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+# A reescrita INVENTA Revit de propósito: o filtro da evidência precisa descartá-la.
+resumo: >-
+  CREA ativo, gestão de obras, AutoCAD e NR-18 estão comprovados, mas a vaga é sênior e o currículo
+  mostra pouco tempo de experiência. BIM no Revit, orçamento de obras e MS Project, todos
+  obrigatórios, não aparecem.
+lacunas:
+  - requisito: Modelagem BIM no Revit
+    comentario: Não há menção a Revit nem a BIM.
+  - requisito: Orçamento de obras
+    comentario: Não há menção a orçamento.
+  - requisito: Planejamento no MS Project
+    comentario: Não há menção a MS Project.
+  - requisito: Pós-graduação em gestão de projetos
+    comentario: Não há pós-graduação citada.
+palavras_chave_ats:
+  - CREA ativo
+  - Gestão de obras
+  - AutoCAD
+  - Revit
+  - MS Project
+reescritas:
+  - antes: Detalhamento de projetos no AutoCAD.
+    depois: Detalhamento de projetos no AutoCAD e modelagem BIM no Revit.
+    competencias: [AutoCAD, Revit]
+o_que_aprender:
+  - competencia: Revit
+    sugestao: Fazer um curso de modelagem BIM no Revit e modelar uma obra que você acompanhou.
+  - competencia: MS Project
+    sugestao: Montar o cronograma de uma obra no MS Project.

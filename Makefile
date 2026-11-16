@@ -7,9 +7,23 @@ UV ?= uv
 PNPM ?= corepack pnpm
 API := apps/api
 PROVEDOR ?= falso
+CASOS ?=
+TETO_USD ?=
+RESULTADO ?=
+EVAL_ARGS := --provedor $(PROVEDOR)
+ifneq ($(strip $(CASOS)),)
+EVAL_ARGS += --casos $(CASOS)
+endif
+ifneq ($(strip $(TETO_USD)),)
+EVAL_ARGS += --teto-usd $(TETO_USD)
+endif
+TAU_ARGS :=
+ifneq ($(strip $(RESULTADO)),)
+TAU_ARGS += --resultado ../../$(RESULTADO)
+endif
 COMPOSE := $(DOCKER) compose -p curriculo -f docker-compose.yml
 
-.PHONY: install lint typecheck test check up down db-check eval gravacoes fixtures dev-api dev-web
+.PHONY: install lint typecheck test check up down db-check eval calibrar-tau gravacoes fixtures dev-api dev-web
 
 install:
 	cd $(API) && $(UV) sync
@@ -40,9 +54,17 @@ db-check:
 	$(COMPOSE) exec -T postgres psql -U curriculo -d curriculo -c "SELECT extversion FROM pg_extension WHERE extname = 'vector'"
 
 # make eval                     -> provedor falso (gravações; sem rede, sem chave)
-# make eval PROVEDOR=anthropic  -> API real, só sob comando e com a chave do usuário (fase 3)
+# make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=2.00
+#                               -> API real, só sob comando e com a chave do usuário. TETO_USD é
+#                                  obrigatório: a execução para antes de uma chamada que passaria
+#                                  dele (custo real somado do usage). CASOS filtra os casos.
 eval:
-	cd $(API) && $(UV) run python -m curriculo_api.evals.rodar --provedor $(PROVEDOR)
+	cd $(API) && $(UV) run python -m curriculo_api.evals.rodar $(EVAL_ARGS)
+
+# Grade de τ_alto/τ_baixo refeita em código sobre as extrações da última execução real (ou de
+# RESULTADO=evals/resultados/<arquivo>.json), sem chamar a API de novo.
+calibrar-tau:
+	cd $(API) && $(UV) run python -m curriculo_api.evals.calibrar_tau $(TAU_ARGS)
 
 # Regenera evals/gravacoes/ a partir das anotações (rode depois de mudar um caso, a ingestão ou a
 # anonimização: o hash é o do texto anonimizado).

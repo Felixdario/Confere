@@ -11,12 +11,14 @@ from typing import Any
 import pytest
 
 from curriculo_api import ancoragem
+from curriculo_api.config import Settings
 from curriculo_api.evals.harness import Execucao, ResultadoMetrica
-from curriculo_api.evals.pipeline import EntradaAnalise, PipelineIngestao, ResultadoAnalise
+from curriculo_api.evals.pipeline import EntradaAnalise, PipelineCompleto, ResultadoAnalise
 from curriculo_api.evals.rodar import (
     SAIDA_META_FALHOU,
     SAIDA_OK,
     SAIDA_PROVEDOR_INDISPONIVEL,
+    criar_pipeline,
     encontrar_anterior,
     nome_do_resultado,
     rodar,
@@ -61,6 +63,10 @@ def _corromper(repo: Path, caso: str, mudar: Callable[[Json], None]) -> None:
     arquivo.write_text(json.dumps(dados, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _pipeline_falso(repo: Path) -> PipelineCompleto:
+    return criar_pipeline(ProvedorFalso(repo / "evals" / "gravacoes"), Settings())
+
+
 def _rodar(repo: Path, agora: datetime = T1, **kwargs: Any) -> tuple[int, Execucao, list[str]]:
     saida: list[str] = []
     codigo = rodar(
@@ -102,13 +108,16 @@ def test_gravacoes_perfeitas_dao_o_maximo(execucao_perfeita: tuple[int, Path]) -
     assert m["descartes"].valor == 0.0 and m["descartes"].situacao == "passou"
     assert m["precisao"].valor == 1.0 and m["precisao"].situacao == "passou"
     assert m["cobertura"].valor == 1.0 and m["cobertura"].situacao == "passou"
-    pendentes = {k: v.fase_pendente for k, v in m.items() if v.situacao == "pendente"}
-    assert pendentes == {
-        "nota_na_faixa": 3,
-        "injection_diferenca": 3,
-        "contrafactual": 3,
-        "reescritas": 3,
-    }
+    assert not [k for k, v in m.items() if v.situacao == "pendente"]
+    for chave in ("nota_na_faixa", "injection_diferenca", "contrafactual", "reescritas"):
+        assert m[chave].situacao == "passou", chave
+    assert m["nota_na_faixa"].valor == 1.0
+    assert m["injection_diferenca"].valor == 0
+    assert m["contrafactual"].valor == 0
+    assert m["reescritas"].valor == 0
+    # Três reescritas inventadas de propósito nas gravações (b02, b12, b13) foram descartadas.
+    assert sum(c.reescritas_descartadas or 0 for c in execucao.casos if c.tipo == "base") == 3
+    assert all(c.nota is not None for c in execucao.casos)
     assert m["injection_deteccao"].valor == 1.0
     assert m["injection_deteccao"].situacao == "passou"
     assert m["injection_falsos_positivos"].valor == 0
@@ -125,7 +134,8 @@ def test_relatorio_tem_a_tabela_do_adr(execucao_perfeita: tuple[int, Path]) -> N
     relatorio = (destino / "evals.md").read_text(encoding="utf-8")
     assert "| # | Métrica | Meta | Atual | Anterior | Δ | Passou? |" in relatorio
     assert "| 3a | Precisão de competências extraídas | ≥ 0,90 | 1,00 | — | — | sim |" in relatorio
-    assert "pendente (fase 3)" in relatorio and "n/a (falso)" in relatorio
+    assert "pendente (fase" not in relatorio and "n/a (falso)" in relatorio
+    assert "| 4 | Nota dentro da faixa anotada | ≥ 90 % dos pares | 100,0 % |" in relatorio
     assert "pendente (fase 2)" not in relatorio
     assert "| 5 | Injection: detecção sinalizada | 100 % das variantes | 100,0 % |" in relatorio
     assert "| 11 | Anonimização: dados pessoais removidos | 100 % | 100,0 % |" in relatorio
@@ -146,7 +156,9 @@ def test_segunda_execucao_compara_com_a_primeira(raiz: Path, tmp_path: Path) -> 
     _corromper(
         repo,
         CASO,
-        lambda s: s["competencias"].append({"nome": "Kubernetes", "trecho": "fluxo com Git"}),
+        lambda s: s["competencias"].append(
+            {"nome": "code review", "trecho": "fluxo com Git e code review"}
+        ),
     )
     codigo, execucao, saida = _rodar(repo, T2)
     relatorio = (repo / "docs" / "evals.md").read_text(encoding="utf-8")
@@ -160,7 +172,7 @@ def test_segunda_execucao_compara_com_a_primeira(raiz: Path, tmp_path: Path) -> 
     assert "| 3b | Cobertura de competências extraídas | ≥ 0,85 | 1,00 | 1,00 | +0,00 | sim |" in (
         relatorio
     )
-    assert f"`{CASO}`: entraram Kubernetes; saíram —" in relatorio
+    assert f"`{CASO}`: entraram code review; saíram —" in relatorio
     assert _metricas(execucao)["precisao"].valor == pytest.approx(20 / 21)
 
 
@@ -181,9 +193,10 @@ def repo_b01(raiz: Path, tmp_path: Path) -> Path:
 
 def test_competencias_inventadas_derrubam_a_precisao(repo_b01: Path) -> None:
     def inventar(saida: Json) -> None:
+        # Itens que passam na ancoragem (o termo está no trecho) mas não estão no gabarito.
         saida["competencias"] += [
-            {"nome": "Kubernetes", "trecho": "fluxo com Git e code review"},
-            {"nome": "GraphQL", "trecho": "consumindo APIs REST"},
+            {"nome": "code review", "trecho": "fluxo com Git e code review"},
+            {"nome": "checkout", "trecho": "auditoria WCAG 2.2 do checkout"},
         ]
 
     _corromper(repo_b01, CASO, inventar)
@@ -193,7 +206,7 @@ def test_competencias_inventadas_derrubam_a_precisao(repo_b01: Path) -> None:
     assert m["precisao"].valor == pytest.approx(11 / 13)
     assert m["precisao"].situacao == "falhou"
     assert m["cobertura"].valor == 1.0
-    assert execucao.casos[0].a_mais == ("GraphQL", "Kubernetes")
+    assert execucao.casos[0].a_mais == ("checkout", "code review")
 
 
 def test_trecho_inexistente_e_descartado_e_conta(repo_b01: Path) -> None:
@@ -230,7 +243,7 @@ def test_competencias_faltando_derrubam_a_cobertura(repo_b01: Path) -> None:
 class _PipelineSemFiltro:
     """Um pipeline com bug: mantém tudo o que a IA devolveu, sem ancorar."""
 
-    def __init__(self, interno: PipelineIngestao) -> None:
+    def __init__(self, interno: PipelineCompleto) -> None:
         self._interno = interno
 
     @property
@@ -247,7 +260,7 @@ def test_pipeline_sem_ancoragem_e_pego_pela_metrica_1(repo_b01: Path) -> None:
         saida["experiencias"][0]["trecho"] = "Tech Lead — Vitrine Azul — 2015 – atual"
 
     _corromper(repo_b01, CASO, inventar_trecho)
-    pipeline = _PipelineSemFiltro(PipelineIngestao(ProvedorFalso(repo_b01 / "evals" / "gravacoes")))
+    pipeline = _PipelineSemFiltro(_pipeline_falso(repo_b01))
     codigo, execucao, _ = _rodar(repo_b01, pipeline=pipeline)
     m = _metricas(execucao)
     assert codigo == SAIDA_META_FALHOU
@@ -278,7 +291,7 @@ def test_filtro_bugado_e_pego_pela_verificacao_independente(
 class _PipelineQueMexeDepoisDoFiltro:
     """Acrescenta um item ancorado depois do filtro e remove outro sem ser por âncora."""
 
-    def __init__(self, interno: PipelineIngestao, *, acrescentar: bool, remover: bool) -> None:
+    def __init__(self, interno: PipelineCompleto, *, acrescentar: bool, remover: bool) -> None:
         self._interno = interno
         self._acrescentar = acrescentar
         self._remover = remover
@@ -302,7 +315,7 @@ class _PipelineQueMexeDepoisDoFiltro:
 def test_descartes_contam_so_o_que_o_filtro_descartou(
     repo_b01: Path, acrescentar: bool, remover: bool
 ) -> None:
-    interno = PipelineIngestao(ProvedorFalso(repo_b01 / "evals" / "gravacoes"))
+    interno = _pipeline_falso(repo_b01)
     pipeline = _PipelineQueMexeDepoisDoFiltro(interno, acrescentar=acrescentar, remover=remover)
     codigo, execucao, _ = _rodar(repo_b01, pipeline=pipeline)
     m = _metricas(execucao)
@@ -343,9 +356,9 @@ def test_gravacao_ausente_vira_erro_do_caso(repo_b01: Path) -> None:
 
 def test_provedor_real_sai_com_mensagem_clara(repo_b01: Path) -> None:
     saida: list[str] = []
-    codigo = rodar(repo_b01, "anthropic", escrever=saida.append)
+    codigo = rodar(
+        repo_b01, "anthropic", escrever=saida.append, settings=Settings(anthropic_api_key=None)
+    )
     assert codigo == SAIDA_PROVEDOR_INDISPONIVEL
-    assert saida == [
-        "O provedor real (Anthropic) chega na fase 3. Por enquanto, use PROVEDOR=falso."
-    ]
+    assert len(saida) == 1 and "ANTHROPIC_API_KEY" in saida[0] and "PROVEDOR=falso" in saida[0]
     assert not (repo_b01 / "evals" / "resultados").exists()

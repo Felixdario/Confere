@@ -1,0 +1,16 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Todos os requisitos têm evidência, e a experiência passa bastante do nível júnior. Vale deixar
+  claro no currículo o interesse pela vaga de N1, para a triagem não ler a candidatura como engano.
+lacunas: []
+palavras_chave_ats:
+  - Atendimento ao cliente
+  - sistema de chamados
+  - Windows
+  - redes de computadores
+  - ITIL
+reescritas:
+  - antes: Implantei o sistema de chamados GLPI.
+    depois: Implantei o sistema de chamados GLPI para a equipe de 12 técnicos de suporte.
+    competencias: [GLPI, Sistemas de chamados]
+o_que_aprender: []

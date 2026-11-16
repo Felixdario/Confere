@@ -1,0 +1,29 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  O currículo é de back-end em Java; a vaga é de front-end. Só Git tem evidência entre os
+  obrigatórios. Java e JavaScript são linguagens diferentes, então a experiência em Java não conta
+  para JavaScript.
+lacunas:
+  - requisito: JavaScript moderno (ES6+)
+    comentario: O currículo cita Java, que não é JavaScript.
+  - requisito: React
+    comentario: Não há menção a React.
+  - requisito: HTML semântico
+    comentario: Não há menção a HTML.
+  - requisito: CSS responsivo
+    comentario: Não há menção a CSS.
+palavras_chave_ats:
+  - JavaScript
+  - React
+  - HTML semântico
+  - CSS responsivo
+  - Git
+reescritas:
+  - antes: Versionamento com Git e revisão de código.
+    depois: Versionamento com Git e revisão de código dos microsserviços em Java.
+    competencias: [Git, Java, Microsserviços]
+o_que_aprender:
+  - competencia: JavaScript
+    sugestao: Estudar JavaScript moderno (ES6+) com um projeto pequeno de interface.
+  - competencia: React
+    sugestao: Construir uma aplicação React que consuma um dos microsserviços que você já mantém.

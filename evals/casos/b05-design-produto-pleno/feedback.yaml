@@ -1,0 +1,28 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  O currículo comprova pesquisa com usuários e prototipação, e o Figma aparece na experiência atual,
+  mas por menos tempo que os 3 anos pedidos. Design system e acessibilidade digital não têm
+  evidência.
+lacunas:
+  - requisito: Pelo menos 3 anos de experiência com Figma
+    comentario: O Figma aparece só na experiência atual, iniciada em 2024.
+  - requisito: Criação e manutenção de design system
+    comentario: Nenhum design system é citado.
+  - requisito: Acessibilidade digital
+    comentario: Não há menção a acessibilidade.
+palavras_chave_ats:
+  - Figma
+  - Pesquisa com usuários
+  - Prototipação de alta fidelidade
+  - design system
+reescritas:
+  - antes: Construo protótipos navegáveis para validar hipóteses antes do desenvolvimento.
+    depois: >-
+      Construo protótipos navegáveis para validar hipóteses com usuários antes do
+      desenvolvimento.
+    competencias: [protótipos]
+o_que_aprender:
+  - competencia: Design system
+    sugestao: Documentar os componentes de um dos seus projetos como uma biblioteca no Figma.
+  - competencia: Acessibilidade
+    sugestao: Estudar as WCAG e aplicar uma revisão de contraste e foco num caso do portfólio.

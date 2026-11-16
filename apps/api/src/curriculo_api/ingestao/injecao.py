@@ -180,7 +180,12 @@ PADROES: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
             rf"{_PAPEL_COM_INSTRUCAO}",
         ),
         ("papel_entre_colchetes", r"[\[<]\s*/?\s*(?:system|assistant|inst|sistema)\s*[\]>]"),
-        ("tag_de_delimitador", rf"<\s*/?\s*(?:{'|'.join(DELIMITADORES_DO_PROMPT)})\s*>"),
+        # Com atributos ou espaços (`</curriculo foo=1>`); largura zero e `＜` de largura cheia
+        # já saíram na chave de casamento (NFKC).
+        (
+            "tag_de_delimitador",
+            rf"<\s*/?\s*(?:{'|'.join(DELIMITADORES_DO_PROMPT)})\b[^<>]*>",
+        ),
         ("tokens_de_chat", r"<\|\s*(?:im_?start|im_?end|system|end_?of_?text)\s*\|>"),
     )
 )

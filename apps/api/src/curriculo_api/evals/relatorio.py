@@ -55,7 +55,7 @@ def situacao_texto(metrica: ResultadoMetrica | None) -> str:
         case "pendente":
             return f"pendente (fase {metrica.fase_pendente})"
         case "n/a":
-            return "n/a (falso)"
+            return f"n/a ({metrica.rotulo_na or 'falso'})"
 
 
 def _lista(itens: Sequence[str]) -> str:
@@ -129,9 +129,9 @@ def _mudancas(execucao: Execucao, anterior: Execucao | None) -> list[str]:
     return linhas
 
 
-def _linha_caso(caso: DetalheCaso) -> str:
+def _linha_caso(caso: DetalheCaso, falso: bool) -> str:
     if caso.erro is not None:
-        return f"| `{caso.id}` | {caso.tipo} | {caso.base or '—'} | erro: {caso.erro} |||||||"
+        return f"| `{caso.id}` | {caso.tipo} | {caso.base or '—'} | erro: {caso.erro} |||||||||"
     itens = f"{caso.itens_devolvidos}/{caso.itens_mantidos}/{caso.itens_descartados}"
     if caso.mantidos_sem_ancora:
         itens += f" ({caso.mantidos_sem_ancora} sem âncora)"
@@ -144,9 +144,19 @@ def _linha_caso(caso: DetalheCaso) -> str:
         alertas = f"pendente (esperados: {_lista(caso.alertas_esperados)})"
     else:
         alertas = "pendente"
+    if caso.reescritas_propostas is None:
+        reescritas = "—"
+    else:
+        descartadas = caso.reescritas_descartadas or 0
+        reescritas = f"{caso.reescritas_propostas - descartadas}/{caso.reescritas_propostas}"
+    if falso or caso.custo_usd is None:
+        custo = "n/a"
+    else:
+        custo = _virgula(f"US$ {caso.custo_usd:.4f}") + " · " + _virgula(f"{caso.latencia_s:.1f} s")
     return (
         f"| `{caso.id}` | {caso.tipo} | {caso.base or '—'} | {itens} | {comp} "
-        f"| {_lista(caso.a_mais)} | {_lista(caso.faltando)} | {nota} | {faixa} | {alertas} |"
+        f"| {_lista(caso.a_mais)} | {_lista(caso.faltando)} | {nota} | {faixa} | {alertas} "
+        f"| {reescritas} | {custo} |"
     )
 
 
@@ -219,11 +229,14 @@ def gerar_relatorio(
         "## Detalhes por caso",
         "",
         "Itens = devolvidos pela IA / mantidos pela ancoragem / descartados. "
-        "Competências = extraídas (E) / anotadas (A), pela canônica da taxonomia.",
+        "Competências = extraídas (E) / anotadas (A), pela canônica da taxonomia. "
+        "Reescritas = entregues / propostas pela IA (a diferença foi descartada pelo filtro da "
+        "evidência).",
         "",
-        "| Caso | Tipo | Base | Itens | E/A | A mais | Faltando | Nota | Faixa | Alertas |",
-        "| - | - | - | - | - | - | - | - | - | - |",
-        *[_linha_caso(c) for c in execucao.casos],
+        "| Caso | Tipo | Base | Itens | E/A | A mais | Faltando | Nota | Faixa | Alertas "
+        "| Reescritas | Custo · latência |",
+        "| - | - | - | - | - | - | - | - | - | - | - | - |",
+        *[_linha_caso(c, execucao.provedor == "falso") for c in execucao.casos],
         "",
     ]
     return "\n".join(linhas)

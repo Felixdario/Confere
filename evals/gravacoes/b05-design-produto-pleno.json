@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b05-design-produto-pleno",
   "extrair_curriculo": {
     "entrada_sha256": "76300045df9729ba1fa58bda4f4094e148df3f5914e3b6f05e3ec8194a639237",
@@ -13,7 +13,8 @@
             "mes": 3
           },
           "fim": null,
-          "trecho": "Designer de Produto — Apps Agendário Pirilampo — mar/2024 – atual"
+          "trecho": "Designer de Produto — Apps Agendário Pirilampo — mar/2024 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Designer Gráfico",
@@ -26,13 +27,15 @@
             "ano": 2021,
             "mes": null
           },
-          "trecho": "Designer Gráfico — Estúdio Caju Octogonal — 2018 – 2021"
+          "trecho": "Designer Gráfico — Estúdio Caju Octogonal — 2018 – 2021",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Figma",
           "trecho": "fluxos no Figma",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Pesquisa com usuários",
           "trecho": "Conduzo entrevistas com usuários",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "Testes de usabilidade",
           "trecho": "testes de usabilidade a cada ciclo",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "protótipos",
           "trecho": "protótipos navegáveis",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "HTML",
           "trecho": "noções de HTML e CSS",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -68,6 +75,7 @@
         {
           "nome": "CSS",
           "trecho": "noções de HTML e CSS",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -75,6 +83,7 @@
         {
           "nome": "Adobe Illustrator",
           "trecho": "Adobe Illustrator",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -82,6 +91,7 @@
         {
           "nome": "Photoshop",
           "trecho": "no Photoshop",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -89,6 +99,7 @@
         {
           "nome": "UX Design",
           "trecho": "Curso livre de UX Design",
+          "nivel": null,
           "experiencias": []
         }
       ],
@@ -118,7 +129,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -133,37 +146,43 @@
           "descricao": "Pelo menos 3 anos de experiência com Figma",
           "tipo": "obrigatorio",
           "competencia": "Figma",
-          "anos_minimos": 3
+          "anos_minimos": 3,
+          "nivel": null
         },
         {
           "descricao": "Pesquisa com usuários",
           "tipo": "obrigatorio",
           "competencia": "Pesquisa com usuários",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Prototipação de alta fidelidade",
           "tipo": "obrigatorio",
           "competencia": "Prototipação",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Criação e manutenção de design system",
           "tipo": "obrigatorio",
           "competencia": "Design system",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Acessibilidade digital",
           "tipo": "desejavel",
           "competencia": "Acessibilidade",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Noções de HTML e CSS",
           "tipo": "desejavel",
           "competencia": "CSS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "basico"
         }
       ]
     },
@@ -176,8 +195,67 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "76300045df9729ba1fa58bda4f4094e148df3f5914e3b6f05e3ec8194a639237",
+    "saida": {
+      "resumo": "O currículo comprova pesquisa com usuários e prototipação, e o Figma aparece na experiência atual, mas por menos tempo que os 3 anos pedidos. Design system e acessibilidade digital não têm evidência.",
+      "lacunas": [
+        {
+          "requisito": "Pelo menos 3 anos de experiência com Figma",
+          "comentario": "O Figma aparece só na experiência atual, iniciada em 2024."
+        },
+        {
+          "requisito": "Criação e manutenção de design system",
+          "comentario": "Nenhum design system é citado."
+        },
+        {
+          "requisito": "Acessibilidade digital",
+          "comentario": "Não há menção a acessibilidade."
+        }
+      ],
+      "palavras_chave_ats": [
+        "Figma",
+        "Pesquisa com usuários",
+        "Prototipação de alta fidelidade",
+        "design system"
+      ],
+      "reescritas": [
+        {
+          "antes": "Construo protótipos navegáveis para validar hipóteses antes do desenvolvimento.",
+          "depois": "Construo protótipos navegáveis para validar hipóteses com usuários antes do desenvolvimento.",
+          "competencias": [
+            "protótipos"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Design system",
+          "sugestao": "Documentar os componentes de um dos seus projetos como uma biblioteca no Figma."
+        },
+        {
+          "competencia": "Acessibilidade",
+          "sugestao": "Estudar as WCAG e aplicar uma revisão de contraste e foco num caso do portfólio."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

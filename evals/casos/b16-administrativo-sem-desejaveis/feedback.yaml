@@ -1,0 +1,19 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  Excel, contas a pagar e atendimento ao cliente estão comprovados. A emissão de notas fiscais,
+  obrigatória, não aparece. A vaga não lista desejáveis nem anos de experiência.
+lacunas:
+  - requisito: Emissão de notas fiscais
+    comentario: Não há menção a notas fiscais.
+palavras_chave_ats:
+  - Excel
+  - contas a pagar
+  - notas fiscais
+  - Atendimento ao cliente
+reescritas:
+  - antes: Lançamento e controle de contas a pagar.
+    depois: Lançamento e controle de contas a pagar e planilhas de fluxo de caixa no MS Excel.
+    competencias: [Contas a pagar, Fluxo de caixa, MS Excel]
+o_que_aprender:
+  - competencia: Emissão de notas fiscais
+    sugestao: Fazer um curso curto de emissão de notas fiscais eletrônicas.

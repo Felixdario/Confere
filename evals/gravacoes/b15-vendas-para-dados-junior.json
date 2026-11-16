@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b15-vendas-para-dados-junior",
   "extrair_curriculo": {
     "entrada_sha256": "7bbc919deb11dcc9d0319cfb9922b62f22d4515bb01f9229c2fd6c41f59ecbb5",
@@ -13,7 +13,8 @@
             "mes": null
           },
           "fim": null,
-          "trecho": "Supervisora de Vendas — Magazine Jacupemba Austral — 2020 – atual"
+          "trecho": "Supervisora de Vendas — Magazine Jacupemba Austral — 2020 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Vendedora",
@@ -26,13 +27,15 @@
             "ano": 2020,
             "mes": null
           },
-          "trecho": "Vendedora — Calçados Tesourinha Oblíqua — 2016 – 2020"
+          "trecho": "Vendedora — Calçados Tesourinha Oblíqua — 2016 – 2020",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Gestão de equipes",
           "trecho": "Gestão de equipes de até 15 vendedores",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Excel",
           "trecho": "planilhas de Excel",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "Atendimento ao cliente",
           "trecho": "Atendimento ao cliente e operação de caixa",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "Operação de caixa",
           "trecho": "operação de caixa",
+          "nivel": null,
           "experiencias": [
             1
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "SQL",
           "trecho": "Curso livre de SQL para análise de dados",
+          "nivel": null,
           "experiencias": []
         }
       ],
@@ -90,7 +97,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -105,43 +114,50 @@
           "descricao": "SQL",
           "tipo": "obrigatorio",
           "competencia": "SQL",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Python",
           "tipo": "obrigatorio",
           "competencia": "Python",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Power BI",
           "tipo": "obrigatorio",
           "competencia": "Power BI",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Noções de estatística",
           "tipo": "obrigatorio",
           "competencia": "Estatística",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "basico"
         },
         {
           "descricao": "Excel",
           "tipo": "obrigatorio",
           "competencia": "Excel",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Looker Studio",
           "tipo": "desejavel",
           "competencia": "Looker Studio",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Inglês para leitura técnica",
           "tipo": "desejavel",
           "competencia": "Inglês",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -154,8 +170,76 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "7bbc919deb11dcc9d0319cfb9922b62f22d4515bb01f9229c2fd6c41f59ecbb5",
+    "saida": {
+      "resumo": "A transição para dados tem base em SQL, pelo curso livre, e em Excel. Python, Power BI e noções de estatística, todos obrigatórios, ainda não aparecem.",
+      "lacunas": [
+        {
+          "requisito": "Python",
+          "comentario": "Não há menção a Python."
+        },
+        {
+          "requisito": "Power BI",
+          "comentario": "Não há menção a Power BI."
+        },
+        {
+          "requisito": "Noções de estatística",
+          "comentario": "Não há menção a estatística."
+        },
+        {
+          "requisito": "Looker Studio",
+          "comentario": "Não há menção a Looker Studio."
+        },
+        {
+          "requisito": "Inglês para leitura técnica",
+          "comentario": "Não há idioma declarado."
+        }
+      ],
+      "palavras_chave_ats": [
+        "SQL",
+        "Python",
+        "Power BI",
+        "Excel"
+      ],
+      "reescritas": [
+        {
+          "antes": "Relatórios diários de vendas em planilhas de Excel.",
+          "depois": "Relatórios diários de vendas em planilhas de Excel, com atendimento ao cliente.",
+          "competencias": [
+            "Excel",
+            "Atendimento ao cliente"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Python",
+          "sugestao": "Fazer um curso introdutório de Python para análise de dados."
+        },
+        {
+          "competencia": "Power BI",
+          "sugestao": "Transformar os relatórios de vendas que você já faz em um painel no Power BI."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

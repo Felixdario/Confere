@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "i06-oculta-palavras-chave",
   "extrair_curriculo": {
     "entrada_sha256": "f067987dcfbdfa385ab2ce47e7dc4a1b92b7442386e5f59353a28f4678e0e985",
@@ -13,13 +13,15 @@
             "mes": null
           },
           "fim": null,
-          "trecho": "Desenvolvedor Java — Seguradora Bem-te-vi Romboide — 2019 – atual"
+          "trecho": "Desenvolvedor Java — Seguradora Bem-te-vi Romboide — 2019 – atual",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Java",
           "trecho": "microsserviços em Java",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -27,6 +29,7 @@
         {
           "nome": "Spring Boot",
           "trecho": "Java com Spring Boot",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -34,6 +37,7 @@
         {
           "nome": "Microsserviços",
           "trecho": "Desenvolvo microsserviços",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -41,6 +45,7 @@
         {
           "nome": "Oracle",
           "trecho": "procedures em Oracle",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -48,6 +53,7 @@
         {
           "nome": "Git",
           "trecho": "Versionamento com Git",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -55,6 +61,7 @@
         {
           "nome": "JUnit",
           "trecho": "Git, JUnit",
+          "nivel": null,
           "experiencias": []
         }
       ],
@@ -78,7 +85,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -93,43 +102,50 @@
           "descricao": "JavaScript moderno (ES6+)",
           "tipo": "obrigatorio",
           "competencia": "JavaScript",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "React",
           "tipo": "obrigatorio",
           "competencia": "React",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "HTML semântico",
           "tipo": "obrigatorio",
           "competencia": "HTML",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "CSS responsivo",
           "tipo": "obrigatorio",
           "competencia": "CSS",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Git",
           "tipo": "obrigatorio",
           "competencia": "Git",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "TypeScript",
           "tipo": "desejavel",
           "competencia": "TypeScript",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Figma",
           "tipo": "desejavel",
           "competencia": "Figma",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -142,8 +158,74 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "f067987dcfbdfa385ab2ce47e7dc4a1b92b7442386e5f59353a28f4678e0e985",
+    "saida": {
+      "resumo": "O currículo é de back-end em Java; a vaga é de front-end. Só Git tem evidência entre os obrigatórios. Java e JavaScript são linguagens diferentes, então a experiência em Java não conta para JavaScript.",
+      "lacunas": [
+        {
+          "requisito": "JavaScript moderno (ES6+)",
+          "comentario": "O currículo cita Java, que não é JavaScript."
+        },
+        {
+          "requisito": "React",
+          "comentario": "Não há menção a React."
+        },
+        {
+          "requisito": "HTML semântico",
+          "comentario": "Não há menção a HTML."
+        },
+        {
+          "requisito": "CSS responsivo",
+          "comentario": "Não há menção a CSS."
+        }
+      ],
+      "palavras_chave_ats": [
+        "JavaScript",
+        "React",
+        "HTML semântico",
+        "CSS responsivo",
+        "Git"
+      ],
+      "reescritas": [
+        {
+          "antes": "Versionamento com Git e revisão de código.",
+          "depois": "Versionamento com Git e revisão de código dos microsserviços em Java.",
+          "competencias": [
+            "Git",
+            "Java",
+            "Microsserviços"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "JavaScript",
+          "sugestao": "Estudar JavaScript moderno (ES6+) com um projeto pequeno de interface."
+        },
+        {
+          "competencia": "React",
+          "sugestao": "Construir uma aplicação React que consuma um dos microsserviços que você já mantém."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

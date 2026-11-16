@@ -1,0 +1,29 @@
+# Resposta de DEMONSTRAÇÃO do provedor falso (escrita à mão, não é saída de um modelo).
+resumo: >-
+  A transição para dados tem base em SQL, pelo curso livre, e em Excel. Python, Power BI e noções de
+  estatística, todos obrigatórios, ainda não aparecem.
+lacunas:
+  - requisito: Python
+    comentario: Não há menção a Python.
+  - requisito: Power BI
+    comentario: Não há menção a Power BI.
+  - requisito: Noções de estatística
+    comentario: Não há menção a estatística.
+  - requisito: Looker Studio
+    comentario: Não há menção a Looker Studio.
+  - requisito: Inglês para leitura técnica
+    comentario: Não há idioma declarado.
+palavras_chave_ats:
+  - SQL
+  - Python
+  - Power BI
+  - Excel
+reescritas:
+  - antes: Relatórios diários de vendas em planilhas de Excel.
+    depois: Relatórios diários de vendas em planilhas de Excel, com atendimento ao cliente.
+    competencias: [Excel, Atendimento ao cliente]
+o_que_aprender:
+  - competencia: Python
+    sugestao: Fazer um curso introdutório de Python para análise de dados.
+  - competencia: Power BI
+    sugestao: Transformar os relatórios de vendas que você já faz em um painel no Power BI.

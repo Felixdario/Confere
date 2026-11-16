@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b08-marketing-troca-carreira",
   "extrair_curriculo": {
     "entrada_sha256": "78ea06b2c32eeee185b12cc8b81d2e829d09a436c24f88622809dbbfcdf401f5",
@@ -13,7 +13,8 @@
             "mes": 3
           },
           "fim": null,
-          "trecho": "Social Media (freelancer) — Projetos independentes — mar/2024 – atual"
+          "trecho": "Social Media (freelancer) — Projetos independentes — mar/2024 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Professora de Língua Portuguesa",
@@ -26,13 +27,15 @@
             "ano": 2023,
             "mes": null
           },
-          "trecho": "Professora de Língua Portuguesa — Colégio Quero-Quero Hiperbólico — 2014 – 2023"
+          "trecho": "Professora de Língua Portuguesa — Colégio Quero-Quero Hiperbólico — 2014 – 2023",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Gestão de redes sociais",
           "trecho": "Gestão de redes sociais de cinco pequenos negócios",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "Copywriting",
           "trecho": "Copywriting para posts, anúncios e e-mails",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -47,6 +51,7 @@
         {
           "nome": "Meta Ads",
           "trecho": "Campanhas de Meta Ads",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -54,6 +59,7 @@
         {
           "nome": "Google Analytics",
           "trecho": "resultado com Google Analytics",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -61,6 +67,7 @@
         {
           "nome": "Excel",
           "trecho": "planilhas em Excel",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -68,6 +75,7 @@
         {
           "nome": "Marketing digital",
           "trecho": "Curso de Marketing Digital",
+          "nivel": null,
           "experiencias": []
         }
       ],
@@ -96,6 +104,7 @@
         {
           "nome": "Google Analytics (GA4)",
           "emissor": null,
+          "competencia": "Google Analytics",
           "trecho": "Google Analytics (GA4) — certificado de conclusão"
         }
       ]
@@ -109,7 +118,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -124,49 +135,57 @@
           "descricao": "SEO",
           "tipo": "obrigatorio",
           "competencia": "SEO",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Google Analytics",
           "tipo": "obrigatorio",
           "competencia": "Google Analytics",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Mídia paga no Google Ads",
           "tipo": "obrigatorio",
           "competencia": "Google Ads",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Copywriting",
           "tipo": "obrigatorio",
           "competencia": "Copywriting",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Gestão de redes sociais",
           "tipo": "obrigatorio",
           "competencia": "Gestão de redes sociais",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "HubSpot",
           "tipo": "desejavel",
           "competencia": "HubSpot",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Excel",
           "tipo": "desejavel",
           "competencia": "Excel",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Inglês intermediário",
           "tipo": "desejavel",
           "competencia": "Inglês",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": "intermediario"
         }
       ]
     },
@@ -179,8 +198,69 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "78ea06b2c32eeee185b12cc8b81d2e829d09a436c24f88622809dbbfcdf401f5",
+    "saida": {
+      "resumo": "A transição de carreira está bem sustentada em redes sociais, copywriting e Google Analytics. A mídia paga aparece em Meta Ads, relacionada ao Google Ads pedido; SEO, obrigatório, não tem evidência.",
+      "lacunas": [
+        {
+          "requisito": "SEO",
+          "comentario": "Não há menção a SEO."
+        },
+        {
+          "requisito": "Mídia paga no Google Ads",
+          "comentario": "As campanhas citadas são de Meta Ads."
+        },
+        {
+          "requisito": "HubSpot",
+          "comentario": "Não há menção a HubSpot."
+        }
+      ],
+      "palavras_chave_ats": [
+        "SEO",
+        "Google Analytics",
+        "Google Ads",
+        "Copywriting",
+        "Gestão de redes sociais"
+      ],
+      "reescritas": [
+        {
+          "antes": "Relatórios de resultado com Google Analytics e planilhas em Excel.",
+          "depois": "Relatórios de resultado das campanhas com Google Analytics e planilhas em Excel.",
+          "competencias": [
+            "Google Analytics",
+            "Excel"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "SEO",
+          "sugestao": "Otimizar o SEO de um dos sites dos seus clientes e registrar o antes e depois."
+        },
+        {
+          "competencia": "Google Ads",
+          "sugestao": "Fazer a certificação gratuita do Google Ads."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }

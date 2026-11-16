@@ -1,5 +1,5 @@
 {
-  "versao": 1,
+  "versao": 2,
   "id": "b12-engenharia-civil-senior",
   "extrair_curriculo": {
     "entrada_sha256": "ff5d0dc0d4426414939479e945704f621e1c62c8b1ab47c8f883bcd9f446fad6",
@@ -13,7 +13,8 @@
             "mes": 6
           },
           "fim": null,
-          "trecho": "Engenheira Civil Júnior — Construtora Jacamim Ortogonal — jun/2023 – atual"
+          "trecho": "Engenheira Civil Júnior — Construtora Jacamim Ortogonal — jun/2023 – atual",
+          "datas_comprovadas": true
         },
         {
           "cargo": "Estagiária de Engenharia",
@@ -26,13 +27,15 @@
             "ano": 2022,
             "mes": null
           },
-          "trecho": "Estagiária de Engenharia — Prefeitura de Vila Tuiuiú do Norte — 2021 – 2022"
+          "trecho": "Estagiária de Engenharia — Prefeitura de Vila Tuiuiú do Norte — 2021 – 2022",
+          "datas_comprovadas": true
         }
       ],
       "competencias": [
         {
           "nome": "Gestão de obras",
           "trecho": "gestão de obras residenciais",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -40,6 +43,7 @@
         {
           "nome": "AutoCAD",
           "trecho": "Detalhamento de projetos no AutoCAD",
+          "nivel": null,
           "experiencias": [
             0,
             1
@@ -48,6 +52,7 @@
         {
           "nome": "NR-18",
           "trecho": "normas de segurança da NR-18",
+          "nivel": null,
           "experiencias": [
             0
           ]
@@ -66,6 +71,7 @@
         {
           "nome": "CREA-GO",
           "emissor": null,
+          "competencia": "CREA",
           "trecho": "CREA-GO ativo"
         }
       ]
@@ -79,7 +85,9 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
   "extrair_vaga": {
@@ -94,49 +102,57 @@
           "descricao": "CREA ativo",
           "tipo": "obrigatorio",
           "competencia": "CREA",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Gestão de obras",
           "tipo": "obrigatorio",
           "competencia": "Gestão de obras",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "AutoCAD",
           "tipo": "obrigatorio",
           "competencia": "AutoCAD",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Modelagem BIM no Revit",
           "tipo": "obrigatorio",
           "competencia": "Revit",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Orçamento de obras",
           "tipo": "obrigatorio",
           "competencia": "Orçamento de obras",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Planejamento no MS Project",
           "tipo": "obrigatorio",
           "competencia": "MS Project",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "Pós-graduação em gestão de projetos",
           "tipo": "desejavel",
           "competencia": "Gestão de projetos",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         },
         {
           "descricao": "NR-18",
           "tipo": "desejavel",
           "competencia": "NR-18",
-          "anos_minimos": null
+          "anos_minimos": null,
+          "nivel": null
         }
       ]
     },
@@ -149,8 +165,73 @@
       "output_tokens": 0,
       "cache_creation_input_tokens": 0,
       "cache_read_input_tokens": 0,
-      "custo_usd": "0"
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
     }
   },
-  "escrever_feedback": null
+  "escrever_feedback": {
+    "entrada_sha256": "ff5d0dc0d4426414939479e945704f621e1c62c8b1ab47c8f883bcd9f446fad6",
+    "saida": {
+      "resumo": "CREA ativo, gestão de obras, AutoCAD e NR-18 estão comprovados, mas a vaga é sênior e o currículo mostra pouco tempo de experiência. BIM no Revit, orçamento de obras e MS Project, todos obrigatórios, não aparecem.",
+      "lacunas": [
+        {
+          "requisito": "Modelagem BIM no Revit",
+          "comentario": "Não há menção a Revit nem a BIM."
+        },
+        {
+          "requisito": "Orçamento de obras",
+          "comentario": "Não há menção a orçamento."
+        },
+        {
+          "requisito": "Planejamento no MS Project",
+          "comentario": "Não há menção a MS Project."
+        },
+        {
+          "requisito": "Pós-graduação em gestão de projetos",
+          "comentario": "Não há pós-graduação citada."
+        }
+      ],
+      "palavras_chave_ats": [
+        "CREA ativo",
+        "Gestão de obras",
+        "AutoCAD",
+        "Revit",
+        "MS Project"
+      ],
+      "reescritas": [
+        {
+          "antes": "Detalhamento de projetos no AutoCAD.",
+          "depois": "Detalhamento de projetos no AutoCAD e modelagem BIM no Revit.",
+          "competencias": [
+            "AutoCAD",
+            "Revit"
+          ]
+        }
+      ],
+      "o_que_aprender": [
+        {
+          "competencia": "Revit",
+          "sugestao": "Fazer um curso de modelagem BIM no Revit e modelar uma obra que você acompanhou."
+        },
+        {
+          "competencia": "MS Project",
+          "sugestao": "Montar o cronograma de uma obra no MS Project."
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "escrever_feedback",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0",
+      "stop_reason": null,
+      "fallback": false
+    }
+  }
 }
