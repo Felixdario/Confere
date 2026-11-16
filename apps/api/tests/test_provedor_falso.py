@@ -4,6 +4,7 @@ import pytest
 
 from curriculo_api.evals.dataset import Dataset
 from curriculo_api.evals.gravacoes import desatualizadas, gerar_gravacao, serializar
+from curriculo_api.evals.pipeline import ingerir_caso
 from curriculo_api.ia import (
     GravacaoAusente,
     ProvedorFalso,
@@ -29,7 +30,7 @@ def test_cumpre_o_protocolo(provedor: ProvedorFalso) -> None:
 
 def test_toda_gravacao_valida_contra_o_schema_atual(raiz: Path) -> None:
     arquivos = sorted((raiz / "evals" / "gravacoes").glob("*.json"))
-    assert len(arquivos) == 29
+    assert len(arquivos) == 30
     for arquivo in arquivos:
         Gravacao.model_validate_json(arquivo.read_text(encoding="utf-8"))
 
@@ -39,11 +40,14 @@ def test_gravacoes_em_dia_com_as_anotacoes(dataset: Dataset, raiz: Path) -> None
     assert not problemas, "rode `make gravacoes`: " + ", ".join(problemas)
 
 
-async def test_responde_pelo_hash_do_texto(provedor: ProvedorFalso, dataset: Dataset) -> None:
+async def test_responde_pelo_hash_do_texto_anonimizado(
+    provedor: ProvedorFalso, dataset: Dataset
+) -> None:
     for caso in dataset.casos:
         gravada = gerar_gravacao(caso)
-        cv = await provedor.extrair_curriculo(TextoAnonimizado(caso.curriculo))
-        vaga = await provedor.extrair_vaga(caso.vaga)
+        curriculo, vaga_ingerida = ingerir_caso(caso)
+        cv = await provedor.extrair_curriculo(curriculo.texto_para_ia)
+        vaga = await provedor.extrair_vaga(vaga_ingerida.texto)
         assert cv.saida == gravada.extrair_curriculo.saida
         assert vaga.saida == gravada.extrair_vaga.saida
         assert all(u.custo_usd == 0 and u.input_tokens == 0 for u in (*cv.usos, *vaga.usos))
@@ -51,8 +55,17 @@ async def test_responde_pelo_hash_do_texto(provedor: ProvedorFalso, dataset: Dat
 
 async def test_crlf_da_o_mesmo_resultado(provedor: ProvedorFalso, dataset: Dataset) -> None:
     caso = dataset.casos[0]
-    cv = await provedor.extrair_curriculo(TextoAnonimizado(caso.curriculo.replace("\n", "\r\n")))
+    texto = ingerir_caso(caso)[0].texto_para_ia
+    cv = await provedor.extrair_curriculo(TextoAnonimizado(texto.replace("\n", "\r\n")))
     assert cv.saida == gerar_gravacao(caso).extrair_curriculo.saida
+
+
+async def test_texto_bruto_com_dados_pessoais_nao_tem_gravacao(
+    provedor: ProvedorFalso, dataset: Dataset
+) -> None:
+    """As gravações são indexadas pelo texto anonimizado: o bruto não tem resposta."""
+    with pytest.raises(GravacaoAusente):
+        await provedor.extrair_curriculo(TextoAnonimizado(dataset.casos[0].curriculo))
 
 
 async def test_texto_desconhecido_nao_tem_gravacao(provedor: ProvedorFalso) -> None:

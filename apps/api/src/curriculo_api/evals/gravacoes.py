@@ -4,7 +4,9 @@ Uso, de `apps/api`:
     uv run python -m curriculo_api.evals.gravacoes             # (re)escreve evals/gravacoes/
     uv run python -m curriculo_api.evals.gravacoes --verificar # só confere; sai 1 se desatualizado
 
-Rode de novo sempre que um `curriculo.md`, `vaga.md` ou `esperado.yaml` mudar (o hash muda junto).
+Rode de novo sempre que um `curriculo.md`, `curriculo.pdf`/`.docx`, `vaga.md` ou `esperado.yaml`
+mudar, ou quando a ingestão ou a anonimização mudarem: o hash é o do texto que o provedor recebe
+(o currículo ingerido e anonimizado, e a vaga normalizada), então ele muda junto.
 """
 
 from __future__ import annotations
@@ -15,6 +17,7 @@ from decimal import Decimal
 from pathlib import Path
 
 from curriculo_api.evals.dataset import Caso, Dataset, carregar_dataset, localizar_raiz
+from curriculo_api.evals.pipeline import ingerir_caso
 from curriculo_api.evals.referencia import data_parcial
 from curriculo_api.ia.falso import (
     VERSAO_GRAVACAO,
@@ -100,16 +103,17 @@ def vaga_perfeita(caso: Caso) -> VagaExtraida:
 
 
 def gerar_gravacao(caso: Caso) -> Gravacao:
+    curriculo, vaga = ingerir_caso(caso)
     return Gravacao(
         versao=VERSAO_GRAVACAO,
         id=caso.id,
         extrair_curriculo=ChamadaCurriculo(
-            entrada_sha256=sha256_texto(caso.curriculo),
+            entrada_sha256=sha256_texto(curriculo.texto_para_ia),
             saida=curriculo_perfeito(caso),
             uso=uso_zerado("extrair_curriculo"),
         ),
         extrair_vaga=ChamadaVaga(
-            entrada_sha256=sha256_texto(caso.vaga),
+            entrada_sha256=sha256_texto(vaga.texto),
             saida=vaga_perfeita(caso),
             uso=uso_zerado("extrair_vaga"),
         ),

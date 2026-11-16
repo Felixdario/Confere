@@ -9,7 +9,7 @@ API := apps/api
 PROVEDOR ?= falso
 COMPOSE := $(DOCKER) compose -p curriculo -f docker-compose.yml
 
-.PHONY: install lint typecheck test check up down db-check eval gravacoes dev-api dev-web
+.PHONY: install lint typecheck test check up down db-check eval gravacoes fixtures dev-api dev-web
 
 install:
 	cd $(API) && $(UV) sync
@@ -44,9 +44,15 @@ db-check:
 eval:
 	cd $(API) && $(UV) run python -m curriculo_api.evals.rodar --provedor $(PROVEDOR)
 
-# Regenera evals/gravacoes/ a partir das anotações (rode depois de mudar um caso).
+# Regenera evals/gravacoes/ a partir das anotações (rode depois de mudar um caso, a ingestão ou a
+# anonimização: o hash é o do texto anonimizado).
 gravacoes:
 	cd $(API) && $(UV) run python -m curriculo_api.evals.gravacoes
+
+# Regenera os PDFs/DOCX reais de alguns casos (evals/casos/<id>/curriculo.{pdf,docx}) a partir do
+# curriculo.md, com o texto oculto renderizado de verdade. Rode antes de `make gravacoes`.
+fixtures:
+	cd $(API) && $(UV) run python -m curriculo_api.evals.fixtures
 
 dev-api:
 	cd $(API) && $(UV) run uvicorn curriculo_api.main:app --reload --port 8010

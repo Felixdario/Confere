@@ -2,7 +2,7 @@
   "versao": 1,
   "id": "b02-backend-pleno-node",
   "extrair_curriculo": {
-    "entrada_sha256": "3842a448ea2642964a4fbe1670d8c6ccd4c153656dae9e0611a47a0c0fcc657f",
+    "entrada_sha256": "ec10d5715bfe1c2a51d3f0b6cc9ad30940cc10fb26c15fe6a2fb7736a9af4561",
     "saida": {
       "experiencias": [
         {

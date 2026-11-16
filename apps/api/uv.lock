@@ -513,10 +513,12 @@ dependencies = [
     { name = "asyncpg" },
     { name = "fastapi" },
     { name = "fastembed" },
+    { name = "numpy" },
     { name = "pdfplumber" },
     { name = "pgvector" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "pypdfium2" },
     { name = "python-docx" },
     { name = "pyyaml" },
     { name = "sqlalchemy", extra = ["asyncio"] },
@@ -530,8 +532,10 @@ dev = [
     { name = "mypy" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
+    { name = "reportlab" },
     { name = "ruff" },
     { name = "types-pyyaml" },
+    { name = "types-reportlab" },
 ]
 
 [package.metadata]
@@ -541,10 +545,12 @@ requires-dist = [
     { name = "asyncpg", specifier = ">=0.32.0" },
     { name = "fastapi", specifier = ">=0.163.1" },
     { name = "fastembed", specifier = ">=0.9.1" },
+    { name = "numpy", specifier = ">=2.5.5" },
     { name = "pdfplumber", specifier = ">=0.11.10" },
     { name = "pgvector", specifier = ">=0.5.1" },
     { name = "pydantic", specifier = ">=2.14.3" },
     { name = "pydantic-settings", specifier = ">=2.16.3" },
+    { name = "pypdfium2", specifier = ">=5.15.2" },
     { name = "python-docx", specifier = ">=1.2.0" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.1.8" },
@@ -558,8 +564,10 @@ dev = [
     { name = "mypy", specifier = ">=2.4.1" },
     { name = "pytest", specifier = ">=9.2.0" },
     { name = "pytest-asyncio", specifier = ">=1.5.0" },
+    { name = "reportlab", specifier = ">=5.1.0" },
     { name = "ruff", specifier = ">=0.17.5" },
     { name = "types-pyyaml", specifier = ">=6.0.12.20261113" },
+    { name = "types-reportlab", specifier = ">=5.1.0.20261104" },
 ]
 
 [[package]]
@@ -1620,6 +1628,7 @@ wheels = [
 name = "numpy"
 version = "2.5.5"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/4e/3a/8770c288c47f0b5c2a786d3c20e79f66fd245f2d42cd232d7cd5e00e83e5/numpy-2.5.5.tar.gz", hash = "sha256:5cddc243c75114ba845f01b1f87aca1572dbf7b6c2d88636ed3e1d2bccd7f1bf", size = 20873892, upload-time = "2026-11-15T21:32:28.607Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/20/74/5b99f425938870958d43dc9f7b17c684e793ce47ec46b7885cdc7acea285/numpy-2.5.5-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:7da9a248f149cfbb220c6da964a59c8d051d516704f7758acfb81eb382a05d97", size = 14750374, upload-time = "2026-11-15T21:30:10.113Z" },
     { url = "https://files.pythonhosted.org/packages/5c/f4/06db317e93dd6d618786004c1761214b113832bb77294c8513776956702a/numpy-2.5.5-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:b96e9ee49ccbdb5676359f852a4497f7a9c5df6c377d8877f5330d6fd3ff42e4", size = 10749920, upload-time = "2026-11-15T21:30:13.092Z" },
@@ -1685,6 +1694,7 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/33/060b8c68e2ed79fe50a20139f7f89fa2d9862f2d3e127fc353d8e6b2589c/numpy-2.5.5-cp315-cp315t-musllinux_1_2_x86_64.whl", hash = "sha256:32dce94d74bb4d5bb058d65b0d9dad7fa61d07ff9375fd7695d8aa7ea82ee73d", size = 17120613, upload-time = "2026-11-15T21:32:20.094Z" },
     { url = "https://files.pythonhosted.org/packages/99/3a/ab02c902cb380d0b950eccda4f0b67ac4f66ba490c98756d38adc4b3ccb5/numpy-2.5.5-cp315-cp315t-win32.whl", hash = "sha256:b5d08742de581c9eb61102768ccca125a2982913de399611b56981a07278de74", size = 6344124, upload-time = "2026-11-15T21:32:22.058Z" },
     { url = "https://files.pythonhosted.org/packages/fd/49/b04b1f12231e6fbcf26fd5e7949f629530e11c46a6fcd91923f61b017243/numpy-2.5.5-cp315-cp315t-win_amd64.whl", hash = "sha256:410eab02c6718cb42d06ccbb8604659f3522d2ce06ae70cacd5042092659f5af", size = 12898288, upload-time = "2026-11-15T21:32:23.871Z" },
+    { url = "https://files.pythonhosted.org/packages/36/7b/935a5896b0bd441c6dd6da81f39bc5ebf8d5da891b7dcff768e1e1c088b5/numpy-2.5.5-cp315-cp315t-win_arm64.whl", hash = "sha256:b6ecbc1ff292c6799067d8064a4dd35cd25ba9d1a24aa41dd635d701691a49b5", size = 10891314, upload-time = "2026-11-15T21:32:26.357Z" },
 ]
 
 [[package]]
@@ -2234,6 +2244,19 @@ hiredis = [
 ]
 
 [[package]]
+name = "reportlab"
+version = "5.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "charset-normalizer" },
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/89/22/c18474be40b9bbb52fdb7051177d4d25f1ea59fada17eb181026411e93b1/reportlab-5.1.0.tar.gz", hash = "sha256:6878200464527e87672d19e9f7cfc6bb890e3a6931e74ac6a1a8d1754aa55671", size = 4109612, upload-time = "2026-10-22T07:26:43.307Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/3c/bf68d44f160b44685fc714f746a954c71d0091b3dc4fd3c8670154b44841/reportlab-5.1.0-py3-none-any.whl", hash = "sha256:59fdbaec5efe437095ad1d7292ec9a271c8ca2d3ec75e889c6e61400929b90df", size = 2018647, upload-time = "2026-10-22T07:26:40.754Z" },
+]
+
+[[package]]
 name = "requests"
 version = "2.34.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2443,6 +2466,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/4d/8b/ba599d956693dbc98e170f32097128bdea0a17f9d42b0b490fa749c12b1a/types_pyyaml-6.0.12.20261113.tar.gz", hash = "sha256:0828be2580fd94151182364f4d0158e4de62fdbeeb8d4296f7f7d2b6c22bb640", size = 19017, upload-time = "2026-11-13T08:51:21.488Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fd/2e/36fc0941a40ef066dbc8abac41bbbefb41389f547c779aef832aea6b873d/types_pyyaml-6.0.12.20261113-py3-none-any.whl", hash = "sha256:3600749e613748afdc4327f0b17c3296cf880cdbc7335f320007abd9dd815f67", size = 21321, upload-time = "2026-11-13T08:51:20.417Z" },
+]
+
+[[package]]
+name = "types-reportlab"
+version = "5.1.0.20261104"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f1/3b/37b677439070293eb8f189b671965da53bf92f88ff985f36f69d25614d45/types_reportlab-5.1.0.20261104.tar.gz", hash = "sha256:5a214b6a53a4f719ce0e8a0081107b54a6d44e0fed25b8e167332a95e3163b17", size = 73428, upload-time = "2026-11-04T08:14:02.731Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9b/7a/c8ce7d2dd43c79ed05a8f97b573a4549d217983952e20da26e6a8cb21535/types_reportlab-5.1.0.20261104-py3-none-any.whl", hash = "sha256:d1410bafa695bc6f38a3f38426b8393f7311ca69a350e99cefadf6103e254202", size = 113474, upload-time = "2026-11-04T08:14:01.308Z" },
 ]
 
 [[package]]

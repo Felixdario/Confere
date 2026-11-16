@@ -250,12 +250,20 @@ class Caso:
     esperado: Esperado
     curriculo: str
     vaga: str
+    arquivo: Path | None = None
+    """`curriculo.pdf` ou `curriculo.docx`, quando o caso tem o arquivo real (gerado do Markdown por
+    `make fixtures`). As evals ingerem o arquivo em vez do Markdown."""
 
 
 @dataclass(frozen=True)
 class Dataset:
     config: ConfigDataset
     casos: tuple[Caso, ...]
+    frases_legitimas: tuple[str, ...] = ()
+    """`evals/frases/legitimas.txt`: frases de currículo e vaga que não podem disparar o
+    detector."""
+    frases_injecao: tuple[str, ...] = ()
+    """`evals/frases/injecao.txt`: variantes de instrução para a IA que o detector deve pegar."""
 
     def por_id(self) -> dict[str, Caso]:
         return {caso.id: caso for caso in self.casos}
@@ -274,12 +282,17 @@ def carregar_caso(pasta: Path) -> Caso:
     esperado = Esperado.model_validate(dados)
     if esperado.id != pasta.name:
         raise ValueError(f"{pasta.name}: o id {esperado.id!r} difere do nome da pasta")
+    arquivos = [pasta / f"curriculo.{ext}" for ext in ("pdf", "docx")]
+    existentes = [a for a in arquivos if a.is_file()]
+    if len(existentes) > 1:
+        raise ValueError(f"{pasta.name}: use um só arquivo real (pdf ou docx)")
     return Caso(
         id=esperado.id,
         pasta=pasta,
         esperado=esperado,
         curriculo=_ler_texto(pasta / "curriculo.md"),
         vaga=_ler_texto(pasta / "vaga.md"),
+        arquivo=existentes[0] if existentes else None,
     )
 
 
@@ -293,7 +306,26 @@ def carregar_dataset(pasta_evals: Path) -> Dataset:
         base = caso.esperado.base
         if base is not None and base not in ids:
             raise ValueError(f"{caso.id}: base {base!r} não existe")
-    return Dataset(config=config, casos=casos)
+    pasta_frases = pasta_evals / "frases"
+    return Dataset(
+        config=config,
+        casos=casos,
+        frases_legitimas=carregar_frases(pasta_frases / "legitimas.txt"),
+        frases_injecao=carregar_frases(pasta_frases / "injecao.txt"),
+    )
+
+
+def carregar_frases(caminho: Path) -> tuple[str, ...]:
+    """Uma frase por linha; linhas vazias e começadas por "#" ficam de fora; a sequência literal
+    `\\n` vira quebra de linha (instrução quebrada no meio)."""
+    if not caminho.is_file():
+        return ()
+    linhas = _ler_texto(caminho).split("\n")
+    return tuple(
+        linha.replace("\\n", "\n")
+        for linha in linhas
+        if linha.strip() and not linha.startswith("#")
+    )
 
 
 def localizar_raiz(inicio: Path | None = None) -> Path:

@@ -2,7 +2,7 @@
   "versao": 1,
   "id": "b03-dados-pleno-vaga-en",
   "extrair_curriculo": {
-    "entrada_sha256": "99721c0754621b89c2a20f817f4432789dd499a310b4a3ef7aba99f900847b57",
+    "entrada_sha256": "ac92cefb5a052458270cadcbf09f462b43b66919c311e8f4f96e3ccf101f4742",
     "saida": {
       "experiencias": [
         {

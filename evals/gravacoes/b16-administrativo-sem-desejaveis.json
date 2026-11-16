@@ -2,7 +2,7 @@
   "versao": 1,
   "id": "b16-administrativo-sem-desejaveis",
   "extrair_curriculo": {
-    "entrada_sha256": "b8a3239d43beb98d8c1f915929406bbd7e5d633a6627402b6984b9a685d5ae29",
+    "entrada_sha256": "b78ed51c52a779f411355f54ef276b09f3e1d1cf5e294ff17a5fcc6f28bbd654",
     "saida": {
       "experiencias": [
         {

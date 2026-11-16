@@ -2,7 +2,7 @@
   "versao": 1,
   "id": "b15-vendas-para-dados-junior",
   "extrair_curriculo": {
-    "entrada_sha256": "a83d329b113ed4737202f0a1e9f27130cab1d3674b5d58c97aa1ce7dcb4252ba",
+    "entrada_sha256": "7bbc919deb11dcc9d0319cfb9922b62f22d4515bb01f9229c2fd6c41f59ecbb5",
     "saida": {
       "experiencias": [
         {

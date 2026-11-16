@@ -29,7 +29,7 @@ from curriculo_api.evals.referencia import (
 )
 from curriculo_api.taxonomia import Taxonomia
 
-TOTAL_DE_CASOS = 29
+TOTAL_DE_CASOS = 30
 CAMPOS_PROFISSIONAIS = (
     "idioma_vaga",
     "titulo_vaga",
@@ -51,16 +51,16 @@ DOMINIOS_RESERVADOS = re.compile(r"@(example\.(com|net|org)|[\w.-]+\.(example|te
 TELEFONE_FICTICIO = re.compile(r"^(\+55 )?\(00\) 9\d{4}-\d{4}$")
 
 
-def test_composicao_16_base_6_injection_7_contrafactuais(dataset: Dataset) -> None:
+def test_composicao_16_base_6_injection_8_contrafactuais(dataset: Dataset) -> None:
     contagem = Counter(c.esperado.tipo for c in dataset.casos)
-    assert contagem == {"base": 16, "injection": 6, "contrafactual": 7}
+    assert contagem == {"base": 16, "injection": 6, "contrafactual": 8}
     assert len(dataset.casos) == TOTAL_DE_CASOS
 
 
 def test_grupos_contrafactuais(dataset: Dataset) -> None:
     grupos = Counter(c.esperado.base for c in dataset.do_tipo("contrafactual"))
     assert grupos == {
-        "b03-dados-pleno-vaga-en": 2,
+        "b03-dados-pleno-vaga-en": 3,
         "b06-contabilidade-pleno": 2,
         "b11-rh-pleno": 2,
         "b01-frontend-senior": 1,

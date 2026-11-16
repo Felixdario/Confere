@@ -24,7 +24,7 @@ from pydantic import ValidationError
 from curriculo_api.config import obter_settings
 from curriculo_api.evals.dataset import carregar_dataset, localizar_raiz
 from curriculo_api.evals.harness import Execucao, executar
-from curriculo_api.evals.pipeline import Pipeline, PipelineExtracao
+from curriculo_api.evals.pipeline import Pipeline, PipelineIngestao
 from curriculo_api.evals.relatorio import formatar_valor, gerar_relatorio, situacao_texto
 from curriculo_api.ia.fabrica import NomeProvedor, criar_provedor
 from curriculo_api.ia.provedor import ProvedorIndisponivel
@@ -99,7 +99,7 @@ def rodar(
         except ProvedorIndisponivel as exc:
             escrever(str(exc))
             return SAIDA_PROVEDOR_INDISPONIVEL
-        pipeline = PipelineExtracao(provedor_ia)
+        pipeline = PipelineIngestao(provedor_ia)
 
     if provedor == "falso":
         modelos = {"extracao": "falso", "feedback": "falso"}

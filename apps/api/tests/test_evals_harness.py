@@ -12,7 +12,7 @@ import pytest
 
 from curriculo_api import ancoragem
 from curriculo_api.evals.harness import Execucao, ResultadoMetrica
-from curriculo_api.evals.pipeline import EntradaAnalise, PipelineExtracao, ResultadoAnalise
+from curriculo_api.evals.pipeline import EntradaAnalise, PipelineIngestao, ResultadoAnalise
 from curriculo_api.evals.rodar import (
     SAIDA_META_FALHOU,
     SAIDA_OK,
@@ -97,7 +97,7 @@ def test_gravacoes_perfeitas_dao_o_maximo(execucao_perfeita: tuple[int, Path]) -
     execucao = _ler_execucao(destino / "resultados")
     m = _metricas(execucao)
     assert codigo == SAIDA_OK
-    assert len(execucao.casos) == 29
+    assert len(execucao.casos) == 30
     assert m["ancoragem"].valor == 1.0 and m["ancoragem"].situacao == "passou"
     assert m["descartes"].valor == 0.0 and m["descartes"].situacao == "passou"
     assert m["precisao"].valor == 1.0 and m["precisao"].situacao == "passou"
@@ -105,11 +105,17 @@ def test_gravacoes_perfeitas_dao_o_maximo(execucao_perfeita: tuple[int, Path]) -
     pendentes = {k: v.fase_pendente for k, v in m.items() if v.situacao == "pendente"}
     assert pendentes == {
         "nota_na_faixa": 3,
-        "injection_deteccao": 2,
         "injection_diferenca": 3,
         "contrafactual": 3,
         "reescritas": 3,
     }
+    assert m["injection_deteccao"].valor == 1.0
+    assert m["injection_deteccao"].situacao == "passou"
+    assert m["injection_falsos_positivos"].valor == 0
+    assert m["injection_falsos_positivos"].situacao == "passou"
+    assert m["anonimizacao"].valor == 1.0 and m["anonimizacao"].situacao == "passou"
+    assert all(not c.dados_pessoais_restantes for c in execucao.casos)
+    assert all(c.evidencias_perdidas == 0 for c in execucao.casos)
     assert {k for k, v in m.items() if v.situacao == "n/a"} == {"custo", "latencia_p95"}
     assert all(not c.a_mais and not c.faltando for c in execucao.casos)
 
@@ -119,7 +125,10 @@ def test_relatorio_tem_a_tabela_do_adr(execucao_perfeita: tuple[int, Path]) -> N
     relatorio = (destino / "evals.md").read_text(encoding="utf-8")
     assert "| # | Métrica | Meta | Atual | Anterior | Δ | Passou? |" in relatorio
     assert "| 3a | Precisão de competências extraídas | ≥ 0,90 | 1,00 | — | — | sim |" in relatorio
-    assert "pendente (fase 2)" in relatorio and "n/a (falso)" in relatorio
+    assert "pendente (fase 3)" in relatorio and "n/a (falso)" in relatorio
+    assert "pendente (fase 2)" not in relatorio
+    assert "| 5 | Injection: detecção sinalizada | 100 % das variantes | 100,0 % |" in relatorio
+    assert "| 11 | Anonimização: dados pessoais removidos | 100 % | 100,0 % |" in relatorio
     assert "Primeira execução deste provedor" in relatorio
     assert "`b01-frontend-senior`" in relatorio
 
@@ -221,7 +230,7 @@ def test_competencias_faltando_derrubam_a_cobertura(repo_b01: Path) -> None:
 class _PipelineSemFiltro:
     """Um pipeline com bug: mantém tudo o que a IA devolveu, sem ancorar."""
 
-    def __init__(self, interno: PipelineExtracao) -> None:
+    def __init__(self, interno: PipelineIngestao) -> None:
         self._interno = interno
 
     @property
@@ -238,7 +247,7 @@ def test_pipeline_sem_ancoragem_e_pego_pela_metrica_1(repo_b01: Path) -> None:
         saida["experiencias"][0]["trecho"] = "Tech Lead — Vitrine Azul — 2015 – atual"
 
     _corromper(repo_b01, CASO, inventar_trecho)
-    pipeline = _PipelineSemFiltro(PipelineExtracao(ProvedorFalso(repo_b01 / "evals" / "gravacoes")))
+    pipeline = _PipelineSemFiltro(PipelineIngestao(ProvedorFalso(repo_b01 / "evals" / "gravacoes")))
     codigo, execucao, _ = _rodar(repo_b01, pipeline=pipeline)
     m = _metricas(execucao)
     assert codigo == SAIDA_META_FALHOU
@@ -269,7 +278,7 @@ def test_filtro_bugado_e_pego_pela_verificacao_independente(
 class _PipelineQueMexeDepoisDoFiltro:
     """Acrescenta um item ancorado depois do filtro e remove outro sem ser por âncora."""
 
-    def __init__(self, interno: PipelineExtracao, *, acrescentar: bool, remover: bool) -> None:
+    def __init__(self, interno: PipelineIngestao, *, acrescentar: bool, remover: bool) -> None:
         self._interno = interno
         self._acrescentar = acrescentar
         self._remover = remover
@@ -293,7 +302,7 @@ class _PipelineQueMexeDepoisDoFiltro:
 def test_descartes_contam_so_o_que_o_filtro_descartou(
     repo_b01: Path, acrescentar: bool, remover: bool
 ) -> None:
-    interno = PipelineExtracao(ProvedorFalso(repo_b01 / "evals" / "gravacoes"))
+    interno = PipelineIngestao(ProvedorFalso(repo_b01 / "evals" / "gravacoes"))
     pipeline = _PipelineQueMexeDepoisDoFiltro(interno, acrescentar=acrescentar, remover=remover)
     codigo, execucao, _ = _rodar(repo_b01, pipeline=pipeline)
     m = _metricas(execucao)

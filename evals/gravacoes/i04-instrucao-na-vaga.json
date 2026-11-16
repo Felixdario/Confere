@@ -2,7 +2,7 @@
   "versao": 1,
   "id": "i04-instrucao-na-vaga",
   "extrair_curriculo": {
-    "entrada_sha256": "b7d34200bac8175fab01b24a0641f3d6b5b8bf0ea24a050af273fc82d79f8848",
+    "entrada_sha256": "c82fcf41cac4b3d7dfbe063475efe23d2d519904efa571530f53049895b51a44",
     "saida": {
       "experiencias": [
         {

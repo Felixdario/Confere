@@ -122,3 +122,95 @@ Sinônimo só quando é a mesma coisa (ADR 0002). Na revisão da fase 1:
   "networking" (ambíguo em pt-BR).
 - Entraram **UX Design** e **Marketing digital** (regra do curso livre, D-15).
 Nenhuma nota de referência mudou por causa da revisão de sinônimos.
+
+## D-17 — Ingestão em `curriculo_api/ingestao/` (2026-11-15)
+Um pacote com um módulo por responsabilidade: `tipo_arquivo` (assinatura de bytes, zip bomb),
+`leitor_pdf`, `leitor_docx`, `normalizacao`, `injecao`, `anonimizacao` e `ingerir` (o ponto de
+entrada: `ingerir_curriculo`, `ingerir_vaga`, `ler_arquivo`, `ler_texto_colado`). A saída única é
+`DocumentoLido` (texto visível, trechos ocultos, imagens, páginas, páginas sem texto e alertas);
+depois vem `Anonimizacao` (texto anonimizado + o que foi removido). Erros são subclasses de
+`ErroIngestao` com `codigo` estável e mensagem em pt-BR que nunca cita conteúdo. As decisões de
+detecção e anonimização estão no ADR 0004.
+
+## D-18 — Marcadores em vez de apagar linhas (2026-11-15)
+Cada dado pessoal vira um marcador em maiúsculas (`[NOME]`, `[EMAIL]`, `[TELEFONE]`, `[CPF]`,
+`[RG]`, `[NASCIMENTO]`, `[IDADE]`, `[GENERO]`, `[ESTADO_CIVIL]`, `[ENDERECO]`, `[LINK]`,
+`[NACIONALIDADE]`), como no rascunho do ADR 0004, e o rótulo sai junto. Os separadores do cabeçalho
+ficam. Motivo: o texto segue legível e, com o mesmo formato de cabeçalho, contrafactuais viram texto
+idêntico (a garantia de viés que as evals conferem). Apagar a linha daria o mesmo efeito, mas
+esconderia da IA que havia um contato ali e mudaria o número de linhas entre formatos.
+
+## D-19 — Arquivos reais das evals versionados (2026-11-15)
+`make fixtures` (`curriculo_api.evals.fixtures`) gera do `curriculo.md` os PDFs de b13, b14, i05 e
+i06 e o DOCX de b16, em `evals/casos/<id>/curriculo.{pdf,docx}` (40 a 45 KB cada, com a fonte Vera
+embutida). Eles são **versionados**: as evals e os testes não dependem do reportlab, que é só de
+desenvolvimento. O reportlab gera com `invariant=1` e o DOCX é reempacotado com datas fixas, mas os
+bytes podem variar com a versão do zlib; por isso a verificação (`--verificar` e o teste
+`test_arquivos_reais_em_dia`) é **semântica**: o arquivo versionado e um recém-gerado dão o mesmo
+texto visível e os mesmos trechos ocultos. O i05 usa texto branco; o i06, metade em 1 pt e metade
+fora da página. O b01 ficou em Markdown de propósito: os testes do harness editam o `curriculo.md`
+dele. O DOCX é o b16 (endereço com logradouro no cabeçalho do Word), não um par-base com
+contrafactuais, porque o contrafactual compara texto anonimizado e precisa do mesmo formato do
+par-base. Quando um caso tem arquivo real, as evals ingerem o arquivo; senão, o Markdown como texto
+colado.
+
+## D-20 — Gravações indexadas pelo texto anonimizado (2026-11-15)
+O SHA-256 da gravação do currículo é o do texto que o provedor recebe: ingerido (arquivo ou
+Markdown), sem o texto oculto e anonimizado. O da vaga é o da vaga normalizada. `make gravacoes`
+roda a mesma função que o pipeline (`evals.pipeline.ingerir_caso`). Consequência: mudar a ingestão ou
+a anonimização exige `make gravacoes` (o teste das gravações avisa), e o texto bruto com dados
+pessoais não tem gravação (teste). Os contrafactuais e os pares-base caem no mesmo hash, como o i05 e
+o b13: o `ProvedorFalso` aceita a duplicata porque as saídas gravadas são iguais.
+
+## D-21 — reportlab e types-reportlab só de desenvolvimento (2026-11-15)
+Para gerar os PDFs de teste: **reportlab 5.1.0** (licença BSD) com a fonte Bitstream Vera que vem
+nele (licença Bitstream Vera, livre para redistribuir embutida), e **types-reportlab** (Apache-2.0,
+typeshed) para o mypy estrito. Ficou de fora o fpdf2 (LGPL-3.0, mais restritiva para um projeto que
+pode virar produto). Pillow (licença HPND) já vinha como dependência transitiva do pdfplumber e do
+fastembed e é usado pelo reportlab para a imagem dos testes. Instalação só local (`uv add --dev`).
+
+## D-22 — Métricas 5b e 11 nas evals (2026-11-15)
+O relatório ganhou "Injection: falsos positivos nos pares-base" (5b, meta 0) e "Anonimização: dados
+pessoais removidos" (11, meta 100 % e nenhuma evidência apagada), registradas no ADR 0005. A métrica
+5 deixou de ser "pendente (fase 2)". O detalhe por caso grava só os tipos de dado que sobraram, nunca
+os valores, porque os resultados são versionados.
+
+## D-23 — Rodada 1 da fase 2: renderização com pypdfium2 (2026-11-16)
+O Validador mostrou texto oculto que as heurísticas por caractere não viam (atrás de retângulo ou
+imagem, fundo em curva, opacidade 0, recorte, contorno branco, `Tz` 1 %). A decisão principal
+passou a ser a página desenhada pelo pdfium (pypdfium2 5.15, BSD-3-Clause/Apache-2.0; já vinha
+como dependência do pdfplumber e virou direta) com numpy (BSD) para medir o contraste na caixa de
+cada caractere. Detalhes, limiares e custo no ADR 0004. pypdfium2 não tem stubs: entrou na lista
+`ignore_missing_imports` do mypy.
+
+## D-24 — Rodada 1 da fase 2: anonimização consistente entre identidades (2026-11-16)
+Toda parte do nome descoberto, com inicial maiúscula e palavra inteira, sai do texto todo
+(inclusive sobrenomes e palavras comuns), exceto termos de uma palavra da taxonomia; linhas que
+ficam só com marcadores viram `[DADOS_PESSOAIS]`. Sem nome confiável, nada é apagado e a ingestão
+emite `nome_nao_identificado`. Isso substitui o compromisso "Rosa/Esperança" da primeira entrega
+(ADR 0004). Desvio consciente do pedido do Planejador: um candidato a nome é recusado quando
+**metade ou mais** das partes são termos da taxonomia, não quando **qualquer** parte é — senão
+"Beatriz Nogueira Sales" (b05) não seria reconhecida, porque "Sales" é termo da taxonomia.
+
+## D-25 — Rodada 1 da fase 2: c08 e corpora de frases (2026-11-16)
+O dataset ganhou o contrafactual **c08** (b03 com "Nguyễn Thị Lan"), e agora são 30 casos
+(16/6/8). Os corpora `evals/frases/legitimas.txt` (89) e `evals/frases/injecao.txt` (46) são
+versionados e carregados com o dataset; a métrica 5b passou a contar também as frases legítimas, e
+a 5c mede a cobertura do corpus de injection (meta ≥ 90 %).
+
+## D-26 — Rodada 2 da fase 2: regra da parte isolada do nome revogada e diferença de desenhos (2026-11-16)
+- A regra de D-24 ("toda parte do nome sai em todo o texto") foi **revogada**: ela apagava
+  evidência conforme o nome (Julia, Ruby, São Paulo, Natal, Banco Santander…), o que é viés. A
+  parte isolada agora só sai fora de termos protegidos (taxonomia + `dados/termos_protegidos.yaml`,
+  versionada) e quando não está colada a outro nome próprio nem seguida de UF. O vazamento
+  residual de um primeiro nome no corpo é aceito (ADR 0004). Um teste de colisão cobre os 16
+  pares-base.
+- Um candidato a nome é aceito com no máximo metade das partes técnicas, e nunca todas ("Ana Go"
+  é nome; "Python Django" não).
+- A verificação de oculto em PDF passou a comparar dois desenhos do pdfium (com e sem os objetos de
+  texto), por palavra, e deixou de pular página com `/Rotate`. O custo de 20 páginas × 60 linhas
+  ficou em ~4 s.
+- DOCX: notas de rodapé e de fim são lidas; comentários não são lidos e geram o alerta
+  `comentario_nao_lido`; caixa de texto fora da página é oculta.
+- O teto de texto de arquivo diz "envie só o currículo, sem anexos"; o de texto colado continua
+  "cole só o currículo".

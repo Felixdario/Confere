@@ -1,0 +1,112 @@
+# Termos que a anonimização NUNCA apaga quando aparecem sozinhos, mesmo que sejam parte do nome da
+# pessoa (ADR 0004, rodada 2 da fase 2). Apagar um deles muda a evidência profissional e, portanto,
+# a nota: seria viés pelo nome (quem se chama Julia perderia a competência Julia). Deixar um
+# primeiro nome sozinho no corpo não muda nada, porque a nota não lê nome.
+#
+# A lista se soma aos termos de uma palavra da taxonomia (`taxonomia.yaml`). Comparação sem acento
+# e sem caixa. A sequência de duas ou mais partes do nome ("Julia Martins") continua saindo sempre.
+versao: 1
+
+# Linguagens, ferramentas e produtos com nome de gente.
+tecnologias:
+  - Ada
+  - Alexa
+  - Ansible
+  - Apex
+  - Bard
+  - Cassandra
+  - Clojure
+  - Cortana
+  - Crystal
+  - Dart
+  - Delphi
+  - Elixir
+  - Erlang
+  - Flask
+  - Flutter
+  - Gatsby
+  - Go
+  - Grace
+  - Groovy
+  - Haskell
+  - Hudson
+  - Ionic
+  - Jasmine
+  - Jenkins
+  - Julia
+  - Kafka
+  - Karma
+  - Kotlin
+  - Laravel
+  - Lua
+  - Mercury
+  - Mocha
+  - Nim
+  - Oracle
+  - Pascal
+  - Pandas
+  - Perl
+  - Phoenix
+  - Prolog
+  - R
+  - Rails
+  - Raven
+  - Ruby
+  - Rust
+  - Sage
+  - Scala
+  - Selenium
+  - Siri
+  - Spark
+  - Swift
+  - Vue
+  - Watson
+  - Zig
+
+# Cidades e lugares que também são nome ou sobrenome. Fora daqui, a cidade colada a outra palavra
+# capitalizada ("São Paulo") ou seguida de UF ("Natal (RN)", "Natal, RN") já fica.
+lugares:
+  - Americana
+  - Aracaju
+  - Belém
+  - Brasília
+  - Campinas
+  - Cuiabá
+  - Florianópolis
+  - Fortaleza
+  - Goiânia
+  - Itajaí
+  - Joinville
+  - Lages
+  - Londrina
+  - Macaé
+  - Manaus
+  - Marília
+  - Natal
+  - Palmas
+  - Petrópolis
+  - Recife
+  - Salvador
+  - Sorocaba
+  - Teresina
+  - Vitória
+  - Brasil
+  - Portugal
+  - Angola
+
+# Empresas e marcas que também são nome ou sobrenome.
+empresas:
+  - Bradesco
+  - Itaú
+  - Natura
+  - Mercedes
+  - Renner
+  - Santander
+  - Sadia
+  - Vale
+  - Vivo
+  - Claro
+  - Embraer
+  - Gerdau
+  - Ambev
+  - Magalu

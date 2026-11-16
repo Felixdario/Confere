@@ -33,6 +33,15 @@ class Settings(BaseSettings):
     teto_custo_diario_usd: float = Field(default=5.0, ge=0)
     pasta_arquivos: Path = Path("data/arquivos")
 
+    # Limites da ingestão (ADR 0004). O DOCX é zip: o limite descompactado barra zip bomb.
+    ingestao_tamanho_max_bytes: int = Field(default=5 * 1024 * 1024, ge=1)
+    ingestao_paginas_max: int = Field(default=20, ge=1)
+    ingestao_descompactado_max_bytes: int = Field(default=30 * 1024 * 1024, ge=1)
+    ingestao_entradas_zip_max: int = Field(default=1000, ge=1)
+    ingestao_texto_max_caracteres: int = Field(default=60_000, ge=1)
+    ingestao_tempo_max_por_pagina_s: float = Field(default=5.0, gt=0)
+    ingestao_documento_xml_max_bytes: int = Field(default=5 * 1024 * 1024, ge=1)
+
     @property
     def usa_provedor_falso(self) -> bool:
         return self.anthropic_api_key is None or not self.anthropic_api_key.get_secret_value()

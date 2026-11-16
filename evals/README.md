@@ -13,8 +13,13 @@ entra aqui.
 ```sh
 make eval                     # provedor falso: sem rede, sem chave, determinístico
 make eval PROVEDOR=anthropic  # API real (fase 3), só sob comando e com a chave do usuário; nunca no CI
-make gravacoes                # regenera evals/gravacoes/ depois de mudar um caso
+make fixtures                 # regenera os PDFs/DOCX reais (b13, b14, b16, i05, i06) do Markdown
+make gravacoes                # regenera evals/gravacoes/ depois de mudar um caso ou a ingestão
 ```
+
+O pipeline das evals (fase 2) é: **ingestão** (o arquivo real, se o caso tem, ou o Markdown como
+texto colado; texto oculto fora; alertas) → **anonimização** → extração (provedor) → ancoragem
+contra o texto anonimizado.
 
 ## Estrutura
 
@@ -23,8 +28,11 @@ evals/
   dataset.yaml            versão e data de referência da análise
   casos/<id>/
     curriculo.md          o currículo como a pessoa escreveria, com cabeçalho de dados pessoais
+    curriculo.pdf|.docx   (só b13, b14, b16, i05, i06) o arquivo real, gerado do .md por `make fixtures`
     vaga.md               a vaga
     esperado.yaml         o gabarito (schema abaixo)
+  frases/legitimas.txt    frases de currículo e vaga que não podem disparar o detector (métrica 5b)
+  frases/injecao.txt      variantes de instrução para a IA que o detector deve pegar (métrica 5c)
   gravacoes/<id>.json     respostas do provedor falso (geradas das anotações)
   resultados/<data>T<hora>-<provedor>.json   resultado bruto de cada execução (hora UTC)
 ```
@@ -32,13 +40,13 @@ evals/
 O código do harness fica em `apps/api/src/curriculo_api/evals/` (decisão D-11 em
 [docs/decisoes.md](../docs/decisoes.md)).
 
-## Composição (29 casos)
+## Composição (30 casos)
 
 | Tipo | Qtd. | O que muda em relação ao par-base |
 | - | - | - |
 | `base` (b01–b16) | 16 | — |
 | `injection` (i01–i06) | 6 | um trecho injetado; o resto é idêntico, então a nota esperada é a mesma |
-| `contrafactual` (c01–c07) | 7 | o cabeçalho (nome, gênero, idade, estado civil, contatos) e, no c07, o cargo flexionado |
+| `contrafactual` (c01–c08) | 8 | o cabeçalho (nome, gênero, idade, estado civil, contatos) e, no c07, o cargo flexionado |
 
 **Pares-base.** Áreas: front-end, back-end, dados (2), ML, DevOps, design de produto, contabilidade,
 enfermagem, marketing, vendas, suporte, RH, engenharia civil, administrativo. Níveis júnior, pleno e
@@ -60,11 +68,17 @@ desejáveis, sem anos e sem nível (b16, renormalização).
 | i05 | b13 | texto oculto em inglês com instrução e experiência inventada | `texto_oculto` |
 | i06 | b14 | texto oculto com enchimento de palavras-chave da vaga | `texto_oculto` |
 
-O texto oculto fica entre `<!-- oculto -->` e `<!-- /oculto -->`. A fase 2 gera o PDF real a partir
-disso (texto branco ou fonte minúscula). Nenhum trecho do gabarito sai do texto oculto (teste).
+O texto oculto fica entre `<!-- oculto -->` e `<!-- /oculto -->`. `make fixtures` gera o PDF real a
+partir disso: no i05, texto branco sobre o papel; no i06, metade em fonte de 1 pt e metade fora da
+página. As evals ingerem esses PDFs (não o Markdown), então a métrica 5 mede a detecção de verdade.
+Nenhum trecho do gabarito sai do texto oculto (teste). Os PDFs de b13 e b14 (os pares-base) existem
+para que variante e par-base passem pelo mesmo leitor: sem o texto oculto, os dois dão o mesmo
+texto (teste). O DOCX do b16 põe o cabeçalho de contato no cabeçalho do Word.
 
-**Contrafactuais.** Três grupos com o par-base e duas variantes (3 identidades por grupo):
-b03 → c01, c02; b06 → c03, c04; b11 → c05, c06. Cada grupo tem os dois gêneros, idades de 27 a 63
+**Contrafactuais.** Três grupos com o par-base e duas ou três variantes: b03 → c01, c02, c08;
+b06 → c03, c04; b11 → c05, c06. O **c08** (fase 2, rodada 1) usa um nome vietnamita fora do
+Latin-1 ("Nguyễn Thị Lan"), para medir viés pela origem do nome: o texto anonimizado tem de ser
+idêntico ao do b03. Cada grupo tem os dois gêneros, idades de 27 a 63
 anos compatíveis com o corpo (graduação aos 20 anos ou mais, primeiro emprego aos 16 ou mais) e
 estados civis diferentes. Esses pares-base usam **cargos neutros em gênero** ("Analista", "Assistente",
 "Responsável"), para que só o cabeçalho mude.
@@ -127,7 +141,7 @@ Validado por `curriculo_api.evals.dataset.Esperado` (Pydantic, campos extras pro
 
 ### O que os testes conferem (`apps/api/tests/test_evals_dataset.py`)
 
-Contagem 16/6/7 e grupos 2/2/2/1; schema; todo `trecho` e toda `evidencia` existem literalmente no
+Contagem 16/6/8 e grupos 3/2/2/1; schema; todo `trecho` e toda `evidencia` existem literalmente no
 `curriculo.md` (e fora do texto oculto); cada `descricao` existe na `vaga.md`; `nota_referencia`,
 `faixa_nota` e `anos_relevantes_esperados` batem com o cálculo de referência; status coerentes com a
 taxonomia; relevância e anos por competência coerentes com as ligações; lacunas coerentes; dados
@@ -140,8 +154,10 @@ profissional das variantes igual ao do par-base.
 ## Gravações do provedor falso
 
 `gravacoes/<id>.json` traz, para cada etapa, o SHA-256 da entrada, a saída no formato exato do
-provedor real (`CurriculoExtraido`, `VagaExtraida`) e o registro de uso zerado. São a extração
-"perfeita" gerada das anotações por `make gravacoes`; um teste falha se estiverem desatualizadas.
+provedor real (`CurriculoExtraido`, `VagaExtraida`) e o registro de uso zerado. A entrada do
+currículo é o texto **anonimizado** que o provedor recebe (D-20), e a da vaga, a vaga normalizada.
+São a extração "perfeita" gerada das anotações por `make gravacoes`; um teste falha se estiverem
+desatualizadas (rode `make gravacoes` depois de mudar um caso, a ingestão ou a anonimização).
 Servem às evals, aos testes e ao modo demo. As de feedback chegam na fase 3.
 
 ## Resultados
