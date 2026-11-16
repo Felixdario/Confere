@@ -138,6 +138,16 @@ diferença máxima:
 - **0 ponto com o provedor falso:** como a anonimização remove os atributos, o texto que chega ao falso
   é idêntico, e a nota também.
 
+**Limitação conhecida (registrada na fase 1): cargo flexionado em gênero.** Em português o cargo
+costuma revelar o gênero ("Desenvolvedora", "Estagiária", "Enfermeira"). A anonimização não remove nem
+neutraliza o cargo: ele é conteúdo profissional e aparece no trecho de prova. Então, num contrafactual
+que muda o cargo de "Desenvolvedora" para "Desenvolvedor", o texto que chega à IA **difere**. A defesa é
+que a nota não depende do cargo: depende só das competências ancoradas, das evidências, do status de
+cada requisito e dos anos (ADR 0003). O dataset tem um contrafactual para isso (c07, cargos no feminino
+no par-base e no masculino na variante), com nota esperada idêntica; com o provedor falso a meta
+continua 0. O texto do feedback, que cita o cargo, fica fora dessa garantia e é revisado à mão
+(fase 7).
+
 ## Consequências
 
 - A anonimização vem antes de tudo e tem os próprios testes com hypothesis, para garantir que nenhum

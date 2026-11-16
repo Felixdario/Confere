@@ -1,0 +1,186 @@
+{
+  "versao": 1,
+  "id": "b08-marketing-troca-carreira",
+  "extrair_curriculo": {
+    "entrada_sha256": "0295f472c004ffa81e86cc70f370cf694691ba69d447fbb989b5bfbe1af26bc3",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Social Media (freelancer)",
+          "empresa": "Projetos independentes",
+          "inicio": {
+            "ano": 2024,
+            "mes": 3
+          },
+          "fim": null,
+          "trecho": "Social Media (freelancer) — Projetos independentes — mar/2024 – atual"
+        },
+        {
+          "cargo": "Professora de Língua Portuguesa",
+          "empresa": "Colégio Quero-Quero Hiperbólico",
+          "inicio": {
+            "ano": 2014,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2023,
+            "mes": null
+          },
+          "trecho": "Professora de Língua Portuguesa — Colégio Quero-Quero Hiperbólico — 2014 – 2023"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Gestão de redes sociais",
+          "trecho": "Gestão de redes sociais de cinco pequenos negócios",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Copywriting",
+          "trecho": "Copywriting para posts, anúncios e e-mails",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Meta Ads",
+          "trecho": "Campanhas de Meta Ads",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Google Analytics",
+          "trecho": "resultado com Google Analytics",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Excel",
+          "trecho": "planilhas em Excel",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Marketing digital",
+          "trecho": "Curso de Marketing Digital",
+          "experiencias": []
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Licenciatura em Letras",
+          "instituicao": "Universidade Fictícia de Brasília",
+          "conclusao": 2013,
+          "trecho": "Licenciatura em Letras — Universidade Fictícia de Brasília — 2013"
+        },
+        {
+          "curso": "Curso de Marketing Digital",
+          "instituicao": "Escola Online Fictícia",
+          "conclusao": 2023,
+          "trecho": "Curso de Marketing Digital — Escola Online Fictícia — 2023"
+        }
+      ],
+      "idiomas": [
+        {
+          "idioma": "Inglês",
+          "nivel": "intermediário",
+          "trecho": "Inglês intermediário"
+        }
+      ],
+      "certificacoes": [
+        {
+          "nome": "Google Analytics (GA4)",
+          "emissor": null,
+          "trecho": "Google Analytics (GA4) — certificado de conclusão"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "4d79edc4fb0c894e9317d4aabab8f7af9edf86fef93c4171a885a5b1249fee90",
+    "saida": {
+      "titulo": "Analista de Marketing Digital Pleno",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "SEO",
+          "tipo": "obrigatorio",
+          "competencia": "SEO",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Google Analytics",
+          "tipo": "obrigatorio",
+          "competencia": "Google Analytics",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Mídia paga no Google Ads",
+          "tipo": "obrigatorio",
+          "competencia": "Google Ads",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Copywriting",
+          "tipo": "obrigatorio",
+          "competencia": "Copywriting",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Gestão de redes sociais",
+          "tipo": "obrigatorio",
+          "competencia": "Gestão de redes sociais",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "HubSpot",
+          "tipo": "desejavel",
+          "competencia": "HubSpot",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Excel",
+          "tipo": "desejavel",
+          "competencia": "Excel",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Inglês intermediário",
+          "tipo": "desejavel",
+          "competencia": "Inglês",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

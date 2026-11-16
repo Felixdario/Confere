@@ -1,0 +1,5 @@
+# Configuração do dataset de evals. O schema dos casos está em evals/README.md.
+versao: 1
+# Data da análise usada para "atual" / "o momento" / "Present" (ADR 0003). Fixa, para que a nota de
+# referência não mude com o calendário.
+data_referencia: 2026-11-01

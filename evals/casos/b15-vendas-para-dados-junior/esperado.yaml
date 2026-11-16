@@ -1,0 +1,109 @@
+id: b15-vendas-para-dados-junior
+tipo: base
+descricao: Troca de carreira (vendas → dados júnior); aderência fraca; SQL só por curso livre (atende pela regra, sem anos pedidos); experiências sobrepostas em 2020; datas só com ano.
+idioma_vaga: pt
+titulo_vaga: Analista de Dados Júnior
+nivel: junior
+anos_minimos: null
+
+experiencias:
+- cargo: Supervisora de Vendas
+  empresa: Magazine Jacupemba Austral
+  inicio: '2020'
+  fim: null
+  relevante: true
+  trecho: Supervisora de Vendas — Magazine Jacupemba Austral — 2020 – atual
+- cargo: Vendedora
+  empresa: Calçados Tesourinha Oblíqua
+  inicio: '2016'
+  fim: '2020'
+  relevante: false
+  trecho: Vendedora — Calçados Tesourinha Oblíqua — 2016 – 2020
+
+competencias:
+- canonica: Gestão de equipes
+  trecho: Gestão de equipes de até 15 vendedores
+  experiencias: [0]
+- canonica: Excel
+  trecho: planilhas de Excel
+  experiencias: [0]
+- canonica: Atendimento ao cliente
+  trecho: Atendimento ao cliente e operação de caixa
+  experiencias: [1]
+- canonica: Operação de caixa
+  trecho: operação de caixa
+  experiencias: [1]
+- canonica: SQL
+  trecho: Curso livre de SQL para análise de dados
+  experiencias: []
+formacao:
+- curso: Tecnólogo em Gestão Comercial
+  instituicao: Faculdade Fictícia do Pará
+  conclusao: 2015
+  trecho: Tecnólogo em Gestão Comercial — Faculdade Fictícia do Pará — 2015
+- curso: Curso livre de SQL para análise de dados (40 h)
+  instituicao: Escola Online Fictícia
+  conclusao: 2025
+  trecho: Curso livre de SQL para análise de dados (40 h) — Escola Online Fictícia — 2025
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: SQL
+  tipo: obrigatorio
+  competencia: SQL
+  status_esperado: atende
+  evidencia: Curso livre de SQL para análise de dados
+- descricao: Python
+  tipo: obrigatorio
+  competencia: Python
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Power BI
+  tipo: obrigatorio
+  competencia: Power BI
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Noções de estatística
+  tipo: obrigatorio
+  competencia: Estatística
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Excel
+  tipo: obrigatorio
+  competencia: Excel
+  status_esperado: atende
+  evidencia: planilhas de Excel
+- descricao: Looker Studio
+  tipo: desejavel
+  competencia: Looker Studio
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Inglês para leitura técnica
+  tipo: desejavel
+  competencia: Inglês
+  status_esperado: nao_atende
+  evidencia: null
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 83 meses.
+anos_relevantes_esperados: 6.92
+# O = 2/5; D = 0/2; S = min(1, 6,9167/1) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 38
+faixa_nota: [33, 43]
+lacunas: [Python, Power BI, Estatística, Looker Studio, Inglês]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Sueli Aparecida Rocha
+- tipo: email
+  valor: sueli.rocha@example.com
+- tipo: telefone
+  valor: (00) 90000-1515
+- tipo: endereco
+  valor: Belém – PA
+- tipo: nascimento
+  valor: 08/08/1984
+- tipo: estado_civil
+  valor: Viúva
+- tipo: cpf
+  valor: 628.401.395-04

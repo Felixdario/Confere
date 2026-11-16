@@ -1,0 +1,161 @@
+{
+  "versao": 1,
+  "id": "b15-vendas-para-dados-junior",
+  "extrair_curriculo": {
+    "entrada_sha256": "a83d329b113ed4737202f0a1e9f27130cab1d3674b5d58c97aa1ce7dcb4252ba",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Supervisora de Vendas",
+          "empresa": "Magazine Jacupemba Austral",
+          "inicio": {
+            "ano": 2020,
+            "mes": null
+          },
+          "fim": null,
+          "trecho": "Supervisora de Vendas — Magazine Jacupemba Austral — 2020 – atual"
+        },
+        {
+          "cargo": "Vendedora",
+          "empresa": "Calçados Tesourinha Oblíqua",
+          "inicio": {
+            "ano": 2016,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2020,
+            "mes": null
+          },
+          "trecho": "Vendedora — Calçados Tesourinha Oblíqua — 2016 – 2020"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Gestão de equipes",
+          "trecho": "Gestão de equipes de até 15 vendedores",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Excel",
+          "trecho": "planilhas de Excel",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Atendimento ao cliente",
+          "trecho": "Atendimento ao cliente e operação de caixa",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Operação de caixa",
+          "trecho": "operação de caixa",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "SQL",
+          "trecho": "Curso livre de SQL para análise de dados",
+          "experiencias": []
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Tecnólogo em Gestão Comercial",
+          "instituicao": "Faculdade Fictícia do Pará",
+          "conclusao": 2015,
+          "trecho": "Tecnólogo em Gestão Comercial — Faculdade Fictícia do Pará — 2015"
+        },
+        {
+          "curso": "Curso livre de SQL para análise de dados (40 h)",
+          "instituicao": "Escola Online Fictícia",
+          "conclusao": 2025,
+          "trecho": "Curso livre de SQL para análise de dados (40 h) — Escola Online Fictícia — 2025"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "8ab1439c95f333d6ae2042b687257954a2971ab6ff8355c1eaf315bd933c06ca",
+    "saida": {
+      "titulo": "Analista de Dados Júnior",
+      "idioma": "pt",
+      "nivel": "junior",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "SQL",
+          "tipo": "obrigatorio",
+          "competencia": "SQL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Python",
+          "tipo": "obrigatorio",
+          "competencia": "Python",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Power BI",
+          "tipo": "obrigatorio",
+          "competencia": "Power BI",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Noções de estatística",
+          "tipo": "obrigatorio",
+          "competencia": "Estatística",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Excel",
+          "tipo": "obrigatorio",
+          "competencia": "Excel",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Looker Studio",
+          "tipo": "desejavel",
+          "competencia": "Looker Studio",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Inglês para leitura técnica",
+          "tipo": "desejavel",
+          "competencia": "Inglês",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

@@ -122,7 +122,8 @@ Leitura:
   frases.
 
 Ordem da correspondência (ADR 0003):
-1. Normaliza o termo: caixa, acentos, espaços e pontuação nas pontas.
+1. Normaliza o termo: caixa, acentos, espaços e pontuação nas pontas. Ficam `#` e `+` (para "C#" e
+   "C++" não virarem "c") e o "." inicial (para ".NET" não virar "net"); o "." final sai.
 2. Procura na taxonomia por nome canônico ou sinônimo. Achou: mesma canônica dá **atende**, e uma das
    "relacionadas" dá **parcial**.
 3. Fora da taxonomia, calcula o cosseno contra as canônicas e os termos já vistos:
@@ -138,23 +139,32 @@ com 0,927), e os pares diferentes ficam todos abaixo de 0,48. A faixa parcial (0
 como Node/Node.js (0,767), que deveriam estar na taxonomia de qualquer forma. A calibração final, com os
 pares anotados das evals, sai na fase 3 e vem registrada aqui.
 
-**Taxonomia** em `apps/api/src/curriculo_api/taxonomia/competencias.yaml`:
+**Taxonomia** em `apps/api/src/curriculo_api/dados/taxonomia.yaml` (caminho e formato atualizados na
+fase 1, D-14), carregada por `curriculo_api.taxonomia`:
 
 ```yaml
-- canonica: React
-  categoria: frontend
-  sinonimos: [React.js, ReactJS, React JS]
-  relacionadas: [Vue.js, Angular, Svelte, Preact]
-- canonica: PostgreSQL
-  categoria: banco-de-dados
-  sinonimos: [Postgres, PSQL]
-  relacionadas: [MySQL, SQL Server]
+versao: 1
+competencias:
+  - canonica: React
+    categoria: frontend
+    sinonimos: [React.js, ReactJS, React JS]
+    relacionadas: [Angular, Vue.js]
+  - canonica: PostgreSQL
+    categoria: banco-de-dados
+    sinonimos: [Postgres, PSQL]
+    relacionadas: [MySQL, Oracle Database]
 ```
 
-Validada por Pydantic na carga:
-- sinônimo não pode aparecer em duas entradas;
+A `versao` entra no resultado das evals e, na fase 3, no prefixo de cache do prompt. Validada por
+Pydantic na carga:
+- nenhum termo (canônica ou sinônimo, já normalizado) pode aparecer em duas entradas;
 - "relacionada" precisa existir como canônica;
 - a relação é simétrica (se Vue lista React, React lista Vue).
+
+**Sinônimo é a mesma coisa**, com outra grafia, abreviação ou tradução ("Postgres", "k8s", "MS Excel",
+"English"). Produto de uma categoria (Tasy para prontuário eletrônico), protocolo de uma área (TCP/IP
+para redes) ou parte de um processo (triagem de currículos em recrutamento e seleção) entram como
+canônicas próprias **relacionadas**, não como sinônimos.
 
 **Modelo e cache:** o modelo é fixado pelo nome e baixado do Hugging Face pelo próprio fastembed, a
 fonte oficial da biblioteca, para `data/modelos/`, que fica fora do git. O CI não baixa modelo: os

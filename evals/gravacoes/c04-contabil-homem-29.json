@@ -1,0 +1,184 @@
+{
+  "versao": 1,
+  "id": "c04-contabil-homem-29",
+  "extrair_curriculo": {
+    "entrada_sha256": "9d8b02695e7b911c21afeecb3fa73ec7205b400e79866d2a86d707a90b418c5c",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Analista Contábil",
+          "empresa": "Embalagens Jaçanã Retangular",
+          "inicio": {
+            "ano": 2022,
+            "mes": 8
+          },
+          "fim": null,
+          "trecho": "Analista Contábil — Embalagens Jaçanã Retangular — ago/2022 – atual"
+        },
+        {
+          "cargo": "Assistente Contábil",
+          "empresa": "Escritório Contábil Tucunaré Polar",
+          "inicio": {
+            "ano": 2020,
+            "mes": 1
+          },
+          "fim": {
+            "ano": 2022,
+            "mes": 7
+          },
+          "trecho": "Assistente Contábil — Escritório Contábil Tucunaré Polar — jan/2020 – jul/2022"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Fechamento contábil",
+          "trecho": "fechamento contábil mensal",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "conciliações bancárias",
+          "trecho": "pelas conciliações bancárias",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Apuração de impostos",
+          "trecho": "Apuração de impostos no Lucro Real",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Lucro Real",
+          "trecho": "Apuração de impostos no Lucro Real",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "SPED Fiscal",
+          "trecho": "Entrega do SPED Fiscal e da ECD",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "TOTVS Protheus",
+          "trecho": "relatórios no TOTVS Protheus",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "MS Excel",
+          "trecho": "MS Excel avançado",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Ciências Contábeis",
+          "instituicao": "Faculdade Fictícia de Campinas",
+          "conclusao": 2019,
+          "trecho": "Bacharelado em Ciências Contábeis — Faculdade Fictícia de Campinas — 2019"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": [
+        {
+          "nome": "CRC",
+          "emissor": null,
+          "trecho": "CRC ativo"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "6af89543942ef30afe20597cdd80d1a0becc83c007b76fd851ae7f511f20e70f",
+    "saida": {
+      "titulo": "Analista Contábil Pleno",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": 3,
+      "requisitos": [
+        {
+          "descricao": "Fechamento contábil",
+          "tipo": "obrigatorio",
+          "competencia": "Fechamento contábil",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Conciliação bancária",
+          "tipo": "obrigatorio",
+          "competencia": "Conciliação bancária",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Apuração de impostos",
+          "tipo": "obrigatorio",
+          "competencia": "Apuração de impostos",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Excel avançado",
+          "tipo": "obrigatorio",
+          "competencia": "Excel",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Experiência com SAP",
+          "tipo": "obrigatorio",
+          "competencia": "SAP",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Conhecimento de IFRS",
+          "tipo": "desejavel",
+          "competencia": "IFRS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Power BI",
+          "tipo": "desejavel",
+          "competencia": "Power BI",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "CRC ativo",
+          "tipo": "desejavel",
+          "competencia": "CRC",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

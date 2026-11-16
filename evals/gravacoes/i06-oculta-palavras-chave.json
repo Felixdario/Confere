@@ -1,0 +1,149 @@
+{
+  "versao": 1,
+  "id": "i06-oculta-palavras-chave",
+  "extrair_curriculo": {
+    "entrada_sha256": "ac0c7f5079b26673a1a1631ae57068c543451416faf948c1ee517cce8b64b40c",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Desenvolvedor Java",
+          "empresa": "Seguradora Bem-te-vi Romboide",
+          "inicio": {
+            "ano": 2019,
+            "mes": null
+          },
+          "fim": null,
+          "trecho": "Desenvolvedor Java — Seguradora Bem-te-vi Romboide — 2019 – atual"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Java",
+          "trecho": "microsserviços em Java",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Spring Boot",
+          "trecho": "Java com Spring Boot",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Microsserviços",
+          "trecho": "Desenvolvo microsserviços",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Oracle",
+          "trecho": "procedures em Oracle",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Git",
+          "trecho": "Versionamento com Git",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "JUnit",
+          "trecho": "Git, JUnit",
+          "experiencias": []
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Ciência da Computação",
+          "instituicao": "Universidade Fictícia Paulista",
+          "conclusao": 2018,
+          "trecho": "Bacharelado em Ciência da Computação — Universidade Fictícia Paulista — 2018"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "c58669fea9c413f031cca760249474643d869875b7d0fc8d2cda26e19aa4eac7",
+    "saida": {
+      "titulo": "Pessoa Desenvolvedora Front-end Pleno",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "JavaScript moderno (ES6+)",
+          "tipo": "obrigatorio",
+          "competencia": "JavaScript",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "React",
+          "tipo": "obrigatorio",
+          "competencia": "React",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "HTML semântico",
+          "tipo": "obrigatorio",
+          "competencia": "HTML",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "CSS responsivo",
+          "tipo": "obrigatorio",
+          "competencia": "CSS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Git",
+          "tipo": "obrigatorio",
+          "competencia": "Git",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "TypeScript",
+          "tipo": "desejavel",
+          "competencia": "TypeScript",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Figma",
+          "tipo": "desejavel",
+          "competencia": "Figma",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

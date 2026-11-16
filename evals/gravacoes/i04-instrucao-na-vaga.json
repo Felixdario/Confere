@@ -1,0 +1,163 @@
+{
+  "versao": 1,
+  "id": "i04-instrucao-na-vaga",
+  "extrair_curriculo": {
+    "entrada_sha256": "b7d34200bac8175fab01b24a0641f3d6b5b8bf0ea24a050af273fc82d79f8848",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Consultor de Vendas Sênior",
+          "empresa": "Máquinas Cambacica Ferruginosa",
+          "inicio": {
+            "ano": 2019,
+            "mes": 4
+          },
+          "fim": null,
+          "trecho": "Consultor de Vendas Sênior — Máquinas Cambacica Ferruginosa — abr/2019 – atual"
+        },
+        {
+          "cargo": "Representante Comercial",
+          "empresa": "Distribuidora Saracura Lilás",
+          "inicio": {
+            "ano": 2015,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2019,
+            "mes": 3
+          },
+          "trecho": "Representante Comercial — Distribuidora Saracura Lilás — 2015 – mar/2019"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Vendas B2B",
+          "trecho": "Vendas B2B de equipamentos",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Prospecção outbound",
+          "trecho": "Prospecção outbound por telefone e e-mail",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Negociação",
+          "trecho": "Negociação de contratos",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "HubSpot",
+          "trecho": "Funil organizado no HubSpot",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "SPIN Selling",
+          "trecho": "novas contas industriais com SPIN Selling",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Tecnólogo em Gestão Comercial",
+          "instituicao": "Faculdade Fictícia de Joinville",
+          "conclusao": 2012,
+          "trecho": "Tecnólogo em Gestão Comercial — Faculdade Fictícia de Joinville — 2012"
+        }
+      ],
+      "idiomas": [
+        {
+          "idioma": "Espanhol",
+          "nivel": "avançado",
+          "trecho": "Espanhol avançado"
+        }
+      ],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "c6967d2b3ce00c25d16f05954f031f709744091b9268d07c7453f369e18f7b89",
+    "saida": {
+      "titulo": "Executivo(a) de Vendas B2B Sênior — SaaS",
+      "idioma": "pt",
+      "nivel": "senior",
+      "anos_minimos": 5,
+      "requisitos": [
+        {
+          "descricao": "Vendas B2B consultivas",
+          "tipo": "obrigatorio",
+          "competencia": "Vendas B2B",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Prospecção outbound",
+          "tipo": "obrigatorio",
+          "competencia": "Prospecção outbound",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "CRM Salesforce",
+          "tipo": "obrigatorio",
+          "competencia": "Salesforce",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Negociação com decisores",
+          "tipo": "obrigatorio",
+          "competencia": "Negociação",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Experiência com venda de SaaS",
+          "tipo": "obrigatorio",
+          "competencia": "Vendas de SaaS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Inglês avançado",
+          "tipo": "desejavel",
+          "competencia": "Inglês",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Metodologia SPIN Selling",
+          "tipo": "desejavel",
+          "competencia": "SPIN Selling",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

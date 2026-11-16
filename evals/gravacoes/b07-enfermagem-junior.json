@@ -1,0 +1,163 @@
+{
+  "versao": 1,
+  "id": "b07-enfermagem-junior",
+  "extrair_curriculo": {
+    "entrada_sha256": "27af59c2343309fdb5511e9b2e5fd01026194cc33299a699a9b2d00ff1a42ece",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Enfermeira",
+          "empresa": "Clínica Anambé Turquesa",
+          "inicio": {
+            "ano": 2025,
+            "mes": 2
+          },
+          "fim": null,
+          "trecho": "Enfermeira — Clínica Anambé Turquesa — fev/2025 – atual"
+        },
+        {
+          "cargo": "Estágio supervisionado em clínica médica",
+          "empresa": "Hospital-Escola Sabiá Trigonal",
+          "inicio": {
+            "ano": 2024,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2024,
+            "mes": null
+          },
+          "trecho": "Estágio supervisionado em clínica médica — Hospital-Escola Sabiá Trigonal — 2024"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Sistematização da Assistência de Enfermagem",
+          "trecho": "Sistematização da Assistência de Enfermagem (SAE)",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Administração de medicamentos",
+          "trecho": "Administração de medicamentos sob prescrição médica",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Prontuário eletrônico",
+          "trecho": "Registro em prontuário eletrônico",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Tasy",
+          "trecho": "prontuário eletrônico Tasy",
+          "experiencias": [
+            0
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Enfermagem",
+          "instituicao": "Universidade Fictícia da Bahia",
+          "conclusao": 2024,
+          "trecho": "Bacharelado em Enfermagem — Universidade Fictícia da Bahia — 2024"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": [
+        {
+          "nome": "COREN-BA",
+          "emissor": null,
+          "trecho": "COREN-BA ativo"
+        },
+        {
+          "nome": "Suporte Básico de Vida (BLS)",
+          "emissor": null,
+          "trecho": "Curso de Suporte Básico de Vida (BLS) — 2024"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "bc12fb8b9b26127bbca3e87b8ef469813ba24f4044d563b1168788daf4d3a117",
+    "saida": {
+      "titulo": "Enfermeiro(a) Assistencial — UTI Adulto",
+      "idioma": "pt",
+      "nivel": null,
+      "anos_minimos": 3,
+      "requisitos": [
+        {
+          "descricao": "COREN ativo",
+          "tipo": "obrigatorio",
+          "competencia": "COREN",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Experiência em terapia intensiva (UTI)",
+          "tipo": "obrigatorio",
+          "competencia": "Terapia intensiva",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Aplicação da SAE",
+          "tipo": "obrigatorio",
+          "competencia": "SAE",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Administração de medicamentos",
+          "tipo": "obrigatorio",
+          "competencia": "Administração de medicamentos",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Curso de ACLS válido",
+          "tipo": "obrigatorio",
+          "competencia": "ACLS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Pós-graduação em terapia intensiva",
+          "tipo": "desejavel",
+          "competencia": "Terapia intensiva",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Prontuário eletrônico (Tasy ou MV)",
+          "tipo": "desejavel",
+          "competencia": "Prontuário eletrônico",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

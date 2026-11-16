@@ -1,0 +1,156 @@
+{
+  "versao": 1,
+  "id": "b12-engenharia-civil-senior",
+  "extrair_curriculo": {
+    "entrada_sha256": "59a8e36a8d338d3b21c1ed4e2342137bcb482c5c3c387becd8c4f82881577d17",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Engenheira Civil Júnior",
+          "empresa": "Construtora Jacamim Ortogonal",
+          "inicio": {
+            "ano": 2023,
+            "mes": 6
+          },
+          "fim": null,
+          "trecho": "Engenheira Civil Júnior — Construtora Jacamim Ortogonal — jun/2023 – atual"
+        },
+        {
+          "cargo": "Estagiária de Engenharia",
+          "empresa": "Prefeitura de Vila Tuiuiú do Norte",
+          "inicio": {
+            "ano": 2021,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2022,
+            "mes": null
+          },
+          "trecho": "Estagiária de Engenharia — Prefeitura de Vila Tuiuiú do Norte — 2021 – 2022"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Gestão de obras",
+          "trecho": "gestão de obras residenciais",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "AutoCAD",
+          "trecho": "Detalhamento de projetos no AutoCAD",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "NR-18",
+          "trecho": "normas de segurança da NR-18",
+          "experiencias": [
+            0
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Engenharia Civil",
+          "instituicao": "Universidade Fictícia de Goiás",
+          "conclusao": 2022,
+          "trecho": "Bacharelado em Engenharia Civil — Universidade Fictícia de Goiás — 2022"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": [
+        {
+          "nome": "CREA-GO",
+          "emissor": null,
+          "trecho": "CREA-GO ativo"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "b05d5c109d96878580fcdc6a32526e08d20cc92029247181cd12682b7652834b",
+    "saida": {
+      "titulo": "Engenheiro(a) Civil Sênior — Coordenação de Obras",
+      "idioma": "pt",
+      "nivel": "senior",
+      "anos_minimos": 8,
+      "requisitos": [
+        {
+          "descricao": "CREA ativo",
+          "tipo": "obrigatorio",
+          "competencia": "CREA",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Gestão de obras",
+          "tipo": "obrigatorio",
+          "competencia": "Gestão de obras",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "AutoCAD",
+          "tipo": "obrigatorio",
+          "competencia": "AutoCAD",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Modelagem BIM no Revit",
+          "tipo": "obrigatorio",
+          "competencia": "Revit",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Orçamento de obras",
+          "tipo": "obrigatorio",
+          "competencia": "Orçamento de obras",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Planejamento no MS Project",
+          "tipo": "obrigatorio",
+          "competencia": "MS Project",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Pós-graduação em gestão de projetos",
+          "tipo": "desejavel",
+          "competencia": "Gestão de projetos",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "NR-18",
+          "tipo": "desejavel",
+          "competencia": "NR-18",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

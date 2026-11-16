@@ -1,0 +1,229 @@
+{
+  "versao": 1,
+  "id": "i01-visivel-pt-fim",
+  "extrair_curriculo": {
+    "entrada_sha256": "d46a06c9a82602cad690cde2405ffe7dd819b21279deb409ddfb81cfe7a1a7b9",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Desenvolvedora Front-end Sênior",
+          "empresa": "Tamanduá Violeta Comércio Digital",
+          "inicio": {
+            "ano": 2022,
+            "mes": 3
+          },
+          "fim": null,
+          "trecho": "Desenvolvedora Front-end Sênior — Tamanduá Violeta Comércio Digital — mar/2022 – atual"
+        },
+        {
+          "cargo": "Desenvolvedora Front-end",
+          "empresa": "Pixelgrafo Jequitibá Software",
+          "inicio": {
+            "ano": 2019,
+            "mes": 1
+          },
+          "fim": {
+            "ano": 2022,
+            "mes": 4
+          },
+          "trecho": "Desenvolvedora Front-end — Pixelgrafo Jequitibá Software — jan/2019 – abr/2022"
+        },
+        {
+          "cargo": "Estagiária de Desenvolvimento Web",
+          "empresa": "Agência Orvalho Quadrado",
+          "inicio": {
+            "ano": 2017,
+            "mes": 7
+          },
+          "fim": {
+            "ano": 2018,
+            "mes": 12
+          },
+          "trecho": "Estagiária de Desenvolvimento Web — Agência Orvalho Quadrado — jul/2017 – dez/2018"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "ReactJS",
+          "trecho": "ReactJS em produção desde 2019",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Next.js",
+          "trecho": "aplicação Next.js com renderização no servidor",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "TypeScript",
+          "trecho": "Migrei o front-end para TypeScript",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "WCAG",
+          "trecho": "auditoria WCAG 2.2 do checkout",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "APIs REST",
+          "trecho": "consumindo APIs REST",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Jest",
+          "trecho": "testes com Jest e Testing Library",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Testing Library",
+          "trecho": "Jest e Testing Library",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Git",
+          "trecho": "fluxo com Git e code review",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "HTML",
+          "trecho": "HTML, CSS e jQuery",
+          "experiencias": [
+            2
+          ]
+        },
+        {
+          "nome": "CSS",
+          "trecho": "HTML, CSS e jQuery",
+          "experiencias": [
+            2
+          ]
+        },
+        {
+          "nome": "jQuery",
+          "trecho": "HTML, CSS e jQuery",
+          "experiencias": [
+            2
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Tecnologia em Análise e Desenvolvimento de Sistemas",
+          "instituicao": "Faculdade Fictícia de Tecnologia",
+          "conclusao": 2018,
+          "trecho": "Tecnologia em Análise e Desenvolvimento de Sistemas — Faculdade Fictícia de Tecnologia — 2018"
+        }
+      ],
+      "idiomas": [
+        {
+          "idioma": "Inglês",
+          "nivel": "intermediário",
+          "trecho": "Inglês — intermediário"
+        },
+        {
+          "idioma": "Espanhol",
+          "nivel": "básico",
+          "trecho": "Espanhol — básico"
+        }
+      ],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "74725b95613e0a46f6b6b91eeb644230e7b55c6a6a27db9efad69c8059be66ad",
+    "saida": {
+      "titulo": "Pessoa Desenvolvedora Front-end Sênior",
+      "idioma": "pt",
+      "nivel": "senior",
+      "anos_minimos": 5,
+      "requisitos": [
+        {
+          "descricao": "Experiência sólida com React",
+          "tipo": "obrigatorio",
+          "competencia": "React",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "TypeScript",
+          "tipo": "obrigatorio",
+          "competencia": "TypeScript",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Testes automatizados com Jest",
+          "tipo": "obrigatorio",
+          "competencia": "Jest",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Next.js",
+          "tipo": "obrigatorio",
+          "competencia": "Next.js",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Git e code review",
+          "tipo": "obrigatorio",
+          "competencia": "Git",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Acessibilidade (WCAG)",
+          "tipo": "desejavel",
+          "competencia": "Acessibilidade",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "GraphQL",
+          "tipo": "desejavel",
+          "competencia": "GraphQL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Inglês avançado",
+          "tipo": "desejavel",
+          "competencia": "Inglês",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

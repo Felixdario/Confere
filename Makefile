@@ -6,9 +6,10 @@ DOCKER ?= docker
 UV ?= uv
 PNPM ?= corepack pnpm
 API := apps/api
+PROVEDOR ?= falso
 COMPOSE := $(DOCKER) compose -p curriculo -f docker-compose.yml
 
-.PHONY: install lint typecheck test check up down db-check eval dev-api dev-web
+.PHONY: install lint typecheck test check up down db-check eval gravacoes dev-api dev-web
 
 install:
 	cd $(API) && $(UV) sync
@@ -38,8 +39,14 @@ down:
 db-check:
 	$(COMPOSE) exec -T postgres psql -U curriculo -d curriculo -c "SELECT extversion FROM pg_extension WHERE extname = 'vector'"
 
+# make eval                     -> provedor falso (gravações; sem rede, sem chave)
+# make eval PROVEDOR=anthropic  -> API real, só sob comando e com a chave do usuário (fase 3)
 eval:
-	@echo O harness de evals chega na fase 1. Nada a rodar ainda.
+	cd $(API) && $(UV) run python -m curriculo_api.evals.rodar --provedor $(PROVEDOR)
+
+# Regenera evals/gravacoes/ a partir das anotações (rode depois de mudar um caso).
+gravacoes:
+	cd $(API) && $(UV) run python -m curriculo_api.evals.gravacoes
 
 dev-api:
 	cd $(API) && $(UV) run uvicorn curriculo_api.main:app --reload --port 8010

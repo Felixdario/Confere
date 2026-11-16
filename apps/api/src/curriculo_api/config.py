@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -21,6 +22,12 @@ class Settings(BaseSettings):
     anthropic_api_key: SecretStr | None = None
     claude_modelo_extracao: str = "claude-haiku-5-5"
     claude_modelo_feedback: str = "claude-opus-5-5"
+    claude_esforco_extracao: Literal["low", "medium", "high"] = "low"
+    claude_esforco_feedback: Literal["low", "medium", "high"] = "medium"
+
+    # Limiares de similaridade da correspondência (ADR 0002/0003), calibrados na fase 3.
+    tau_alto: float = Field(default=0.85, ge=0, le=1)
+    tau_baixo: float = Field(default=0.70, ge=0, le=1)
 
     retencao_dias: int = Field(default=30, ge=1)
     teto_custo_diario_usd: float = Field(default=5.0, ge=0)

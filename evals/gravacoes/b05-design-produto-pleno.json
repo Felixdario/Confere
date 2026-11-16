@@ -1,0 +1,183 @@
+{
+  "versao": 1,
+  "id": "b05-design-produto-pleno",
+  "extrair_curriculo": {
+    "entrada_sha256": "6cad683962c2bbb709fefb6df2b23ac90f34847f37d5cea0f8584250e82d0001",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Designer de Produto",
+          "empresa": "Apps Agendário Pirilampo",
+          "inicio": {
+            "ano": 2024,
+            "mes": 3
+          },
+          "fim": null,
+          "trecho": "Designer de Produto — Apps Agendário Pirilampo — mar/2024 – atual"
+        },
+        {
+          "cargo": "Designer Gráfico",
+          "empresa": "Estúdio Caju Octogonal",
+          "inicio": {
+            "ano": 2018,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2021,
+            "mes": null
+          },
+          "trecho": "Designer Gráfico — Estúdio Caju Octogonal — 2018 – 2021"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Figma",
+          "trecho": "fluxos no Figma",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Pesquisa com usuários",
+          "trecho": "Conduzo entrevistas com usuários",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Testes de usabilidade",
+          "trecho": "testes de usabilidade a cada ciclo",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "protótipos",
+          "trecho": "protótipos navegáveis",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "HTML",
+          "trecho": "noções de HTML e CSS",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "CSS",
+          "trecho": "noções de HTML e CSS",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Adobe Illustrator",
+          "trecho": "Adobe Illustrator",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Photoshop",
+          "trecho": "no Photoshop",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "UX Design",
+          "trecho": "Curso livre de UX Design",
+          "experiencias": []
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Design",
+          "instituicao": "Universidade Fictícia do Ceará",
+          "conclusao": 2017,
+          "trecho": "Bacharelado em Design — Universidade Fictícia do Ceará — 2017"
+        },
+        {
+          "curso": "Curso livre de UX Design",
+          "instituicao": "Escola Online Fictícia",
+          "conclusao": 2023,
+          "trecho": "Curso livre de UX Design — Escola Online Fictícia — 2023"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "eae97c7f7adc357d53663849589eea219f0bb435afdab4400376e0b92d918afc",
+    "saida": {
+      "titulo": "Product Designer Pleno",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "Pelo menos 3 anos de experiência com Figma",
+          "tipo": "obrigatorio",
+          "competencia": "Figma",
+          "anos_minimos": 3
+        },
+        {
+          "descricao": "Pesquisa com usuários",
+          "tipo": "obrigatorio",
+          "competencia": "Pesquisa com usuários",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Prototipação de alta fidelidade",
+          "tipo": "obrigatorio",
+          "competencia": "Prototipação",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Criação e manutenção de design system",
+          "tipo": "obrigatorio",
+          "competencia": "Design system",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Acessibilidade digital",
+          "tipo": "desejavel",
+          "competencia": "Acessibilidade",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Noções de HTML e CSS",
+          "tipo": "desejavel",
+          "competencia": "CSS",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

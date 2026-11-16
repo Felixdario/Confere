@@ -1,0 +1,114 @@
+id: b03-dados-pleno-vaga-en
+tipo: base
+descricao: Analista de dados pleno; vaga em inglês com currículo em pt-BR; tradução (A/B testing, Fluent English); Tableau relacionado a Power BI. Base do grupo contrafactual 1 (cargos neutros em gênero).
+idioma_vaga: en
+titulo_vaga: Data Analyst (Mid-level)
+nivel: pleno
+anos_minimos: 3
+
+experiencias:
+- cargo: Analista de Dados
+  empresa: Mercado Graúna Elíptica
+  inicio: 2023-02
+  fim: null
+  relevante: true
+  trecho: Analista de Dados — Mercado Graúna Elíptica — fev/2023 – atual
+- cargo: Analista de BI Júnior
+  empresa: Cooperativa Mandacaru Prismático
+  inicio: 2021-06
+  fim: 2023-01
+  relevante: true
+  trecho: Analista de BI Júnior — Cooperativa Mandacaru Prismático — jun/2021 – jan/2023
+
+competencias:
+- canonica: SQL
+  trecho: Escrevo consultas SQL
+  experiencias: [0]
+- canonica: Python
+  trecho: Python (pandas)
+  experiencias: [0]
+- canonica: pandas
+  trecho: Python (pandas)
+  experiencias: [0]
+- canonica: Testes A/B
+  como_escrito: testes A/B
+  trecho: analiso testes A/B de preço
+  experiencias: [0]
+- canonica: Tableau
+  trecho: dashboards em Tableau
+  experiencias: [1]
+- canonica: Excel
+  trecho: planilhas de acompanhamento em Excel
+  experiencias: [1]
+formacao:
+- curso: Bacharelado em Estatística
+  instituicao: Universidade Fictícia do Paraná
+  conclusao: 2021
+  trecho: Bacharelado em Estatística — Universidade Fictícia do Paraná — 2021
+idiomas:
+- idioma: Inglês
+  nivel: fluente
+  trecho: Inglês fluente
+certificacoes: []
+
+requisitos:
+- descricao: Advanced SQL
+  tipo: obrigatorio
+  competencia: SQL
+  status_esperado: atende
+  evidencia: Escrevo consultas SQL
+- descricao: Python for data analysis
+  tipo: obrigatorio
+  competencia: Python
+  status_esperado: atende
+  evidencia: Python (pandas)
+- descricao: Power BI dashboards
+  tipo: obrigatorio
+  competencia: Power BI
+  status_esperado: parcial
+  evidencia: dashboards em Tableau
+- descricao: Fluent English
+  tipo: obrigatorio
+  competencia: Inglês
+  status_esperado: atende
+  evidencia: Inglês fluente
+- descricao: dbt
+  tipo: desejavel
+  competencia: dbt
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Airflow
+  tipo: desejavel
+  competencia: Apache Airflow
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: A/B testing
+  tipo: desejavel
+  competencia: Testes A/B
+  status_esperado: atende
+  evidencia: analiso testes A/B de preço
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 66 meses.
+anos_relevantes_esperados: 5.5
+# O = 3,5/4; D = 1/3; S = min(1, 5,5/3) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 78
+faixa_nota: [73, 83]
+lacunas: [Power BI, dbt, Apache Airflow]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Renata Okumura Prado
+- tipo: email
+  valor: renata.prado@example.com
+- tipo: telefone
+  valor: (00) 90000-0303
+- tipo: endereco
+  valor: Curitiba – PR
+- tipo: nascimento
+  valor: 17/06/1997
+- tipo: estado_civil
+  valor: solteira
+- tipo: genero
+  valor: 'Sexo: feminino'
+- tipo: cpf
+  valor: 742.118.305-21

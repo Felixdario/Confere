@@ -1,0 +1,190 @@
+{
+  "versao": 1,
+  "id": "b02-backend-pleno-node",
+  "extrair_curriculo": {
+    "entrada_sha256": "3842a448ea2642964a4fbe1670d8c6ccd4c153656dae9e0611a47a0c0fcc657f",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Desenvolvedor Back-end",
+          "empresa": "Logística Siriema Hexagonal",
+          "inicio": {
+            "ano": 2021,
+            "mes": null
+          },
+          "fim": null,
+          "trecho": "Desenvolvedor Back-end — Logística Siriema Hexagonal — 2021 – o momento"
+        },
+        {
+          "cargo": "Desenvolvedor Júnior",
+          "empresa": "Sistemas Capivara Binária",
+          "inicio": {
+            "ano": 2019,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2021,
+            "mes": null
+          },
+          "trecho": "Desenvolvedor Júnior — Sistemas Capivara Binária — 2019 – 2021"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Node",
+          "trecho": "APIs REST em Node com Express",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Express",
+          "trecho": "Node com Express",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "APIs REST",
+          "trecho": "Desenvolvo APIs REST",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Postgres",
+          "trecho": "Modelei o banco Postgres",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Docker",
+          "trecho": "containers Docker",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Redis",
+          "trecho": "cache com Redis",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "JavaScript",
+          "trecho": "telas em JavaScript",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Mongo",
+          "trecho": "consultas no Mongo",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Git",
+          "trecho": "Docker, Redis, Git",
+          "experiencias": []
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Sistemas de Informação",
+          "instituicao": "Universidade Fictícia de Minas",
+          "conclusao": 2019,
+          "trecho": "Bacharelado em Sistemas de Informação — Universidade Fictícia de Minas — 2019"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "4f708ac2e6a18143a8dcc9cffdca5be83155e4b006f0de36fe9147f3c43de3d2",
+    "saida": {
+      "titulo": "Desenvolvedor(a) Back-end Pleno — Node.js",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "Node.js no back-end",
+          "tipo": "obrigatorio",
+          "competencia": "Node.js",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "PostgreSQL",
+          "tipo": "obrigatorio",
+          "competencia": "PostgreSQL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Construção de APIs REST",
+          "tipo": "obrigatorio",
+          "competencia": "REST",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Docker",
+          "tipo": "obrigatorio",
+          "competencia": "Docker",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "TypeScript",
+          "tipo": "obrigatorio",
+          "competencia": "TypeScript",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Redis",
+          "tipo": "desejavel",
+          "competencia": "Redis",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Kubernetes",
+          "tipo": "desejavel",
+          "competencia": "Kubernetes",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "AWS",
+          "tipo": "desejavel",
+          "competencia": "AWS",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

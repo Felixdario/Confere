@@ -1,0 +1,428 @@
+# Taxonomia de competências (ADR 0002).
+#
+# - `canonica`: o nome que aparece na tela e nas evals.
+# - `sinonimos`: grafias, abreviações e traduções da MESMA competência ("Postgres", "k8s", "MS Excel").
+#   Abreviação comum precisa estar aqui: o embedding não a reconhece (ADR 0002, medições).
+# - `relacionadas`: competências próximas que valem "parcial" (Vue para quem pede React). Só a
+#   taxonomia decide "relacionada"; a relação é simétrica e cada nome precisa ser uma canônica.
+#
+# A comparação normaliza caixa, acentos, espaços e pontuação nas pontas (exceto # e +).
+# A carga valida: nenhum termo em duas entradas, relacionadas existentes e simétricas.
+# Mantenha as entradas em ordem alfabética dentro de cada categoria.
+
+versao: 1
+competencias:
+  # --- front-end ---
+  - canonica: Acessibilidade
+    categoria: frontend
+    sinonimos: [WCAG, acessibilidade digital, accessibility, a11y]
+  - canonica: Angular
+    categoria: frontend
+    sinonimos: [AngularJS, Angular.js]
+    relacionadas: [React, Vue.js]
+  - canonica: CSS
+    categoria: frontend
+    sinonimos: [CSS3]
+  - canonica: HTML
+    categoria: frontend
+    sinonimos: [HTML5]
+  - canonica: JavaScript
+    categoria: frontend
+    sinonimos: [JS, ES6, ECMAScript]
+    relacionadas: [TypeScript]
+  - canonica: Jest
+    categoria: frontend
+    relacionadas: [Vitest]
+  - canonica: jQuery
+    categoria: frontend
+  - canonica: Next.js
+    categoria: frontend
+    sinonimos: [NextJS, Next.JS]
+    relacionadas: [Nuxt]
+  - canonica: Nuxt
+    categoria: frontend
+    sinonimos: [Nuxt.js, NuxtJS]
+    relacionadas: [Next.js]
+  - canonica: React
+    categoria: frontend
+    sinonimos: [React.js, ReactJS, React JS]
+    relacionadas: [Angular, Vue.js]
+  - canonica: Testing Library
+    categoria: frontend
+    sinonimos: [React Testing Library]
+  - canonica: TypeScript
+    categoria: frontend
+    sinonimos: [TS]
+    relacionadas: [JavaScript]
+  - canonica: Vitest
+    categoria: frontend
+    relacionadas: [Jest]
+  - canonica: Vue.js
+    categoria: frontend
+    sinonimos: [Vue, VueJS]
+    relacionadas: [Angular, React]
+
+  # --- back-end ---
+  - canonica: Django
+    categoria: backend
+  - canonica: Express
+    categoria: backend
+    sinonimos: [Express.js, ExpressJS]
+  - canonica: Go
+    categoria: backend
+    sinonimos: [Golang]
+  - canonica: GraphQL
+    categoria: backend
+  - canonica: Java
+    categoria: backend
+  - canonica: JUnit
+    categoria: backend
+  - canonica: Microsserviços
+    categoria: backend
+    sinonimos: [microsserviço, microservices, microservice]
+  - canonica: Node.js
+    categoria: backend
+    sinonimos: [Node, NodeJS]
+  - canonica: Python
+    categoria: backend
+    sinonimos: [Python 3]
+  - canonica: REST
+    categoria: backend
+    sinonimos: [APIs REST, API REST, RESTful, REST API, REST APIs]
+  - canonica: Spring Boot
+    categoria: backend
+    sinonimos: [SpringBoot]
+
+  # --- bancos de dados ---
+  - canonica: MongoDB
+    categoria: banco-de-dados
+    sinonimos: [Mongo]
+  - canonica: MySQL
+    categoria: banco-de-dados
+    relacionadas: [Oracle Database, PostgreSQL]
+  - canonica: Oracle Database
+    categoria: banco-de-dados
+    sinonimos: [Oracle, Oracle DB]
+    relacionadas: [MySQL, PostgreSQL]
+  - canonica: PostgreSQL
+    categoria: banco-de-dados
+    sinonimos: [Postgres, PSQL]
+    relacionadas: [MySQL, Oracle Database]
+  - canonica: Redis
+    categoria: banco-de-dados
+  - canonica: SQL
+    categoria: banco-de-dados
+
+  # --- nuvem, infraestrutura e DevOps ---
+  - canonica: AWS
+    categoria: nuvem-e-infra
+    sinonimos: [Amazon Web Services]
+    relacionadas: [Azure, Google Cloud]
+  - canonica: Azure
+    categoria: nuvem-e-infra
+    sinonimos: [Microsoft Azure]
+    relacionadas: [AWS, Google Cloud]
+  - canonica: CI/CD
+    categoria: nuvem-e-infra
+    sinonimos: [CI-CD, CI / CD]
+  - canonica: Docker
+    categoria: nuvem-e-infra
+    relacionadas: [Kubernetes]
+  - canonica: Git
+    categoria: nuvem-e-infra
+  - canonica: GitLab
+    categoria: nuvem-e-infra
+    sinonimos: [GitLab CI]
+  - canonica: Google Cloud
+    categoria: nuvem-e-infra
+    sinonimos: [GCP, Google Cloud Platform]
+    relacionadas: [AWS, Azure]
+  - canonica: Grafana
+    categoria: nuvem-e-infra
+  - canonica: Kubernetes
+    categoria: nuvem-e-infra
+    sinonimos: [k8s]
+    relacionadas: [Docker]
+  - canonica: Linux
+    categoria: nuvem-e-infra
+  - canonica: Prometheus
+    categoria: nuvem-e-infra
+  - canonica: Shell script
+    categoria: nuvem-e-infra
+    sinonimos: [shell scripting, script shell]
+  - canonica: Terraform
+    categoria: nuvem-e-infra
+  - canonica: VMware
+    categoria: nuvem-e-infra
+    sinonimos: [vSphere]
+  - canonica: Windows
+    categoria: nuvem-e-infra
+    sinonimos: [Microsoft Windows]
+
+  # --- dados ---
+  - canonica: Apache Airflow
+    categoria: dados
+    sinonimos: [Airflow]
+  - canonica: Apache Spark
+    categoria: dados
+    sinonimos: [Spark, PySpark]
+  - canonica: dbt
+    categoria: dados
+    sinonimos: [data build tool]
+  - canonica: Estatística
+    categoria: dados
+    sinonimos: [statistics]
+  - canonica: Excel
+    categoria: dados
+    sinonimos: [MS Excel, Microsoft Excel]
+    relacionadas: [Google Planilhas]
+  - canonica: Google Planilhas
+    categoria: dados
+    sinonimos: [Google Sheets]
+    relacionadas: [Excel]
+  - canonica: Looker Studio
+    categoria: dados
+    sinonimos: [Google Data Studio, Data Studio]
+    relacionadas: [Power BI, Tableau]
+  - canonica: Machine learning
+    categoria: dados
+    sinonimos: [aprendizado de máquina, ML]
+  - canonica: pandas
+    categoria: dados
+  - canonica: Power BI
+    categoria: dados
+    sinonimos: [PowerBI, Microsoft Power BI]
+    relacionadas: [Looker Studio, Tableau]
+  - canonica: PyTorch
+    categoria: dados
+    relacionadas: [TensorFlow]
+  - canonica: Tableau
+    categoria: dados
+    relacionadas: [Looker Studio, Power BI]
+  - canonica: TensorFlow
+    categoria: dados
+    relacionadas: [PyTorch]
+  - canonica: Testes A/B
+    categoria: dados
+    sinonimos: [teste A/B, A/B testing, A/B test, A/B tests]
+
+  # --- design ---
+  - canonica: Adobe Illustrator
+    categoria: design
+    sinonimos: [Illustrator]
+  - canonica: Adobe Photoshop
+    categoria: design
+    sinonimos: [Photoshop]
+  - canonica: Design system
+    categoria: design
+    sinonimos: [design systems, sistema de design]
+  - canonica: Figma
+    categoria: design
+  - canonica: Pesquisa com usuários
+    categoria: design
+    sinonimos: [UX Research, user research, pesquisa de usuário, pesquisa com usuário]
+  - canonica: Prototipação
+    categoria: design
+    sinonimos: [prototipagem, protótipos, protótipo, prototyping]
+  - canonica: Testes de usabilidade
+    categoria: design
+    sinonimos: [teste de usabilidade, usability testing]
+  - canonica: UX Design
+    categoria: design
+    sinonimos: [design de experiência do usuário, user experience design]
+
+  # --- contabilidade e administrativo ---
+  - canonica: Apuração de impostos
+    categoria: contabilidade
+    sinonimos: [apuração tributária, apuração fiscal]
+  - canonica: Conciliação bancária
+    categoria: contabilidade
+    sinonimos: [conciliações bancárias]
+  - canonica: Contas a pagar
+    categoria: administrativo
+  - canonica: Emissão de notas fiscais
+    categoria: administrativo
+    sinonimos: [notas fiscais, NF-e, emissão de NF-e]
+  - canonica: Fechamento contábil
+    categoria: contabilidade
+    sinonimos: [fechamento mensal, month-end close]
+  - canonica: Fluxo de caixa
+    categoria: administrativo
+  - canonica: IFRS
+    categoria: contabilidade
+  - canonica: Lucro Real
+    categoria: contabilidade
+  - canonica: Operação de caixa
+    categoria: administrativo
+  - canonica: SAP
+    categoria: contabilidade
+    sinonimos: [SAP ERP, SAP S/4HANA]
+    relacionadas: [TOTVS Protheus]
+  - canonica: SPED
+    categoria: contabilidade
+    sinonimos: [SPED Fiscal, SPED Contábil]
+  - canonica: TOTVS Protheus
+    categoria: contabilidade
+    sinonimos: [Protheus]
+    relacionadas: [SAP]
+
+  # --- saúde ---
+  - canonica: ACLS
+    categoria: saude
+    sinonimos: [Suporte Avançado de Vida]
+    relacionadas: [BLS]
+  - canonica: Administração de medicamentos
+    categoria: saude
+  - canonica: BLS
+    categoria: saude
+    sinonimos: [Suporte Básico de Vida]
+    relacionadas: [ACLS]
+  - canonica: Prontuário eletrônico
+    categoria: saude
+    sinonimos: [PEP, prontuário eletrônico do paciente]
+    relacionadas: [Tasy]
+  - canonica: SAE
+    categoria: saude
+    sinonimos: [Sistematização da Assistência de Enfermagem]
+  - canonica: Tasy
+    categoria: saude
+    relacionadas: [Prontuário eletrônico]
+  - canonica: Terapia intensiva
+    categoria: saude
+    sinonimos: [UTI, terapia intensiva adulto]
+
+  # --- marketing ---
+  - canonica: Copywriting
+    categoria: marketing
+    sinonimos: [redação publicitária]
+  - canonica: Gestão de redes sociais
+    categoria: marketing
+    sinonimos: [social media, gestão de mídias sociais]
+  - canonica: Google Ads
+    categoria: marketing
+    sinonimos: [Google AdWords]
+    relacionadas: [Meta Ads]
+  - canonica: Google Analytics
+    categoria: marketing
+    sinonimos: [GA4]
+  - canonica: Marketing digital
+    categoria: marketing
+    sinonimos: [digital marketing]
+  - canonica: Meta Ads
+    categoria: marketing
+    sinonimos: [Facebook Ads, Instagram Ads]
+    relacionadas: [Google Ads]
+  - canonica: SEO
+    categoria: marketing
+    sinonimos: [otimização para mecanismos de busca]
+
+  # --- vendas e CRM ---
+  - canonica: HubSpot
+    categoria: vendas
+    relacionadas: [Salesforce]
+  - canonica: Negociação
+    categoria: vendas
+    sinonimos: [negotiation]
+  - canonica: Prospecção outbound
+    categoria: vendas
+    sinonimos: [outbound, prospecção ativa]
+  - canonica: Salesforce
+    categoria: vendas
+    sinonimos: [Salesforce CRM]
+    relacionadas: [HubSpot]
+  - canonica: SPIN Selling
+    categoria: vendas
+    sinonimos: [SPIN]
+  - canonica: Vendas B2B
+    categoria: vendas
+    sinonimos: [B2B sales, venda B2B]
+  - canonica: Vendas de SaaS
+    categoria: vendas
+    sinonimos: [venda de SaaS, SaaS sales]
+
+  # --- suporte e gestão ---
+  - canonica: Atendimento ao cliente
+    categoria: suporte
+    sinonimos: [customer service, atendimento a clientes]
+  - canonica: Gestão de equipes
+    categoria: gestao
+    sinonimos: [liderança de equipes, team management]
+  - canonica: Gestão de projetos
+    categoria: gestao
+    sinonimos: [gerenciamento de projetos, project management]
+  - canonica: GLPI
+    categoria: suporte
+  - canonica: Redes de computadores
+    categoria: suporte
+    sinonimos: [redes, redes de dados, computer networks]
+    relacionadas: [TCP/IP]
+  - canonica: Sistemas de chamados
+    categoria: suporte
+    sinonimos: [sistema de chamados, help desk, service desk, ticketing]
+  - canonica: TCP/IP
+    categoria: suporte
+    relacionadas: [Redes de computadores]
+
+  # --- RH ---
+  - canonica: Diversidade e inclusão
+    categoria: rh
+    sinonimos: [D&I, DEI]
+  - canonica: Entrevista por competências
+    categoria: rh
+    sinonimos: [entrevistas por competências]
+  - canonica: Gupy
+    categoria: rh
+  - canonica: Onboarding
+    categoria: rh
+    sinonimos: [integração de novos colaboradores]
+  - canonica: People analytics
+    categoria: rh
+  - canonica: Recrutamento e seleção
+    categoria: rh
+    sinonimos: [R&S, recrutamento, recruiting]
+    relacionadas: [Triagem de currículos]
+  - canonica: Triagem de currículos
+    categoria: rh
+    sinonimos: [triagem de CVs, CV screening]
+    relacionadas: [Recrutamento e seleção]
+
+  # --- engenharia civil ---
+  - canonica: AutoCAD
+    categoria: engenharia-civil
+  - canonica: Gestão de obras
+    categoria: engenharia-civil
+    sinonimos: [gerenciamento de obras]
+  - canonica: MS Project
+    categoria: engenharia-civil
+    sinonimos: [Microsoft Project]
+  - canonica: NR-18
+    categoria: engenharia-civil
+  - canonica: Orçamento de obras
+    categoria: engenharia-civil
+  - canonica: Revit
+    categoria: engenharia-civil
+    sinonimos: [Autodesk Revit]
+
+  # --- registros profissionais e certificações ---
+  - canonica: COREN
+    categoria: certificacao
+    sinonimos: [COREN-BA, COREN-SP]
+  - canonica: CRC
+    categoria: certificacao
+  - canonica: CREA
+    categoria: certificacao
+    sinonimos: [CREA-GO, CREA-SP]
+  - canonica: ITIL
+    categoria: certificacao
+    sinonimos: [ITIL 4, ITIL 4 Foundation, ITIL Foundation]
+
+  # --- idiomas ---
+  - canonica: Espanhol
+    categoria: idioma
+    sinonimos: [Spanish, Español]
+  - canonica: Inglês
+    categoria: idioma
+    sinonimos: [English]
+  - canonica: Português
+    categoria: idioma
+    sinonimos: [Portuguese]

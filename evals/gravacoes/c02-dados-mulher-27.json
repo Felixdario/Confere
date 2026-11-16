@@ -1,0 +1,170 @@
+{
+  "versao": 1,
+  "id": "c02-dados-mulher-27",
+  "extrair_curriculo": {
+    "entrada_sha256": "32229f5b49cf911f4ce53559b32658829c3b0b8226b9e4636f9e6e1bcdc5f3ce",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Analista de Dados",
+          "empresa": "Mercado Graúna Elíptica",
+          "inicio": {
+            "ano": 2023,
+            "mes": 2
+          },
+          "fim": null,
+          "trecho": "Analista de Dados — Mercado Graúna Elíptica — fev/2023 – atual"
+        },
+        {
+          "cargo": "Analista de BI Júnior",
+          "empresa": "Cooperativa Mandacaru Prismático",
+          "inicio": {
+            "ano": 2021,
+            "mes": 6
+          },
+          "fim": {
+            "ano": 2023,
+            "mes": 1
+          },
+          "trecho": "Analista de BI Júnior — Cooperativa Mandacaru Prismático — jun/2021 – jan/2023"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "SQL",
+          "trecho": "Escrevo consultas SQL",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Python",
+          "trecho": "Python (pandas)",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "pandas",
+          "trecho": "Python (pandas)",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "testes A/B",
+          "trecho": "analiso testes A/B de preço",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Tableau",
+          "trecho": "dashboards em Tableau",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Excel",
+          "trecho": "planilhas de acompanhamento em Excel",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Estatística",
+          "instituicao": "Universidade Fictícia do Paraná",
+          "conclusao": 2021,
+          "trecho": "Bacharelado em Estatística — Universidade Fictícia do Paraná — 2021"
+        }
+      ],
+      "idiomas": [
+        {
+          "idioma": "Inglês",
+          "nivel": "fluente",
+          "trecho": "Inglês fluente"
+        }
+      ],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "2c6945dc0ba4772272604838bb4a60ca5441ddbe00106010b2e5e87e296f6c8f",
+    "saida": {
+      "titulo": "Data Analyst (Mid-level)",
+      "idioma": "en",
+      "nivel": "pleno",
+      "anos_minimos": 3,
+      "requisitos": [
+        {
+          "descricao": "Advanced SQL",
+          "tipo": "obrigatorio",
+          "competencia": "SQL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Python for data analysis",
+          "tipo": "obrigatorio",
+          "competencia": "Python",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Power BI dashboards",
+          "tipo": "obrigatorio",
+          "competencia": "Power BI",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Fluent English",
+          "tipo": "obrigatorio",
+          "competencia": "Inglês",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "dbt",
+          "tipo": "desejavel",
+          "competencia": "dbt",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Airflow",
+          "tipo": "desejavel",
+          "competencia": "Apache Airflow",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "A/B testing",
+          "tipo": "desejavel",
+          "competencia": "Testes A/B",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

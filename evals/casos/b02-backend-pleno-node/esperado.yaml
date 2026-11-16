@@ -1,0 +1,126 @@
+id: b02-backend-pleno-node
+tipo: base
+descricao: Back-end pleno com sinônimos pesados (Node, Postgres, Mongo); datas só com ano; emprego atual escrito como "o momento"; relacionadas JavaScript→TypeScript e Docker→Kubernetes.
+idioma_vaga: pt
+titulo_vaga: Desenvolvedor(a) Back-end Pleno — Node.js
+nivel: pleno
+anos_minimos: null
+
+experiencias:
+- cargo: Desenvolvedor Back-end
+  empresa: Logística Siriema Hexagonal
+  inicio: '2021'
+  fim: null
+  relevante: true
+  trecho: Desenvolvedor Back-end — Logística Siriema Hexagonal — 2021 – o momento
+- cargo: Desenvolvedor Júnior
+  empresa: Sistemas Capivara Binária
+  inicio: '2019'
+  fim: '2021'
+  relevante: true
+  trecho: Desenvolvedor Júnior — Sistemas Capivara Binária — 2019 – 2021
+
+competencias:
+- canonica: Node.js
+  como_escrito: Node
+  trecho: APIs REST em Node com Express
+  experiencias: [0, 1]
+- canonica: Express
+  trecho: Node com Express
+  experiencias: [0]
+- canonica: REST
+  como_escrito: APIs REST
+  trecho: Desenvolvo APIs REST
+  experiencias: [0]
+- canonica: PostgreSQL
+  como_escrito: Postgres
+  trecho: Modelei o banco Postgres
+  experiencias: [0]
+- canonica: Docker
+  trecho: containers Docker
+  experiencias: [0]
+- canonica: Redis
+  trecho: cache com Redis
+  experiencias: [0]
+- canonica: JavaScript
+  trecho: telas em JavaScript
+  experiencias: [1]
+- canonica: MongoDB
+  como_escrito: Mongo
+  trecho: consultas no Mongo
+  experiencias: [1]
+- canonica: Git
+  trecho: Docker, Redis, Git
+  experiencias: []
+formacao:
+- curso: Bacharelado em Sistemas de Informação
+  instituicao: Universidade Fictícia de Minas
+  conclusao: 2019
+  trecho: Bacharelado em Sistemas de Informação — Universidade Fictícia de Minas — 2019
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: Node.js no back-end
+  tipo: obrigatorio
+  competencia: Node.js
+  status_esperado: atende
+  evidencia: APIs REST em Node com Express
+- descricao: PostgreSQL
+  tipo: obrigatorio
+  competencia: PostgreSQL
+  status_esperado: atende
+  evidencia: Modelei o banco Postgres
+- descricao: Construção de APIs REST
+  tipo: obrigatorio
+  competencia: REST
+  status_esperado: atende
+  evidencia: Desenvolvo APIs REST
+- descricao: Docker
+  tipo: obrigatorio
+  competencia: Docker
+  status_esperado: atende
+  evidencia: containers Docker
+- descricao: TypeScript
+  tipo: obrigatorio
+  competencia: TypeScript
+  status_esperado: parcial
+  evidencia: telas em JavaScript
+- descricao: Redis
+  tipo: desejavel
+  competencia: Redis
+  status_esperado: atende
+  evidencia: cache com Redis
+- descricao: Kubernetes
+  tipo: desejavel
+  competencia: Kubernetes
+  status_esperado: parcial
+  evidencia: containers Docker
+- descricao: AWS
+  tipo: desejavel
+  competencia: AWS
+  status_esperado: nao_atende
+  evidencia: null
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 95 meses.
+anos_relevantes_esperados: 7.92
+# O = 4,5/5; D = 1,5/3; S = min(1, 7,9167/3) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 83
+faixa_nota: [78, 88]
+lacunas: [TypeScript, Kubernetes, AWS]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Thiago Rezende Amaral
+- tipo: email
+  valor: thiago.amaral@example.com
+- tipo: telefone
+  valor: (00) 90000-0202
+- tipo: endereco
+  valor: Belo Horizonte/MG
+- tipo: nascimento
+  valor: 03/02/1993
+- tipo: genero
+  valor: Nascido
+- tipo: estado_civil
+  valor: Casado

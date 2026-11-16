@@ -1,0 +1,124 @@
+id: b06-contabilidade-pleno
+tipo: base
+descricao: Contabilidade pleno; sinônimo MS Excel; TOTVS Protheus relacionado a SAP; endereço completo no cabeçalho. Base do grupo contrafactual 2 (cargos neutros em gênero).
+idioma_vaga: pt
+titulo_vaga: Analista Contábil Pleno
+nivel: pleno
+anos_minimos: 3
+
+experiencias:
+- cargo: Analista Contábil
+  empresa: Embalagens Jaçanã Retangular
+  inicio: 2022-08
+  fim: null
+  relevante: true
+  trecho: Analista Contábil — Embalagens Jaçanã Retangular — ago/2022 – atual
+- cargo: Assistente Contábil
+  empresa: Escritório Contábil Tucunaré Polar
+  inicio: 2020-01
+  fim: 2022-07
+  relevante: true
+  trecho: Assistente Contábil — Escritório Contábil Tucunaré Polar — jan/2020 – jul/2022
+
+competencias:
+- canonica: Fechamento contábil
+  trecho: fechamento contábil mensal
+  experiencias: [0]
+- canonica: Conciliação bancária
+  como_escrito: conciliações bancárias
+  trecho: pelas conciliações bancárias
+  experiencias: [0, 1]
+- canonica: Apuração de impostos
+  trecho: Apuração de impostos no Lucro Real
+  experiencias: [0]
+- canonica: Lucro Real
+  trecho: Apuração de impostos no Lucro Real
+  experiencias: [0]
+- canonica: SPED
+  como_escrito: SPED Fiscal
+  trecho: Entrega do SPED Fiscal e da ECD
+  experiencias: [0]
+- canonica: TOTVS Protheus
+  trecho: relatórios no TOTVS Protheus
+  experiencias: [0]
+- canonica: Excel
+  como_escrito: MS Excel
+  trecho: MS Excel avançado
+  experiencias: [1]
+formacao:
+- curso: Bacharelado em Ciências Contábeis
+  instituicao: Faculdade Fictícia de Campinas
+  conclusao: 2019
+  trecho: Bacharelado em Ciências Contábeis — Faculdade Fictícia de Campinas — 2019
+idiomas: []
+certificacoes:
+- nome: CRC
+  canonica: CRC
+  trecho: CRC ativo
+
+requisitos:
+- descricao: Fechamento contábil
+  tipo: obrigatorio
+  competencia: Fechamento contábil
+  status_esperado: atende
+  evidencia: fechamento contábil mensal
+- descricao: Conciliação bancária
+  tipo: obrigatorio
+  competencia: Conciliação bancária
+  status_esperado: atende
+  evidencia: pelas conciliações bancárias
+- descricao: Apuração de impostos
+  tipo: obrigatorio
+  competencia: Apuração de impostos
+  status_esperado: atende
+  evidencia: Apuração de impostos no Lucro Real
+- descricao: Excel avançado
+  tipo: obrigatorio
+  competencia: Excel
+  status_esperado: atende
+  evidencia: MS Excel avançado
+- descricao: Experiência com SAP
+  tipo: obrigatorio
+  competencia: SAP
+  status_esperado: parcial
+  evidencia: relatórios no TOTVS Protheus
+- descricao: Conhecimento de IFRS
+  tipo: desejavel
+  competencia: IFRS
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Power BI
+  tipo: desejavel
+  competencia: Power BI
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: CRC ativo
+  tipo: desejavel
+  competencia: CRC
+  status_esperado: atende
+  evidencia: CRC ativo
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 83 meses.
+anos_relevantes_esperados: 6.92
+# O = 4,5/5; D = 1/3; S = min(1, 6,9167/3) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 80
+faixa_nota: [75, 85]
+lacunas: [SAP, IFRS, Power BI]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Juliana Martins Teixeira
+- tipo: email
+  valor: juliana.teixeira@example.com
+- tipo: telefone
+  valor: (00) 90000-0606
+- tipo: endereco
+  valor: Rua das Palmeiras Fictícias, 120 – Campinas/SP
+- tipo: nascimento
+  valor: 30/04/1990
+- tipo: estado_civil
+  valor: casada
+- tipo: genero
+  valor: 'Sexo: feminino'
+- tipo: cpf
+  valor: 461.209.837-11

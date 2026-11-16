@@ -1,0 +1,133 @@
+{
+  "versao": 1,
+  "id": "b16-administrativo-sem-desejaveis",
+  "extrair_curriculo": {
+    "entrada_sha256": "b8a3239d43beb98d8c1f915929406bbd7e5d633a6627402b6984b9a685d5ae29",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Auxiliar Administrativo",
+          "empresa": "Clínica Odontológica Pintassilgo Ártico",
+          "inicio": {
+            "ano": 2022,
+            "mes": 5
+          },
+          "fim": null,
+          "trecho": "Auxiliar Administrativo — Clínica Odontológica Pintassilgo Ártico — mai/2022 – atual"
+        },
+        {
+          "cargo": "Atendente (meio período)",
+          "empresa": "Padaria Corrupião Losango",
+          "inicio": {
+            "ano": 2021,
+            "mes": 1
+          },
+          "fim": {
+            "ano": 2022,
+            "mes": 8
+          },
+          "trecho": "Atendente (meio período) — Padaria Corrupião Losango — jan/2021 – ago/2022"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Contas a pagar",
+          "trecho": "controle de contas a pagar",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Fluxo de caixa",
+          "trecho": "Planilhas de fluxo de caixa",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "MS Excel",
+          "trecho": "fluxo de caixa no MS Excel",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Atendimento ao cliente",
+          "trecho": "Atendimento ao cliente na recepção",
+          "experiencias": [
+            0,
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Técnico em Administração",
+          "instituicao": "Escola Técnica Fictícia",
+          "conclusao": 2019,
+          "trecho": "Técnico em Administração — Escola Técnica Fictícia — 2019"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "a8e24a0beb2fd1d0e994adf03c93ee07441ad8f848676564787929cbb5365775",
+    "saida": {
+      "titulo": "Assistente Administrativo-Financeiro",
+      "idioma": "pt",
+      "nivel": null,
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "Excel",
+          "tipo": "obrigatorio",
+          "competencia": "Excel",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Rotinas de contas a pagar",
+          "tipo": "obrigatorio",
+          "competencia": "Contas a pagar",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Emissão de notas fiscais",
+          "tipo": "obrigatorio",
+          "competencia": "Emissão de notas fiscais",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Atendimento ao cliente",
+          "tipo": "obrigatorio",
+          "competencia": "Atendimento ao cliente",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

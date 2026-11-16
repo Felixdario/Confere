@@ -1,0 +1,117 @@
+id: b05-design-produto-pleno
+tipo: base
+descricao: Design de produto pleno vindo do design gráfico (troca de carreira parcial); requisito com anos na competência (3 anos de Figma, tem 2,67) vira parcial; datas com e sem mês.
+idioma_vaga: pt
+titulo_vaga: Product Designer Pleno
+nivel: pleno
+anos_minimos: null
+
+experiencias:
+- cargo: Designer de Produto
+  empresa: Apps Agendário Pirilampo
+  inicio: 2024-03
+  fim: null
+  relevante: true
+  trecho: Designer de Produto — Apps Agendário Pirilampo — mar/2024 – atual
+- cargo: Designer Gráfico
+  empresa: Estúdio Caju Octogonal
+  inicio: '2018'
+  fim: '2021'
+  relevante: false
+  trecho: Designer Gráfico — Estúdio Caju Octogonal — 2018 – 2021
+
+competencias:
+- canonica: Figma
+  trecho: fluxos no Figma
+  experiencias: [0]
+- canonica: Pesquisa com usuários
+  trecho: Conduzo entrevistas com usuários
+  experiencias: [0]
+- canonica: Testes de usabilidade
+  trecho: testes de usabilidade a cada ciclo
+  experiencias: [0]
+- canonica: Prototipação
+  como_escrito: protótipos
+  trecho: protótipos navegáveis
+  experiencias: [0]
+- canonica: HTML
+  trecho: noções de HTML e CSS
+  experiencias: [0]
+- canonica: CSS
+  trecho: noções de HTML e CSS
+  experiencias: [0]
+- canonica: Adobe Illustrator
+  trecho: Adobe Illustrator
+  experiencias: [1]
+- canonica: Adobe Photoshop
+  como_escrito: Photoshop
+  trecho: no Photoshop
+  experiencias: [1]
+- canonica: UX Design
+  trecho: Curso livre de UX Design
+  experiencias: []
+formacao:
+- curso: Bacharelado em Design
+  instituicao: Universidade Fictícia do Ceará
+  conclusao: 2017
+  trecho: Bacharelado em Design — Universidade Fictícia do Ceará — 2017
+- curso: Curso livre de UX Design
+  instituicao: Escola Online Fictícia
+  conclusao: 2023
+  trecho: Curso livre de UX Design — Escola Online Fictícia — 2023
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: Pelo menos 3 anos de experiência com Figma
+  tipo: obrigatorio
+  competencia: Figma
+  anos: 3
+  status_esperado: parcial
+  evidencia: fluxos no Figma
+- descricao: Pesquisa com usuários
+  tipo: obrigatorio
+  competencia: Pesquisa com usuários
+  status_esperado: atende
+  evidencia: Conduzo entrevistas com usuários
+- descricao: Prototipação de alta fidelidade
+  tipo: obrigatorio
+  competencia: Prototipação
+  status_esperado: atende
+  evidencia: protótipos navegáveis
+- descricao: Criação e manutenção de design system
+  tipo: obrigatorio
+  competencia: Design system
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Acessibilidade digital
+  tipo: desejavel
+  competencia: Acessibilidade
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Noções de HTML e CSS
+  tipo: desejavel
+  competencia: CSS
+  status_esperado: atende
+  evidencia: noções de HTML e CSS
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 33 meses.
+anos_relevantes_esperados: 2.75
+# O = 2,5/4; D = 1/2; S = min(1, 2,75/3) = 0,9167 (pesos renormalizados se faltar componente).
+nota_referencia: 63
+faixa_nota: [58, 68]
+lacunas: [Figma, Design system, Acessibilidade]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Beatriz Nogueira Sales
+- tipo: email
+  valor: bia.sales@example.com
+- tipo: telefone
+  valor: (00) 90000-0505
+- tipo: endereco
+  valor: Fortaleza – CE
+- tipo: nascimento
+  valor: 09/11/1992
+- tipo: estado_civil
+  valor: Casada

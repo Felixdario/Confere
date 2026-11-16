@@ -1,0 +1,111 @@
+id: b07-enfermagem-junior
+tipo: base
+descricao: Enfermagem recém-formada para UTI; aderência média; BLS relacionado a ACLS; estágio só com ano conta nos anos relevantes.
+idioma_vaga: pt
+titulo_vaga: Enfermeiro(a) Assistencial — UTI Adulto
+nivel: null
+anos_minimos: 3
+
+experiencias:
+- cargo: Enfermeira
+  empresa: Clínica Anambé Turquesa
+  inicio: 2025-02
+  fim: null
+  relevante: true
+  trecho: Enfermeira — Clínica Anambé Turquesa — fev/2025 – atual
+- cargo: Estágio supervisionado em clínica médica
+  empresa: Hospital-Escola Sabiá Trigonal
+  inicio: '2024'
+  fim: '2024'
+  relevante: true
+  trecho: Estágio supervisionado em clínica médica — Hospital-Escola Sabiá Trigonal — 2024
+
+competencias:
+- canonica: SAE
+  como_escrito: Sistematização da Assistência de Enfermagem
+  trecho: Sistematização da Assistência de Enfermagem (SAE)
+  experiencias: [0, 1]
+- canonica: Administração de medicamentos
+  trecho: Administração de medicamentos sob prescrição médica
+  experiencias: [0, 1]
+- canonica: Prontuário eletrônico
+  trecho: Registro em prontuário eletrônico
+  experiencias: [0]
+- canonica: Tasy
+  trecho: prontuário eletrônico Tasy
+  experiencias: [0]
+formacao:
+- curso: Bacharelado em Enfermagem
+  instituicao: Universidade Fictícia da Bahia
+  conclusao: 2024
+  trecho: Bacharelado em Enfermagem — Universidade Fictícia da Bahia — 2024
+idiomas: []
+certificacoes:
+- nome: COREN-BA
+  canonica: COREN
+  trecho: COREN-BA ativo
+- nome: Suporte Básico de Vida (BLS)
+  canonica: BLS
+  trecho: Curso de Suporte Básico de Vida (BLS) — 2024
+
+requisitos:
+- descricao: COREN ativo
+  tipo: obrigatorio
+  competencia: COREN
+  status_esperado: atende
+  evidencia: COREN-BA ativo
+- descricao: Experiência em terapia intensiva (UTI)
+  tipo: obrigatorio
+  competencia: Terapia intensiva
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Aplicação da SAE
+  tipo: obrigatorio
+  competencia: SAE
+  status_esperado: atende
+  evidencia: Sistematização da Assistência de Enfermagem (SAE)
+- descricao: Administração de medicamentos
+  tipo: obrigatorio
+  competencia: Administração de medicamentos
+  status_esperado: atende
+  evidencia: Administração de medicamentos sob prescrição médica
+- descricao: Curso de ACLS válido
+  tipo: obrigatorio
+  competencia: ACLS
+  status_esperado: parcial
+  evidencia: Curso de Suporte Básico de Vida (BLS) — 2024
+- descricao: Pós-graduação em terapia intensiva
+  tipo: desejavel
+  competencia: Terapia intensiva
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Prontuário eletrônico (Tasy ou MV)
+  tipo: desejavel
+  competencia: Prontuário eletrônico
+  status_esperado: atende
+  evidencia: prontuário eletrônico Tasy
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 34 meses.
+anos_relevantes_esperados: 2.83
+# O = 3,5/5; D = 1/2; S = min(1, 2,8333/3) = 0,9444 (pesos renormalizados se faltar componente).
+nota_referencia: 68
+faixa_nota: [63, 73]
+lacunas: [Terapia intensiva, ACLS]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Priscila Andrade Moura
+- tipo: email
+  valor: priscila.moura@example.com
+- tipo: telefone
+  valor: (00) 90000-0707
+- tipo: endereco
+  valor: Salvador – BA
+- tipo: nascimento
+  valor: 12/01/2000
+- tipo: genero
+  valor: Nascida
+- tipo: estado_civil
+  valor: Solteira
+- tipo: cpf
+  valor: 237.904.118-40

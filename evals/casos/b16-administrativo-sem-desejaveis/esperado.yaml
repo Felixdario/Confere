@@ -1,0 +1,86 @@
+id: b16-administrativo-sem-desejaveis
+tipo: base
+descricao: 'Renormalização: vaga sem desejáveis, sem anos e sem nível (só O conta, peso 0,70 renormalizado); experiências sobrepostas (mai–ago/2022); endereço completo.'
+idioma_vaga: pt
+titulo_vaga: Assistente Administrativo-Financeiro
+nivel: null
+anos_minimos: null
+
+experiencias:
+- cargo: Auxiliar Administrativo
+  empresa: Clínica Odontológica Pintassilgo Ártico
+  inicio: 2022-05
+  fim: null
+  relevante: true
+  trecho: Auxiliar Administrativo — Clínica Odontológica Pintassilgo Ártico — mai/2022 – atual
+- cargo: Atendente (meio período)
+  empresa: Padaria Corrupião Losango
+  inicio: 2021-01
+  fim: 2022-08
+  relevante: true
+  trecho: Atendente (meio período) — Padaria Corrupião Losango — jan/2021 – ago/2022
+
+competencias:
+- canonica: Contas a pagar
+  trecho: controle de contas a pagar
+  experiencias: [0]
+- canonica: Fluxo de caixa
+  trecho: Planilhas de fluxo de caixa
+  experiencias: [0]
+- canonica: Excel
+  como_escrito: MS Excel
+  trecho: fluxo de caixa no MS Excel
+  experiencias: [0]
+- canonica: Atendimento ao cliente
+  trecho: Atendimento ao cliente na recepção
+  experiencias: [0, 1]
+formacao:
+- curso: Técnico em Administração
+  instituicao: Escola Técnica Fictícia
+  conclusao: 2019
+  trecho: Técnico em Administração — Escola Técnica Fictícia — 2019
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: Excel
+  tipo: obrigatorio
+  competencia: Excel
+  status_esperado: atende
+  evidencia: fluxo de caixa no MS Excel
+- descricao: Rotinas de contas a pagar
+  tipo: obrigatorio
+  competencia: Contas a pagar
+  status_esperado: atende
+  evidencia: controle de contas a pagar
+- descricao: Emissão de notas fiscais
+  tipo: obrigatorio
+  competencia: Emissão de notas fiscais
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Atendimento ao cliente
+  tipo: obrigatorio
+  competencia: Atendimento ao cliente
+  status_esperado: atende
+  evidencia: Atendimento ao cliente na recepção
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 71 meses.
+anos_relevantes_esperados: 5.92
+# O = 3/4; D ausente; S ausente (pesos renormalizados se faltar componente).
+nota_referencia: 75
+faixa_nota: [70, 80]
+lacunas: [Emissão de notas fiscais]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Gabriel Henrique Souza
+- tipo: email
+  valor: gabriel.souza@example.com
+- tipo: telefone
+  valor: (00) 90000-1616
+- tipo: endereco
+  valor: Rua Fictícia dos Ipês, 45 – Ribeirão Preto/SP
+- tipo: nascimento
+  valor: 19/05/2001
+- tipo: estado_civil
+  valor: Solteiro

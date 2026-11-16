@@ -1,0 +1,216 @@
+{
+  "versao": 1,
+  "id": "b04-devops-senior",
+  "extrair_curriculo": {
+    "entrada_sha256": "0422f8db03f5790ad518a3410fb1fa4562964b8418a6b91753080ef059622cec",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Engenheiro de Infraestrutura Sênior",
+          "empresa": "Tecnologia Nimbo Tatupeba",
+          "inicio": {
+            "ano": 2020,
+            "mes": 8
+          },
+          "fim": null,
+          "trecho": "Engenheiro de Infraestrutura Sênior — Tecnologia Nimbo Tatupeba — ago/2020 – atual"
+        },
+        {
+          "cargo": "Analista de Infraestrutura",
+          "empresa": "Datacenter Ipê Trapezoidal",
+          "inicio": {
+            "ano": 2016,
+            "mes": 3
+          },
+          "fim": {
+            "ano": 2020,
+            "mes": 9
+          },
+          "trecho": "Analista de Infraestrutura — Datacenter Ipê Trapezoidal — mar/2016 – set/2020"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "k8s",
+          "trecho": "clusters k8s de produção",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "AWS",
+          "trecho": "de produção na AWS",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Terraform",
+          "trecho": "infraestrutura em Terraform",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "CI/CD",
+          "trecho": "pipelines de CI/CD no GitLab",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "GitLab",
+          "trecho": "CI/CD no GitLab",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Prometheus",
+          "trecho": "monitoração com Prometheus e Grafana",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Grafana",
+          "trecho": "Prometheus e Grafana",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Python",
+          "trecho": "scripts em Python",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Linux",
+          "trecho": "servidores Linux",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "VMware",
+          "trecho": "virtualização com VMware",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "Shell script",
+          "trecho": "tarefas com shell script",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Ciência da Computação",
+          "instituicao": "Universidade Fictícia do Sul",
+          "conclusao": 2015,
+          "trecho": "Bacharelado em Ciência da Computação — Universidade Fictícia do Sul — 2015"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": [
+        {
+          "nome": "AWS Certified Solutions Architect – Associate",
+          "emissor": null,
+          "trecho": "AWS Certified Solutions Architect – Associate"
+        },
+        {
+          "nome": "Certified Kubernetes Administrator (CKA)",
+          "emissor": null,
+          "trecho": "Certified Kubernetes Administrator (CKA)"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "9762e3074f3b92b451d600db38616c3f697b912581415f6c52d4117529044a69",
+    "saida": {
+      "titulo": "Engenheiro(a) DevOps Sênior",
+      "idioma": "pt",
+      "nivel": "senior",
+      "anos_minimos": 6,
+      "requisitos": [
+        {
+          "descricao": "Kubernetes em produção",
+          "tipo": "obrigatorio",
+          "competencia": "Kubernetes",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Terraform",
+          "tipo": "obrigatorio",
+          "competencia": "Terraform",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "AWS",
+          "tipo": "obrigatorio",
+          "competencia": "AWS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "CI/CD",
+          "tipo": "obrigatorio",
+          "competencia": "CI/CD",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Linux",
+          "tipo": "obrigatorio",
+          "competencia": "Linux",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Prometheus",
+          "tipo": "desejavel",
+          "competencia": "Prometheus",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Python para automação",
+          "tipo": "desejavel",
+          "competencia": "Python",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Go",
+          "tipo": "desejavel",
+          "competencia": "Go",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

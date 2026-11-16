@@ -1,0 +1,171 @@
+{
+  "versao": 1,
+  "id": "c06-rh-mulher-62",
+  "extrair_curriculo": {
+    "entrada_sha256": "e3a52c4959f734a0f472e1de1609032d2572118a717a729eb9ba065070e0a209",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Analista de RH",
+          "empresa": "Hospital Garça Mostarda",
+          "inicio": {
+            "ano": 2023,
+            "mes": 9
+          },
+          "fim": null,
+          "trecho": "Analista de RH — Hospital Garça Mostarda — set/2023 – atual"
+        },
+        {
+          "cargo": "Assistente de RH",
+          "empresa": "Varejo Pica-Pau Trapézio",
+          "inicio": {
+            "ano": 2021,
+            "mes": 1
+          },
+          "fim": {
+            "ano": 2023,
+            "mes": 8
+          },
+          "trecho": "Assistente de RH — Varejo Pica-Pau Trapézio — jan/2021 – ago/2023"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Recrutamento e seleção",
+          "trecho": "processos de recrutamento e seleção",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Triagem de currículos",
+          "trecho": "Triagem de currículos e agendamento de entrevistas",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "entrevistas por competências",
+          "trecho": "Faço entrevistas por competências",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Gupy",
+          "trecho": "os candidatos na Gupy",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Onboarding",
+          "trecho": "programa de onboarding",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Diversidade e inclusão",
+          "trecho": "comitê de diversidade e inclusão",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Google Planilhas",
+          "trecho": "admissão em Google Planilhas",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Psicologia",
+          "instituicao": "Universidade Fictícia do Espírito Santo",
+          "conclusao": 2020,
+          "trecho": "Bacharelado em Psicologia — Universidade Fictícia do Espírito Santo — 2020"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "de58bd767f3f80d3ab7a1881dfdcfe837931d01877a4e12a83a66f699dee26b4",
+    "saida": {
+      "titulo": "Analista de Recrutamento e Seleção Pleno",
+      "idioma": "pt",
+      "nivel": "pleno",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "Recrutamento e seleção de ponta a ponta",
+          "tipo": "obrigatorio",
+          "competencia": "Recrutamento e seleção",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Entrevista por competências",
+          "tipo": "obrigatorio",
+          "competencia": "Entrevista por competências",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Experiência com Gupy",
+          "tipo": "obrigatorio",
+          "competencia": "Gupy",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "People analytics",
+          "tipo": "obrigatorio",
+          "competencia": "People analytics",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Onboarding de novos colaboradores",
+          "tipo": "obrigatorio",
+          "competencia": "Onboarding",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Excel intermediário",
+          "tipo": "desejavel",
+          "competencia": "Excel",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Programas de diversidade e inclusão",
+          "tipo": "desejavel",
+          "competencia": "Diversidade e inclusão",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

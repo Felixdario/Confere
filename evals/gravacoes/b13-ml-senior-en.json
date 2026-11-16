@@ -1,0 +1,170 @@
+{
+  "versao": 1,
+  "id": "b13-ml-senior-en",
+  "extrair_curriculo": {
+    "entrada_sha256": "c0c570fdf2b9eddeeafff4f5855c98ce7ad434503666a90bccfe23bae1a5ce3e",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Backend Developer",
+          "empresa": "Quillbramble Credit Union",
+          "inicio": {
+            "ano": 2020,
+            "mes": 9
+          },
+          "fim": null,
+          "trecho": "Backend Developer — Quillbramble Credit Union — Sep 2020 – Present"
+        },
+        {
+          "cargo": "Junior Developer",
+          "empresa": "Zorvexa Labs",
+          "inicio": {
+            "ano": 2018,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2020,
+            "mes": 8
+          },
+          "trecho": "Junior Developer — Zorvexa Labs — 2018 – Aug 2020"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Python",
+          "trecho": "Build Python services with Django",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Django",
+          "trecho": "Python services with Django",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "SQL",
+          "trecho": "Write and tune SQL queries",
+          "experiencias": [
+            0,
+            1
+          ]
+        },
+        {
+          "nome": "Docker",
+          "trecho": "containerized services with Docker",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Google Cloud",
+          "trecho": "Docker on Google Cloud",
+          "experiencias": [
+            0
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "B.Sc. in Computer Engineering",
+          "instituicao": "Fictional Federal University",
+          "conclusao": 2017,
+          "trecho": "B.Sc. in Computer Engineering — Fictional Federal University — 2017"
+        }
+      ],
+      "idiomas": [
+        {
+          "idioma": "Português",
+          "nivel": "native",
+          "trecho": "Portuguese (native)"
+        },
+        {
+          "idioma": "Inglês",
+          "nivel": "advanced",
+          "trecho": "English (advanced)"
+        }
+      ],
+      "certificacoes": []
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "aa830e4bc769f1b9b21b21bfe56791b2ded01ccabf07df113e1ad73e6cf3b7c5",
+    "saida": {
+      "titulo": "Senior Machine Learning Engineer",
+      "idioma": "en",
+      "nivel": "senior",
+      "anos_minimos": 5,
+      "requisitos": [
+        {
+          "descricao": "Strong Python",
+          "tipo": "obrigatorio",
+          "competencia": "Python",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Machine learning models in production",
+          "tipo": "obrigatorio",
+          "competencia": "Machine learning",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "PyTorch",
+          "tipo": "obrigatorio",
+          "competencia": "PyTorch",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "SQL",
+          "tipo": "obrigatorio",
+          "competencia": "SQL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "AWS",
+          "tipo": "obrigatorio",
+          "competencia": "AWS",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Docker",
+          "tipo": "desejavel",
+          "competencia": "Docker",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Apache Spark",
+          "tipo": "desejavel",
+          "competencia": "Apache Spark",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

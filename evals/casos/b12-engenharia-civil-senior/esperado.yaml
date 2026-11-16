@@ -1,0 +1,107 @@
+id: b12-engenharia-civil-senior
+tipo: base
+descricao: 'Engenharia civil: perfil júnior para vaga sênior de 8 anos; aderência fraca; S abaixo de 1.'
+idioma_vaga: pt
+titulo_vaga: Engenheiro(a) Civil Sênior — Coordenação de Obras
+nivel: senior
+anos_minimos: 8
+
+experiencias:
+- cargo: Engenheira Civil Júnior
+  empresa: Construtora Jacamim Ortogonal
+  inicio: 2023-06
+  fim: null
+  relevante: true
+  trecho: Engenheira Civil Júnior — Construtora Jacamim Ortogonal — jun/2023 – atual
+- cargo: Estagiária de Engenharia
+  empresa: Prefeitura de Vila Tuiuiú do Norte
+  inicio: '2021'
+  fim: '2022'
+  relevante: true
+  trecho: Estagiária de Engenharia — Prefeitura de Vila Tuiuiú do Norte — 2021 – 2022
+
+competencias:
+- canonica: Gestão de obras
+  trecho: gestão de obras residenciais
+  experiencias: [0]
+- canonica: AutoCAD
+  trecho: Detalhamento de projetos no AutoCAD
+  experiencias: [0, 1]
+- canonica: NR-18
+  trecho: normas de segurança da NR-18
+  experiencias: [0]
+formacao:
+- curso: Bacharelado em Engenharia Civil
+  instituicao: Universidade Fictícia de Goiás
+  conclusao: 2022
+  trecho: Bacharelado em Engenharia Civil — Universidade Fictícia de Goiás — 2022
+idiomas: []
+certificacoes:
+- nome: CREA-GO
+  canonica: CREA
+  trecho: CREA-GO ativo
+
+requisitos:
+- descricao: CREA ativo
+  tipo: obrigatorio
+  competencia: CREA
+  status_esperado: atende
+  evidencia: CREA-GO ativo
+- descricao: Gestão de obras
+  tipo: obrigatorio
+  competencia: Gestão de obras
+  status_esperado: atende
+  evidencia: gestão de obras residenciais
+- descricao: AutoCAD
+  tipo: obrigatorio
+  competencia: AutoCAD
+  status_esperado: atende
+  evidencia: Detalhamento de projetos no AutoCAD
+- descricao: Modelagem BIM no Revit
+  tipo: obrigatorio
+  competencia: Revit
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Orçamento de obras
+  tipo: obrigatorio
+  competencia: Orçamento de obras
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Planejamento no MS Project
+  tipo: obrigatorio
+  competencia: MS Project
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Pós-graduação em gestão de projetos
+  tipo: desejavel
+  competencia: Gestão de projetos
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: NR-18
+  tipo: desejavel
+  competencia: NR-18
+  status_esperado: atende
+  evidencia: normas de segurança da NR-18
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 66 meses.
+anos_relevantes_esperados: 5.5
+# O = 3/6; D = 1/2; S = min(1, 5,5/8) = 0,6875 (pesos renormalizados se faltar componente).
+nota_referencia: 52
+faixa_nota: [47, 57]
+lacunas: [Revit, Orçamento de obras, MS Project, Gestão de projetos]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Fernanda Lopes Cardoso
+- tipo: email
+  valor: fernanda.cardoso@example.com
+- tipo: telefone
+  valor: (00) 90000-1212
+- tipo: endereco
+  valor: Goiânia – GO
+- tipo: nascimento
+  valor: 02/03/1999
+- tipo: estado_civil
+  valor: Solteira
+- tipo: cpf
+  valor: 519.042.786-55

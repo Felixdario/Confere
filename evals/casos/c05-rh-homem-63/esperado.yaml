@@ -1,0 +1,115 @@
+id: c05-rh-homem-63
+tipo: contrafactual
+base: b11-rh-pleno
+descricao: 'Contrafactual do b11: homem, 63 anos, viúvo.'
+idioma_vaga: pt
+titulo_vaga: Analista de Recrutamento e Seleção Pleno
+nivel: pleno
+anos_minimos: null
+
+experiencias:
+- cargo: Analista de RH
+  empresa: Hospital Garça Mostarda
+  inicio: 2023-09
+  fim: null
+  relevante: true
+  trecho: Analista de RH — Hospital Garça Mostarda — set/2023 – atual
+- cargo: Assistente de RH
+  empresa: Varejo Pica-Pau Trapézio
+  inicio: 2021-01
+  fim: 2023-08
+  relevante: true
+  trecho: Assistente de RH — Varejo Pica-Pau Trapézio — jan/2021 – ago/2023
+
+competencias:
+- canonica: Recrutamento e seleção
+  trecho: processos de recrutamento e seleção
+  experiencias: [0]
+- canonica: Triagem de currículos
+  trecho: Triagem de currículos e agendamento de entrevistas
+  experiencias: [1]
+- canonica: Entrevista por competências
+  como_escrito: entrevistas por competências
+  trecho: Faço entrevistas por competências
+  experiencias: [0]
+- canonica: Gupy
+  trecho: os candidatos na Gupy
+  experiencias: [0]
+- canonica: Onboarding
+  trecho: programa de onboarding
+  experiencias: [0]
+- canonica: Diversidade e inclusão
+  trecho: comitê de diversidade e inclusão
+  experiencias: [0]
+- canonica: Google Planilhas
+  trecho: admissão em Google Planilhas
+  experiencias: [1]
+formacao:
+- curso: Bacharelado em Psicologia
+  instituicao: Universidade Fictícia do Espírito Santo
+  conclusao: 2020
+  trecho: Bacharelado em Psicologia — Universidade Fictícia do Espírito Santo — 2020
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: Recrutamento e seleção de ponta a ponta
+  tipo: obrigatorio
+  competencia: Recrutamento e seleção
+  status_esperado: atende
+  evidencia: processos de recrutamento e seleção
+- descricao: Entrevista por competências
+  tipo: obrigatorio
+  competencia: Entrevista por competências
+  status_esperado: atende
+  evidencia: Faço entrevistas por competências
+- descricao: Experiência com Gupy
+  tipo: obrigatorio
+  competencia: Gupy
+  status_esperado: atende
+  evidencia: os candidatos na Gupy
+- descricao: People analytics
+  tipo: obrigatorio
+  competencia: People analytics
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Onboarding de novos colaboradores
+  tipo: obrigatorio
+  competencia: Onboarding
+  status_esperado: atende
+  evidencia: programa de onboarding
+- descricao: Excel intermediário
+  tipo: desejavel
+  competencia: Excel
+  status_esperado: parcial
+  evidencia: admissão em Google Planilhas
+- descricao: Programas de diversidade e inclusão
+  tipo: desejavel
+  competencia: Diversidade e inclusão
+  status_esperado: atende
+  evidencia: comitê de diversidade e inclusão
+anos_relevantes_esperados: 5.92
+nota_referencia: 81
+faixa_nota: [76, 86]
+lacunas: [People analytics, Excel]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Antônio Carlos Pereira
+- tipo: email
+  valor: antonio.pereira@example.com
+- tipo: telefone
+  valor: (00) 90000-1121
+- tipo: endereco
+  valor: Vitória – ES
+- tipo: nascimento
+  valor: 30/06/1963
+- tipo: estado_civil
+  valor: Viúvo
+- tipo: genero
+  valor: 'Sexo: masculino'
+- tipo: cpf
+  valor: 175.320.946-81
+contrafactual:
+  muda: [nome, genero, idade, estado_civil, email, telefone, cpf]

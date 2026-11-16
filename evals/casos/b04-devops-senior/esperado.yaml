@@ -1,0 +1,131 @@
+id: b04-devops-senior
+tipo: base
+descricao: DevOps sênior com aderência forte; abreviação k8s; experiências sobrepostas (ago–set/2020); certificações.
+idioma_vaga: pt
+titulo_vaga: Engenheiro(a) DevOps Sênior
+nivel: senior
+anos_minimos: 6
+
+experiencias:
+- cargo: Engenheiro de Infraestrutura Sênior
+  empresa: Tecnologia Nimbo Tatupeba
+  inicio: 2020-08
+  fim: null
+  relevante: true
+  trecho: Engenheiro de Infraestrutura Sênior — Tecnologia Nimbo Tatupeba — ago/2020 – atual
+- cargo: Analista de Infraestrutura
+  empresa: Datacenter Ipê Trapezoidal
+  inicio: 2016-03
+  fim: 2020-09
+  relevante: true
+  trecho: Analista de Infraestrutura — Datacenter Ipê Trapezoidal — mar/2016 – set/2020
+
+competencias:
+- canonica: Kubernetes
+  como_escrito: k8s
+  trecho: clusters k8s de produção
+  experiencias: [0]
+- canonica: AWS
+  trecho: de produção na AWS
+  experiencias: [0]
+- canonica: Terraform
+  trecho: infraestrutura em Terraform
+  experiencias: [0]
+- canonica: CI/CD
+  trecho: pipelines de CI/CD no GitLab
+  experiencias: [0]
+- canonica: GitLab
+  trecho: CI/CD no GitLab
+  experiencias: [0]
+- canonica: Prometheus
+  trecho: monitoração com Prometheus e Grafana
+  experiencias: [0]
+- canonica: Grafana
+  trecho: Prometheus e Grafana
+  experiencias: [0]
+- canonica: Python
+  trecho: scripts em Python
+  experiencias: [0]
+- canonica: Linux
+  trecho: servidores Linux
+  experiencias: [1]
+- canonica: VMware
+  trecho: virtualização com VMware
+  experiencias: [1]
+- canonica: Shell script
+  trecho: tarefas com shell script
+  experiencias: [1]
+formacao:
+- curso: Bacharelado em Ciência da Computação
+  instituicao: Universidade Fictícia do Sul
+  conclusao: 2015
+  trecho: Bacharelado em Ciência da Computação — Universidade Fictícia do Sul — 2015
+idiomas: []
+certificacoes:
+- nome: AWS Certified Solutions Architect – Associate
+  canonica: null
+  trecho: AWS Certified Solutions Architect – Associate
+- nome: Certified Kubernetes Administrator (CKA)
+  canonica: null
+  trecho: Certified Kubernetes Administrator (CKA)
+
+requisitos:
+- descricao: Kubernetes em produção
+  tipo: obrigatorio
+  competencia: Kubernetes
+  status_esperado: atende
+  evidencia: clusters k8s de produção
+- descricao: Terraform
+  tipo: obrigatorio
+  competencia: Terraform
+  status_esperado: atende
+  evidencia: infraestrutura em Terraform
+- descricao: AWS
+  tipo: obrigatorio
+  competencia: AWS
+  status_esperado: atende
+  evidencia: de produção na AWS
+- descricao: CI/CD
+  tipo: obrigatorio
+  competencia: CI/CD
+  status_esperado: atende
+  evidencia: pipelines de CI/CD no GitLab
+- descricao: Linux
+  tipo: obrigatorio
+  competencia: Linux
+  status_esperado: atende
+  evidencia: servidores Linux
+- descricao: Prometheus
+  tipo: desejavel
+  competencia: Prometheus
+  status_esperado: atende
+  evidencia: monitoração com Prometheus e Grafana
+- descricao: Python para automação
+  tipo: desejavel
+  competencia: Python
+  status_esperado: atende
+  evidencia: scripts em Python
+- descricao: Go
+  tipo: desejavel
+  competencia: Go
+  status_esperado: nao_atende
+  evidencia: null
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 129 meses.
+anos_relevantes_esperados: 10.75
+# O = 5/5; D = 2/3; S = min(1, 10,75/6) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 93
+faixa_nota: [88, 98]
+lacunas: [Go]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Carlos Eduardo Brandão
+- tipo: email
+  valor: carlos.brandao@example.com
+- tipo: telefone
+  valor: +55 (00) 90000-0404
+- tipo: endereco
+  valor: Porto Alegre, RS
+- tipo: cpf
+  valor: 905.331.274-00

@@ -105,8 +105,9 @@ O = (1 + 1 + 1 + 1 + 0,5 + 0) / 6 = 4,5 / 6 = **0,75**
 
 D = 1 / 3 = **0,333…**
 
-**Senioridade:** duas experiências, jan/2019–jun/2021 e jan/2021–jan/2023. A união é jan/2019–jan/2023
-= **4 anos**. Os 6 meses de sobreposição contam uma vez só; somar os intervalos daria 4,5.
+**Senioridade:** duas experiências, jan/2019–jun/2021 (30 meses) e jan/2021–dez/2022 (24 meses). A
+união é jan/2019–dez/2022 = 48 meses = **4 anos**. Os 6 meses de sobreposição (jan–jun/2021) contam uma
+vez só; somar os intervalos daria 54 meses = 4,5 anos.
 
 S = min(1, 4 / 5) = **0,80**
 
@@ -144,18 +145,28 @@ nota cai para round(100 × 0,605 / 1,00) = **61**.
 
 ### Regras de borda
 
-- **Arredondamento:** meio para cima (`Decimal.quantize(ROUND_HALF_UP)`), não o arredondamento bancário
-  do `round` do Python. 67,5 vira 68 e 66,5 vira 67. A conta é feita em `Decimal`, para não depender de
-  erro de ponto flutuante.
+- **Arredondamento:** meio para cima, não o arredondamento bancário do `round` do Python. 67,5 vira 68
+  e 66,5 vira 67. A conta é exata, com frações (`fractions.Fraction`), para que um meio exato não vire
+  0,4999… em `Decimal` ou `float` (atualizado na fase 1: o caso b08 das evals dá exatamente 71,5).
 - **Vaga sem obrigatórios e sem desejáveis:** erro "a vaga não tem requisitos reconhecíveis", sem nota.
   O componente S sozinho não vira nota.
 - **Vaga sem anos e sem nível:** S fica ausente, e renormalizam O e D (pesos 0,90).
 - **"Anos relevantes comprovados":** é a união dos intervalos das experiências com pelo menos uma
   competência ancorada que atende ou atende em parte algum requisito obrigatório.
-- **Experiência sem fim:** "atual" vai até a data da análise. Sem mês, conta janeiro no início e
-  dezembro no fim, e a tela avisa.
+- **Contagem de meses** (atualizada na fase 1): a duração conta o mês inicial e o final
+  (jan–dez de um ano = 12 meses; "2012 – 2016" = 60 meses). Sem mês, conta janeiro no início e
+  dezembro no fim, e a tela avisa. Na união, intervalos consecutivos (jul → ago) se emendam sem
+  buraco, e a sobreposição conta uma vez.
+- **Experiência sem fim:** "atual" vai até o mês da data da análise, inclusive.
 - **Requisito com anos** ("3 anos de React"): os anos daquela competência são a união dos intervalos
-  das experiências onde ela tem evidência. Abaixo do pedido, vale parcial.
+  das experiências onde ela tem evidência (a extração liga cada competência às experiências em que
+  aparece, campo `Competencia.experiencias`). Abaixo do pedido, vale parcial.
+- **Requisito com nível** (decidido na fase 1): quando o requisito pede um nível de proficiência
+  (básico/noções < intermediário < avançado < fluente/nativo) e o currículo **declara** um nível
+  para aquela competência, nível abaixo do pedido vale parcial; nível igual ou acima, atende. Quando o
+  currículo não declara nível (o caso comum de "SQL avançado" pedido e "consultas SQL" no currículo),
+  a evidência basta e vale atende: o sistema não infere proficiência que a pessoa não escreveu.
+  Adjetivos sem escala ("experiência sólida") não são nível.
 - **Propriedades testadas com hypothesis:**
   - nota ∈ [0, 100];
   - trocar um requisito de 0 para 0,5 ou de 0,5 para 1 nunca baixa a nota;

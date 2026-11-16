@@ -1,0 +1,121 @@
+id: b08-marketing-troca-carreira
+tipo: base
+descricao: Troca de carreira (professora → marketing digital); a docência não conta nos anos relevantes; Meta Ads relacionado a Google Ads.
+idioma_vaga: pt
+titulo_vaga: Analista de Marketing Digital Pleno
+nivel: pleno
+anos_minimos: null
+
+experiencias:
+- cargo: Social Media (freelancer)
+  empresa: Projetos independentes
+  inicio: 2024-03
+  fim: null
+  relevante: true
+  trecho: Social Media (freelancer) — Projetos independentes — mar/2024 – atual
+- cargo: Professora de Língua Portuguesa
+  empresa: Colégio Quero-Quero Hiperbólico
+  inicio: '2014'
+  fim: '2023'
+  relevante: false
+  trecho: Professora de Língua Portuguesa — Colégio Quero-Quero Hiperbólico — 2014 – 2023
+
+competencias:
+- canonica: Gestão de redes sociais
+  trecho: Gestão de redes sociais de cinco pequenos negócios
+  experiencias: [0]
+- canonica: Copywriting
+  trecho: Copywriting para posts, anúncios e e-mails
+  experiencias: [0]
+- canonica: Meta Ads
+  trecho: Campanhas de Meta Ads
+  experiencias: [0]
+- canonica: Google Analytics
+  trecho: resultado com Google Analytics
+  experiencias: [0]
+- canonica: Excel
+  trecho: planilhas em Excel
+  experiencias: [0]
+- canonica: Marketing digital
+  trecho: Curso de Marketing Digital
+  experiencias: []
+formacao:
+- curso: Licenciatura em Letras
+  instituicao: Universidade Fictícia de Brasília
+  conclusao: 2013
+  trecho: Licenciatura em Letras — Universidade Fictícia de Brasília — 2013
+- curso: Curso de Marketing Digital
+  instituicao: Escola Online Fictícia
+  conclusao: 2023
+  trecho: Curso de Marketing Digital — Escola Online Fictícia — 2023
+idiomas:
+- idioma: Inglês
+  nivel: intermediário
+  trecho: Inglês intermediário
+certificacoes:
+- nome: Google Analytics (GA4)
+  canonica: Google Analytics
+  trecho: Google Analytics (GA4) — certificado de conclusão
+
+requisitos:
+- descricao: SEO
+  tipo: obrigatorio
+  competencia: SEO
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Google Analytics
+  tipo: obrigatorio
+  competencia: Google Analytics
+  status_esperado: atende
+  evidencia: resultado com Google Analytics
+- descricao: Mídia paga no Google Ads
+  tipo: obrigatorio
+  competencia: Google Ads
+  status_esperado: parcial
+  evidencia: Campanhas de Meta Ads
+- descricao: Copywriting
+  tipo: obrigatorio
+  competencia: Copywriting
+  status_esperado: atende
+  evidencia: Copywriting para posts, anúncios e e-mails
+- descricao: Gestão de redes sociais
+  tipo: obrigatorio
+  competencia: Gestão de redes sociais
+  status_esperado: atende
+  evidencia: Gestão de redes sociais de cinco pequenos negócios
+- descricao: HubSpot
+  tipo: desejavel
+  competencia: HubSpot
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Excel
+  tipo: desejavel
+  competencia: Excel
+  status_esperado: atende
+  evidencia: planilhas em Excel
+- descricao: Inglês intermediário
+  tipo: desejavel
+  competencia: Inglês
+  status_esperado: atende
+  evidencia: Inglês intermediário
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 33 meses.
+anos_relevantes_esperados: 2.75
+# O = 3,5/5; D = 2/3; S = min(1, 2,75/3) = 0,9167 (pesos renormalizados se faltar componente).
+nota_referencia: 72
+faixa_nota: [67, 77]
+lacunas: [SEO, Google Ads, HubSpot]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Luana Ribeiro Campos
+- tipo: email
+  valor: luana.campos@example.com
+- tipo: telefone
+  valor: (00) 90000-0808
+- tipo: endereco
+  valor: Brasília – DF
+- tipo: nascimento
+  valor: 05/07/1988
+- tipo: estado_civil
+  valor: Divorciada

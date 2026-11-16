@@ -1,0 +1,187 @@
+{
+  "versao": 1,
+  "id": "b10-suporte-junior-sobrequalificado",
+  "extrair_curriculo": {
+    "entrada_sha256": "9e18f95846a9f58856250183c6a92e73fc3a81bc69e9eaae9c2fffd6e108bf81",
+    "saida": {
+      "experiencias": [
+        {
+          "cargo": "Coordenador de Infraestrutura de TI",
+          "empresa": "Grupo Educacional Socó Prateado",
+          "inicio": {
+            "ano": 2017,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2025,
+            "mes": null
+          },
+          "trecho": "Coordenador de Infraestrutura de TI — Grupo Educacional Socó Prateado — 2017 – 2025"
+        },
+        {
+          "cargo": "Analista de Suporte",
+          "empresa": "Telecom Araponga Cúbica",
+          "inicio": {
+            "ano": 2012,
+            "mes": null
+          },
+          "fim": {
+            "ano": 2016,
+            "mes": null
+          },
+          "trecho": "Analista de Suporte — Telecom Araponga Cúbica — 2012 – 2016"
+        }
+      ],
+      "competencias": [
+        {
+          "nome": "Gestão de equipes",
+          "trecho": "Coordenei uma equipe de 12 técnicos",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Sistemas de chamados",
+          "trecho": "sistema de chamados GLPI",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "GLPI",
+          "trecho": "sistema de chamados GLPI",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Windows",
+          "trecho": "estações Windows",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Linux",
+          "trecho": "servidores Linux",
+          "experiencias": [
+            0
+          ]
+        },
+        {
+          "nome": "Atendimento ao cliente",
+          "trecho": "Atendimento ao cliente corporativo",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "redes",
+          "trecho": "Diagnóstico de redes TCP/IP",
+          "experiencias": [
+            1
+          ]
+        },
+        {
+          "nome": "TCP/IP",
+          "trecho": "redes TCP/IP",
+          "experiencias": [
+            1
+          ]
+        }
+      ],
+      "formacao": [
+        {
+          "curso": "Bacharelado em Redes de Computadores",
+          "instituicao": "Faculdade Fictícia do Recife",
+          "conclusao": 2011,
+          "trecho": "Bacharelado em Redes de Computadores — Faculdade Fictícia do Recife — 2011"
+        },
+        {
+          "curso": "MBA em Gestão de TI",
+          "instituicao": "Faculdade Fictícia do Recife",
+          "conclusao": 2018,
+          "trecho": "MBA em Gestão de TI — Faculdade Fictícia do Recife — 2018"
+        }
+      ],
+      "idiomas": [],
+      "certificacoes": [
+        {
+          "nome": "ITIL 4 Foundation",
+          "emissor": null,
+          "trecho": "ITIL 4 Foundation"
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_curriculo",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "extrair_vaga": {
+    "entrada_sha256": "65aea5a8ccaefbb66516723e9875479ed48b92afd67f4554660fc5409e0b58eb",
+    "saida": {
+      "titulo": "Analista de Suporte Técnico Júnior (N1)",
+      "idioma": "pt",
+      "nivel": "junior",
+      "anos_minimos": null,
+      "requisitos": [
+        {
+          "descricao": "Atendimento ao cliente",
+          "tipo": "obrigatorio",
+          "competencia": "Atendimento ao cliente",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Experiência com sistema de chamados",
+          "tipo": "obrigatorio",
+          "competencia": "Sistemas de chamados",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Windows",
+          "tipo": "obrigatorio",
+          "competencia": "Windows",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Noções de redes de computadores",
+          "tipo": "obrigatorio",
+          "competencia": "Redes de computadores",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "ITIL",
+          "tipo": "desejavel",
+          "competencia": "ITIL",
+          "anos_minimos": null
+        },
+        {
+          "descricao": "Linux",
+          "tipo": "desejavel",
+          "competencia": "Linux",
+          "anos_minimos": null
+        }
+      ]
+    },
+    "uso": {
+      "etapa": "extrair_vaga",
+      "modelo": "falso",
+      "tentativa": 1,
+      "duracao_ms": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "custo_usd": "0"
+    }
+  },
+  "escrever_feedback": null
+}

@@ -1,0 +1,115 @@
+id: b10-suporte-junior-sobrequalificado
+tipo: base
+descricao: 'Sobrequalificação: coordenador de infraestrutura com 13 anos para vaga júnior N1. Nota 100 (o ADR 0003 não pune excesso); faixa truncada em 100; datas só com ano.'
+idioma_vaga: pt
+titulo_vaga: Analista de Suporte Técnico Júnior (N1)
+nivel: junior
+anos_minimos: null
+
+experiencias:
+- cargo: Coordenador de Infraestrutura de TI
+  empresa: Grupo Educacional Socó Prateado
+  inicio: '2017'
+  fim: '2025'
+  relevante: true
+  trecho: Coordenador de Infraestrutura de TI — Grupo Educacional Socó Prateado — 2017 – 2025
+- cargo: Analista de Suporte
+  empresa: Telecom Araponga Cúbica
+  inicio: '2012'
+  fim: '2016'
+  relevante: true
+  trecho: Analista de Suporte — Telecom Araponga Cúbica — 2012 – 2016
+
+competencias:
+- canonica: Gestão de equipes
+  trecho: Coordenei uma equipe de 12 técnicos
+  experiencias: [0]
+- canonica: Sistemas de chamados
+  trecho: sistema de chamados GLPI
+  experiencias: [0]
+- canonica: GLPI
+  trecho: sistema de chamados GLPI
+  experiencias: [0]
+- canonica: Windows
+  trecho: estações Windows
+  experiencias: [0]
+- canonica: Linux
+  trecho: servidores Linux
+  experiencias: [0]
+- canonica: Atendimento ao cliente
+  trecho: Atendimento ao cliente corporativo
+  experiencias: [1]
+- canonica: Redes de computadores
+  como_escrito: redes
+  trecho: Diagnóstico de redes TCP/IP
+  experiencias: [1]
+- canonica: TCP/IP
+  trecho: redes TCP/IP
+  experiencias: [1]
+formacao:
+- curso: Bacharelado em Redes de Computadores
+  instituicao: Faculdade Fictícia do Recife
+  conclusao: 2011
+  trecho: Bacharelado em Redes de Computadores — Faculdade Fictícia do Recife — 2011
+- curso: MBA em Gestão de TI
+  instituicao: Faculdade Fictícia do Recife
+  conclusao: 2018
+  trecho: MBA em Gestão de TI — Faculdade Fictícia do Recife — 2018
+idiomas: []
+certificacoes:
+- nome: ITIL 4 Foundation
+  canonica: ITIL
+  trecho: ITIL 4 Foundation
+
+requisitos:
+- descricao: Atendimento ao cliente
+  tipo: obrigatorio
+  competencia: Atendimento ao cliente
+  status_esperado: atende
+  evidencia: Atendimento ao cliente corporativo
+- descricao: Experiência com sistema de chamados
+  tipo: obrigatorio
+  competencia: Sistemas de chamados
+  status_esperado: atende
+  evidencia: sistema de chamados GLPI
+- descricao: Windows
+  tipo: obrigatorio
+  competencia: Windows
+  status_esperado: atende
+  evidencia: estações Windows
+- descricao: Noções de redes de computadores
+  tipo: obrigatorio
+  competencia: Redes de computadores
+  status_esperado: atende
+  evidencia: Diagnóstico de redes TCP/IP
+- descricao: ITIL
+  tipo: desejavel
+  competencia: ITIL
+  status_esperado: atende
+  evidencia: ITIL 4 Foundation
+- descricao: Linux
+  tipo: desejavel
+  competencia: Linux
+  status_esperado: atende
+  evidencia: servidores Linux
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 168 meses.
+anos_relevantes_esperados: 14.0
+# O = 4/4; D = 2/2; S = min(1, 14/1) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 100
+faixa_nota: [95, 100]
+lacunas: []
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: Marcos Vinícius Albuquerque
+- tipo: email
+  valor: marcos.albuquerque@example.com
+- tipo: telefone
+  valor: (00) 90000-1010
+- tipo: endereco
+  valor: Recife – PE
+- tipo: nascimento
+  valor: 21/09/1979
+- tipo: cpf
+  valor: 154.876.302-99

@@ -1,0 +1,103 @@
+id: b14-java-para-front-end
+tipo: base
+descricao: 'Falso amigo: desenvolvedor Java para vaga de JavaScript/front-end. Aderência fraca; Java não é JavaScript nem relacionada a ele na taxonomia.'
+idioma_vaga: pt
+titulo_vaga: Pessoa Desenvolvedora Front-end Pleno
+nivel: pleno
+anos_minimos: null
+
+experiencias:
+- cargo: Desenvolvedor Java
+  empresa: Seguradora Bem-te-vi Romboide
+  inicio: '2019'
+  fim: null
+  relevante: true
+  trecho: Desenvolvedor Java — Seguradora Bem-te-vi Romboide — 2019 – atual
+
+competencias:
+- canonica: Java
+  trecho: microsserviços em Java
+  experiencias: [0]
+- canonica: Spring Boot
+  trecho: Java com Spring Boot
+  experiencias: [0]
+- canonica: Microsserviços
+  trecho: Desenvolvo microsserviços
+  experiencias: [0]
+- canonica: Oracle Database
+  como_escrito: Oracle
+  trecho: procedures em Oracle
+  experiencias: [0]
+- canonica: Git
+  trecho: Versionamento com Git
+  experiencias: [0]
+- canonica: JUnit
+  trecho: Git, JUnit
+  experiencias: []
+formacao:
+- curso: Bacharelado em Ciência da Computação
+  instituicao: Universidade Fictícia Paulista
+  conclusao: 2018
+  trecho: Bacharelado em Ciência da Computação — Universidade Fictícia Paulista — 2018
+idiomas: []
+certificacoes: []
+
+requisitos:
+- descricao: JavaScript moderno (ES6+)
+  tipo: obrigatorio
+  competencia: JavaScript
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: React
+  tipo: obrigatorio
+  competencia: React
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: HTML semântico
+  tipo: obrigatorio
+  competencia: HTML
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: CSS responsivo
+  tipo: obrigatorio
+  competencia: CSS
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Git
+  tipo: obrigatorio
+  competencia: Git
+  status_esperado: atende
+  evidencia: Versionamento com Git
+- descricao: TypeScript
+  tipo: desejavel
+  competencia: TypeScript
+  status_esperado: nao_atende
+  evidencia: null
+- descricao: Figma
+  tipo: desejavel
+  competencia: Figma
+  status_esperado: nao_atende
+  evidencia: null
+# União das experiências relevantes, mês final inclusivo, atual = 2026-11: 95 meses.
+anos_relevantes_esperados: 7.92
+# O = 1/5; D = 0/2; S = min(1, 7,9167/3) = 1 (pesos renormalizados se faltar componente).
+nota_referencia: 24
+faixa_nota: [19, 29]
+lacunas: [JavaScript, React, HTML, CSS, TypeScript, Figma]
+alertas_esperados: []
+
+dados_pessoais:
+- tipo: nome
+  valor: André Luiz Barbosa
+- tipo: email
+  valor: andre.barbosa@example.com
+- tipo: telefone
+  valor: (00) 90000-1414
+- tipo: endereco
+  valor: Guarulhos – SP
+- tipo: nascimento
+  valor: 11/12/1990
+- tipo: estado_civil
+  valor: Casado
+- tipo: cpf
+  valor: 372.659.104-77

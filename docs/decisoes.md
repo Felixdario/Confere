@@ -53,3 +53,72 @@ Também há `make db-check`, que consulta a versão da extensão `vector`.
 ## D-10 — Modelo de embeddings (2026-11-15)
 `paraphrase-multilingual-MiniLM-L12-v2` pelo fastembed, com as medições no ADR 0002. O cache de modelos
 fica em `data/` e não vai para o git. O CI não baixa modelo.
+
+## D-11 — Harness de evals dentro do pacote da API (2026-11-15)
+O código fica em `apps/api/src/curriculo_api/evals/` e roda com
+`cd apps/api && uv run python -m curriculo_api.evals.rodar` (é o que `make eval` chama). Os dados
+ficam na raiz, em `evals/` (casos, gravações, resultados). Motivos:
+- o harness passa por ruff, mypy estrito e pytest junto com o resto, sem configuração extra;
+- a fase 3 implementa o `Pipeline` real no mesmo pacote e o harness o importa sem `sys.path`;
+- `evals/` continua só com dados, legível por quem não abre o código.
+
+## D-12 — Todos os resultados das evals são versionados (2026-11-15)
+`evals/resultados/<AAAA-MM-DD>T<hhmmss>-<provedor>.json` (hora UTC) vai para o git, todos, não só o
+último. Cada um tem dezenas de KB, e o histórico é o que dá sentido ao Δ: quem clona vê de onde a
+execução anterior veio. Execuções de rascunho locais podem ser apagadas antes do commit.
+
+## D-13 — `ProvedorIA` devolve `Resposta[T]` (2026-11-15)
+O esboço do ADR 0001 tem `extrair_curriculo(...) -> CurriculoExtraido`. Na implementação, as extrações
+devolvem `Resposta[T]` (`saida` + `usos`, um `RegistroUso` por chamada, novas tentativas inclusive). O
+custo viaja com o resultado, sem estado mutável no provedor, que é compartilhado entre requisições na
+fase 4. Registrado no ADR 0001 (rodada 1 da revisão da fase 1).
+
+## D-14 — Taxonomia em `curriculo_api/dados/taxonomia.yaml` (2026-11-15)
+O ADR 0002 cita `curriculo_api/taxonomia/competencias.yaml` e uma lista na raiz do YAML. A fase 1
+usa `dados/taxonomia.yaml` (pedido do plano) com `versao` e `competencias` na raiz; a versão entra no
+resultado das evals e, na fase 3, no prefixo de cache. O carregador é `curriculo_api.taxonomia`. A
+normalização preserva `#` e `+` nas pontas e o "." inicial, para "C#", "C++" e ".NET" não virarem
+"c" e "net". Registrado no ADR 0002.
+
+## D-15 — Regras do dataset de evals (2026-11-15)
+- **Data de referência fixa** (`evals/dataset.yaml`, 2026-11-01) para "atual": sem ela, a nota de
+  referência mudaria com o calendário.
+- **Faixa = nota de referência ± 5**, truncada em 0–100, com a nota calculada pela fórmula do ADR 0003
+  a partir dos status anotados (oráculo em `curriculo_api/evals/referencia.py`, testado contra os
+  exemplos 67/76/61 do ADR).
+- **Contrafactuais**: 3 grupos (b03, b06, b11) de par-base + 2 variantes, com cargos neutros em
+  gênero nos pares-base desses grupos, e o c07 (b01 → cargos no masculino), que mede a limitação do
+  cargo flexionado (ADR 0004). `contrafactual.muda` lista tudo o que difere (nome, gênero, idade,
+  estado civil, e-mail, telefone, CPF, endereço, cargo flexionado), conferido por teste; as idades são
+  compatíveis com o corpo (graduação aos 20+, primeiro emprego aos 16+, teste).
+- **Competências anotadas (conjunto A)** excluem idiomas e certificações, que servem de evidência
+  para requisitos em seções próprias.
+- **Curso de formação × curso livre** (regra única, rodada 1): o nome de uma graduação, curso técnico,
+  pós ou MBA não vira competência ("Bacharelado em Estatística"); um curso livre ou de curta duração
+  comprova a competência que o trecho nomeia ("Curso livre de SQL" → SQL; "Curso livre de UX Design"
+  → UX Design; "Curso de Marketing Digital" → Marketing digital).
+- **Ligação competência → experiência**: cada competência anotada lista os índices das experiências em
+  que aparece (`experiencias`). Um teste deriva daí o `relevante` de cada experiência (ADR 0003) e o
+  status dos requisitos com anos.
+- **Dados de contato**: e-mails só em `example.com` (RFC 2606/6761; `exemplo.com.br` não é reservado)
+  e telefones com DDD 00, que não existe. Empresas com nomes inventados e improváveis.
+- Schema e regras completas em `evals/README.md`.
+
+## D-16 — Revisão de sinônimos da taxonomia (2026-11-15)
+Sinônimo só quando é a mesma coisa (ADR 0002). Na revisão da fase 1:
+- **Tasy** saiu de sinônimo de Prontuário eletrônico: é um produto (sistema hospitalar). Virou canônica
+  relacionada. No b07, "Registro em prontuário eletrônico Tasy" comprova as duas; o requisito
+  "Prontuário eletrônico (Tasy ou MV)" segue atende pela evidência "prontuário eletrônico".
+- **TCP/IP** saiu de Redes de computadores: é um protocolo, não a área. Virou canônica relacionada.
+  No b10, "Diagnóstico de redes TCP/IP" comprova Redes de computadores (pela palavra "redes") e TCP/IP;
+  a nota segue 100.
+- **Triagem de currículos** saiu de Recrutamento e seleção: é uma etapa do processo. Virou canônica
+  relacionada; no b11, a experiência de assistente continua relevante pela relação.
+- **CI, CD** saíram de CI/CD ("CD" sozinho é ambíguo e "CI" é só metade); também saíram "integração
+  contínua" e "continuous integration" (só CI).
+- Também saíram sinônimos genéricos ou feitos sob medida: "Next" (Next.js), "Spring" (é a família, não o
+  Spring Boot), "shell" e "Bash" (Shell script), "fechamento contábil mensal" (frase do currículo),
+  "ECD" e "EFD" (são módulos do SPED, não o SPED), "entrevistas com usuários" (é um método de pesquisa),
+  "networking" (ambíguo em pt-BR).
+- Entraram **UX Design** e **Marketing digital** (regra do curso livre, D-15).
+Nenhuma nota de referência mudou por causa da revisão de sinônimos.

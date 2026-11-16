@@ -53,11 +53,23 @@ Um `Protocol` com as três operações do pipeline:
 
 ```python
 class ProvedorIA(Protocol):
-    async def extrair_curriculo(self, texto: TextoAnonimizado) -> CurriculoExtraido: ...
-    async def extrair_vaga(self, texto: str) -> VagaExtraida: ...
+    @property
+    def nome(self) -> str: ...  # "falso" ou "anthropic"
+    async def extrair_curriculo(self, texto: TextoAnonimizado) -> Resposta[CurriculoExtraido]: ...
+    async def extrair_vaga(self, texto: str) -> Resposta[VagaExtraida]: ...
     def escrever_feedback(self, tabela: TabelaDaNota, curriculo: CurriculoExtraido,
                           vaga: VagaExtraida) -> AsyncIterator[EventoFeedback]: ...
+
+@dataclass(frozen=True)
+class Resposta[T]:
+    saida: T                         # o modelo Pydantic validado
+    usos: tuple[RegistroUso, ...]    # um registro por chamada, novas tentativas inclusive
 ```
+
+Atualizado na fase 1 (D-13): as extrações devolvem `Resposta[T]` em vez da saída pura, para que o
+custo de cada chamada viaje junto com o resultado, sem estado mutável no provedor (que é
+compartilhado entre requisições na fase 4). O feedback entrega o uso no último evento do fluxo.
+Implementação em `curriculo_api/ia/` (`provedor.py`, `modelos.py`, `falso.py`, `fabrica.py`).
 
 - `ProvedorAnthropic`: o SDK oficial, com as regras abaixo.
 - `ProvedorFalso`: devolve respostas gravadas em `evals/` e `tests/`, escolhidas pelo hash do texto de
