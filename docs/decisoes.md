@@ -417,3 +417,27 @@ modelam essas linhas (b01, b03, b07: anos da vaga, sem requisito a mais), e o or
 (ADR 0003) conta esse tempo pela componente S. A falha real era o singular "ano" não ser
 reconhecido, o que criava um requisito duplicado; com ele reconhecido, nada se duplica. "React (3+
 anos)", com o termo antes do número, segue como requisito de anos da competência.
+## D-56 — O produto se chama Confere (2026-11-17)
+Três nomes propostos:
+- **Confere.** É o verbo do mecanismo: cada item é conferido contra o original, e "confere com o
+  original" é a frase do carimbo de autenticação que virou o mundo visual. É curto, do dia a dia
+  ("confere?") e serve também ao recrutador, que confere currículos.
+- **Consta.** "Consta no currículo?" é a pergunta de cada requisito, mas soa como certidão negativa e
+  fica do lado da falta.
+- **Trecho.** Nomeia a prova (a citação literal), mas não diz o que o produto faz.
+
+Escolhido: **Confere**, porque nomeia o que o produto faz, e não o que ele mostra. O repositório
+continua `curriculo`. Não verifiquei marcas registradas nem domínios: é projeto de portfólio.
+
+## D-57 — Direção de design da fase 5 (2026-11-17)
+Mundo "Confere com o original" (autenticação de cartório), escolhido pelo usuário entre o sorteio do
+impeccable (cupom fiscal), a escolha do impeccable (esta) e o padrão da categoria. A landing usa a
+direção `one-motif` da design-taste-frontend, com o carimbo como forma única. As telas usam o estilo
+`framed-sheet`, com a folha como folha de ofício. A paleta sorteada para a landing (preto-ameixa e
+rosa) foi trocada pelas cores do assunto, mantendo as proporções. A tinta violeta do cartório virou
+azul de carimbo, porque as duas skills proíbem violeta e índigo. No app, o texto do currículo e da
+vaga é sempre em serifa, e a interface em grotesco. Detalhes em `docs/design/direcao.md` e em
+`DESIGN.md`. O `DESIGN.md` foi escrito antes do front, como o plano pede. O impeccable prefere
+escrevê-lo a partir do que foi construído, então ele é revisado no fim da fase 6. A página de decisão
+local do impeccable não abriu neste terminal (o comando ficou preso sem saída), e a escolha foi feita
+pelas perguntas da sessão.
