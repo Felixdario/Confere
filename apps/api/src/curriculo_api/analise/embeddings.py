@@ -5,7 +5,9 @@
   cache de vetores em memória e, para a taxonomia, em disco (`<pasta_modelos>/vetores/`).
 - `EmbutidorFalso`: determinístico, para os testes (o CI não baixa modelo).
 
-Os vetores saem normalizados (norma 1): o cosseno é o produto escalar. O pgvector entra na fase 4.
+Os vetores saem normalizados (norma 1): o cosseno é o produto escalar. Na fase 4, com o banco, o
+vizinho mais próximo na taxonomia vem do pgvector (`vetores_pg.ComparadorPgvector`); este caminho
+em memória continua nos testes de unidade e nas evals.
 """
 
 from __future__ import annotations
@@ -182,6 +184,11 @@ class Comparador:
             resultado.append(forcada if forcada is not None else cosseno(base, vetor))
         return resultado
 
+    async def preparar(self, termos: Sequence[str]) -> None:
+        """Gancho da fase 4: o comparador com banco (`vetores_pg.ComparadorPgvector`) busca aqui,
+        de uma vez, o vizinho mais próximo de cada termo no pgvector. Em memória, nada a fazer."""
+        return None
+
     def canonica_mais_proxima(self, termo: str) -> tuple[str, str, float]:
         """(canônica, termo da taxonomia mais parecido, cosseno)."""
         self.consultas += 1
@@ -194,3 +201,28 @@ class Comparador:
                 similaridades[i] = forcada
         indice = int(np.argmax(similaridades))
         return termos[indice][1], termos[indice][0], similaridades[indice]
+
+
+class ComparadorSemEmbeddings(Comparador):
+    """Sem o modelo de embeddings baixado (`make modelos`), a correspondência fica só na
+    taxonomia: nenhum par é parecido, e `pedidos` conta quantas vezes o embedding faria falta
+    (vira aviso na análise). Nunca baixa modelo no meio de uma análise."""
+
+    def __init__(self, taxonomia: Taxonomia) -> None:
+        super().__init__(taxonomia, EmbutidorFalso())
+        self.pedidos = 0
+
+    def similaridades(self, termo: str, candidatos: Sequence[str]) -> list[float]:
+        self.consultas += 1
+        self.pedidos += 1
+        return [0.0 for _ in candidatos]
+
+    def canonica_mais_proxima(self, termo: str) -> tuple[str, str, float]:
+        self.consultas += 1
+        self.pedidos += 1
+        return "", "", 0.0
+
+
+def modelo_instalado(pasta: Path) -> bool:
+    """O fastembed guarda o ONNX em `<pasta>/models--…/snapshots/…/*.onnx`."""
+    return pasta.is_dir() and any(pasta.rglob("*.onnx"))

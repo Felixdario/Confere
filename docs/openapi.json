@@ -1,0 +1,4128 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Analisador de currículos",
+    "description": "\nAPI do analisador de currículos: compara um currículo com uma vaga e explica a nota.\n\n- **Sessão** por cookie httpOnly (`curriculo_sessao`). Toda rota que muda estado exige o\n  cabeçalho `X-CSRF-Token` igual ao cookie `curriculo_csrf` (pegue em `GET /auth/csrf`).\n- **Erros** em `application/problem+json` com `codigo` estável e `detail` em português.\n- **Análise** assíncrona: `POST /analises` responde 202 com o id; os eventos chegam por SSE em\n  `GET /analises/{id}/eventos` e o resultado em `GET /analises/{id}`.\n- **Modo demonstração**: sem chave de IA, a análise é por regras, sem IA e sem custo (ADR 0006).\n- **Privacidade**: dados pessoais saem antes da análise; `DELETE /eu/dados` apaga tudo.\n",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/auth/csrf": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Token CSRF",
+        "description": "Define o cookie `curriculo_csrf` (legível pela página) e devolve o mesmo valor. Envie-o no cabeçalho `X-CSRF-Token` em todo POST e DELETE.",
+        "operationId": "csrf_auth_csrf_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenCsrf"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/cadastro": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Criar conta",
+        "description": "Cria a conta e já abre a sessão. O consentimento (LGPD) é obrigatório e registra a versão do texto de `GET /privacidade`.",
+        "operationId": "cadastro_auth_cadastro_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cadastro"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Eu"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso recusado",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Não foi possível processar",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite atingido",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Entrar",
+        "description": "Abre a sessão (cookie httpOnly). Limite de tentativas por e-mail e por IP.",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Eu"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso recusado",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Limite atingido",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Sair",
+        "operationId": "logout_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "403": {
+            "description": "Acesso recusado",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eu": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Quem sou eu",
+        "description": "A conta da sessão atual e os consentimentos registrados.",
+        "operationId": "eu_eu_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Eu"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises": {
+      "post": {
+        "tags": [
+          "análises"
+        ],
+        "summary": "Enviar currículo para análise",
+        "description": "Recebe o currículo (arquivo PDF/DOCX **ou** texto colado) e a vaga (texto **ou** o id de uma vaga já enviada). O arquivo é validado na hora pelo tipo real (assinatura de bytes), tamanho e páginas, e o texto é lido e anonimizado; erros saem em problem+json. A análise vai para a fila e a resposta traz o id: acompanhe em `GET /analises/{id}/eventos` (SSE). Com `curriculo_id`, o envio vira uma nova versão desse currículo (para comparar).",
+        "operationId": "enviar_analises_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_enviar_analises_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnaliseCriada"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Acesso recusado"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Arquivo grande demais"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não foi possível processar"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Limite atingido"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Serviço indisponível"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "análises"
+        ],
+        "summary": "Histórico de análises",
+        "description": "As análises dos seus currículos, da mais recente para a mais antiga, paginadas por cursor (as do modo recrutador ficam nos processos).",
+        "operationId": "listar_analises_get",
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limite"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "O `proximo_cursor` da página anterior.",
+              "title": "Cursor"
+            },
+            "description": "O `proximo_cursor` da página anterior."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaAnalises"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/{analise_id}": {
+      "get": {
+        "tags": [
+          "análises"
+        ],
+        "summary": "Resultado da análise",
+        "description": "Nota e decomposição, tabela requisito × evidência (com o trecho), lacunas, reescritas antes/depois, palavras-chave, avisos (texto oculto, instrução para a IA, PDF sem texto) e o que a anonimização ignorou (valores mascarados).",
+        "operationId": "obter_analises__analise_id__get",
+        "parameters": [
+          {
+            "name": "analise_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analise Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnaliseDetalhe"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/{analise_id}/eventos": {
+      "get": {
+        "tags": [
+          "análises"
+        ],
+        "summary": "Eventos da análise em tempo real (SSE)",
+        "description": "`text/event-stream` com os eventos `etapa` (`{etapa, texto}`: leitura, anonimização, extração, ancoragem, correspondência, nota, feedback), `texto` (`{texto}`: um pedaço do feedback enquanto é escrito), `final` (`{status, nota}`) e `erro` (`{codigo, mensagem}`). Cada evento tem `id`; reconecte com o cabeçalho `Last-Event-ID` (ou `?desde=`) para continuar sem perder nem repetir. Comentários `: ping` a cada 15 s mantêm a conexão. O fluxo fecha depois de `final` ou `erro`; reconectando depois do fim (Last-Event-ID igual ou maior que o do terminal), o terminal é **reenviado** com o mesmo id e o fluxo fecha. Uma conexão dura no máximo `TEMPO_MAX_ANALISE_S` + 120 s. Até 5 conexões simultâneas por pessoa (429 acima disso).",
+        "operationId": "eventos_analises__analise_id__eventos_get",
+        "parameters": [
+          {
+            "name": "analise_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analise Id"
+            }
+          },
+          {
+            "name": "desde",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Último id recebido (o mesmo que `Last-Event-ID`).",
+              "title": "Desde"
+            },
+            "description": "Último id recebido (o mesmo que `Last-Event-ID`)."
+          },
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Last-Event-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/event-stream": {
+                "example": "id: 1\nevent: etapa\ndata: {\"etapa\": \"leitura\", \"texto\": \"lendo o arquivo\"}\n\n"
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Limite atingido"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analises/{analise_id}/relatorio.pdf": {
+      "get": {
+        "tags": [
+          "análises"
+        ],
+        "summary": "Relatório em PDF",
+        "description": "Gerado no servidor, sem dados pessoais (sem a lista do que foi removido, sem o arquivo original).",
+        "operationId": "relatorio_analises__analise_id__relatorio_pdf_get",
+        "parameters": [
+          {
+            "name": "analise_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analise Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/pdf": {}
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/curriculos": {
+      "get": {
+        "tags": [
+          "currículos"
+        ],
+        "summary": "Meus currículos",
+        "description": "Os currículos enviados por você (sem os do modo recrutador), com as versões.",
+        "operationId": "listar_curriculos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CurriculoDetalhe"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Curriculos Get"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/curriculos/{curriculo_id}": {
+      "get": {
+        "tags": [
+          "currículos"
+        ],
+        "summary": "Um currículo e suas versões",
+        "operationId": "obter_curriculos__curriculo_id__get",
+        "parameters": [
+          {
+            "name": "curriculo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Curriculo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurriculoDetalhe"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/curriculos/{curriculo_id}/comparacao": {
+      "get": {
+        "tags": [
+          "currículos"
+        ],
+        "summary": "Comparar versões contra a mesma vaga",
+        "description": "Compara a análise concluída de duas versões deste currículo contra a mesma vaga: por padrão as duas mais recentes (ou `de` e `para`). Devolve a frase (\"A nota subiu de 58 para 76.\") e os requisitos que mudaram de status.",
+        "operationId": "comparar_curriculos__curriculo_id__comparacao_get",
+        "parameters": [
+          {
+            "name": "curriculo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Curriculo Id"
+            }
+          },
+          {
+            "name": "vaga",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "description": "O id da vaga.",
+              "title": "Vaga"
+            },
+            "description": "O id da vaga."
+          },
+          {
+            "name": "de",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Versão de partida.",
+              "title": "De"
+            },
+            "description": "Versão de partida."
+          },
+          {
+            "name": "para",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Versão de chegada.",
+              "title": "Para"
+            },
+            "description": "Versão de chegada."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comparacao"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Conflito"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não foi possível processar"
+          }
+        }
+      }
+    },
+    "/processos": {
+      "get": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Meus processos",
+        "operationId": "listar_processos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProcessoResumo"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Processos Get"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Criar processo seletivo",
+        "description": "Um processo tem uma vaga e até 20 currículos. Quem envia currículos de terceiros declara ter base legal (LGPD); a declaração fica registrada.",
+        "operationId": "criar_processos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NovoProcesso"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessoResumo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso recusado",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Não foi possível processar",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}": {
+      "get": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Ranking do processo",
+        "description": "Candidatos por nota, com as parcelas e os requisitos de cada um, na visão anonimizada (rótulos; sem nome, contato nem arquivo).",
+        "operationId": "obter_processos__processo_id__get",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessoDetalhe"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos": {
+      "post": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Enviar um currículo ao processo",
+        "description": "Um currículo por envio (arquivo PDF/DOCX ou texto). A análise vai para a fila; o candidato recebe o próximo rótulo. Passado o limite (20), o envio é recusado com 422.",
+        "operationId": "enviar_candidato_processos__processo_id__candidatos_post",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_enviar_candidato_processos__processo_id__candidatos_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatoCriado"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Acesso recusado"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Arquivo grande demais"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não foi possível processar"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Limite atingido"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Serviço indisponível"
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos/{candidato_id}/eventos": {
+      "get": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Progresso da análise de um candidato (SSE)",
+        "description": "Como `GET /analises/{id}/eventos`, mas na visão anonimizada: só `etapa`, `final` e `erro` (sem os pedaços de texto do feedback).",
+        "operationId": "eventos_do_candidato_processos__processo_id__candidatos__candidato_id__eventos_get",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          },
+          {
+            "name": "candidato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Candidato Id"
+            }
+          },
+          {
+            "name": "desde",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Desde"
+            }
+          },
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Last-Event-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/event-stream": {}
+            }
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Limite atingido"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos/{candidato_id}": {
+      "get": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Explicação de um candidato",
+        "description": "A tabela requisito × evidência (trechos anonimizados), lacunas e o histórico de decisões. Sem nome, contato nem arquivo.",
+        "operationId": "obter_candidato_processos__processo_id__candidatos__candidato_id__get",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          },
+          {
+            "name": "candidato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Candidato Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatoDetalhe"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos/{candidato_id}/decisoes": {
+      "post": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Registrar decisão humana",
+        "description": "Avançar, não avançar ou deixar pendente, sempre com justificativa. Fica registrado quem decidiu e quando; o histórico é mantido. O sistema nunca decide sozinho.",
+        "operationId": "decidir_processos__processo_id__candidatos__candidato_id__decisoes_post",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          },
+          {
+            "name": "candidato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Candidato Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NovaDecisao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisaoSaida"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Acesso recusado"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não foi possível processar"
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos/{candidato_id}/revelar": {
+      "post": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Revelar a identidade (ação registrada)",
+        "description": "Sai da visão anonimizada para este candidato: registra quando e libera o download do arquivo original. Faça isso só quando precisar contatar a pessoa.",
+        "operationId": "revelar_processos__processo_id__candidatos__candidato_id__revelar_post",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          },
+          {
+            "name": "candidato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Candidato Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Revelacao"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Acesso recusado"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processos/{processo_id}/candidatos/{candidato_id}/arquivo": {
+      "get": {
+        "tags": [
+          "recrutador"
+        ],
+        "summary": "Arquivo original (depois de revelar)",
+        "operationId": "arquivo_processos__processo_id__candidatos__candidato_id__arquivo_get",
+        "parameters": [
+          {
+            "name": "processo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Processo Id"
+            }
+          },
+          {
+            "name": "candidato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Candidato Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/pdf": {},
+              "application/octet-stream": {}
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Sessão necessária"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Acesso recusado"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            },
+            "description": "Não encontrado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/privacidade": {
+      "get": {
+        "tags": [
+          "privacidade"
+        ],
+        "summary": "O que guardamos e por quanto tempo",
+        "description": "Público. Lido da configuração (`RETENCAO_DIAS`, versão do texto).",
+        "operationId": "privacidade_privacidade_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Privacidade"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eu/dados": {
+      "delete": {
+        "tags": [
+          "privacidade"
+        ],
+        "summary": "Apagar meus dados",
+        "description": "Apaga na hora tudo da conta: banco (em cascata), arquivos em disco e chaves no Redis. Encerra a sessão e responde com o que foi apagado. Não há como desfazer.",
+        "operationId": "apagar_dados_eu_dados_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DadosApagados"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessão necessária",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acesso recusado",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/saude": {
+      "get": {
+        "tags": [
+          "infra"
+        ],
+        "summary": "Saúde do serviço",
+        "operationId": "saude_saude_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Saude"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnaliseCriada": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "curriculo": {
+            "$ref": "#/components/schemas/CurriculoRef"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "eventos_url": {
+            "type": "string",
+            "title": "Eventos Url",
+            "examples": [
+              "/analises/6f1c…/eventos"
+            ]
+          },
+          "resultado_url": {
+            "type": "string",
+            "title": "Resultado Url",
+            "examples": [
+              "/analises/6f1c…"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "curriculo",
+          "vaga",
+          "eventos_url",
+          "resultado_url"
+        ],
+        "title": "AnaliseCriada"
+      },
+      "AnaliseDetalhe": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "etapas": {
+            "items": {
+              "$ref": "#/components/schemas/EtapaFeita"
+            },
+            "type": "array",
+            "title": "Etapas"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "iniciado_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iniciado Em"
+          },
+          "concluido_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concluido Em"
+          },
+          "curriculo": {
+            "$ref": "#/components/schemas/CurriculoRef"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "modo_demonstracao": {
+            "type": "boolean",
+            "title": "Modo Demonstracao",
+            "description": "Análise por regras ou gravações, sem IA."
+          },
+          "aviso_modo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aviso Modo",
+            "examples": [
+              "Modo demonstração: análise por regras, sem IA."
+            ]
+          },
+          "provedor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provedor"
+          },
+          "modelos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Modelos"
+          },
+          "custo_usd": {
+            "type": "string",
+            "title": "Custo Usd"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          },
+          "decomposicao": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Decomposicao"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requisitos": {
+            "items": {
+              "$ref": "#/components/schemas/LinhaRequisito"
+            },
+            "type": "array",
+            "title": "Requisitos",
+            "description": "Tabela requisito × evidência."
+          },
+          "resumo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resumo"
+          },
+          "lacunas": {
+            "items": {
+              "$ref": "#/components/schemas/LacunaIA"
+            },
+            "type": "array",
+            "title": "Lacunas"
+          },
+          "reescritas": {
+            "items": {
+              "$ref": "#/components/schemas/Reescrita"
+            },
+            "type": "array",
+            "title": "Reescritas",
+            "description": "Antes/depois, só com evidência ancorada."
+          },
+          "reescritas_descartadas": {
+            "type": "integer",
+            "title": "Reescritas Descartadas"
+          },
+          "palavras_chave": {
+            "items": {
+              "$ref": "#/components/schemas/PalavraChave"
+            },
+            "type": "array",
+            "title": "Palavras Chave"
+          },
+          "o_que_aprender": {
+            "items": {
+              "$ref": "#/components/schemas/AprenderIA"
+            },
+            "type": "array",
+            "title": "O Que Aprender"
+          },
+          "avisos": {
+            "items": {
+              "$ref": "#/components/schemas/Aviso"
+            },
+            "type": "array",
+            "title": "Avisos"
+          },
+          "ignorado": {
+            "items": {
+              "$ref": "#/components/schemas/Ignorado"
+            },
+            "type": "array",
+            "title": "Ignorado",
+            "description": "O que a anonimização tirou antes da análise, com o valor mascarado."
+          },
+          "conteudo_apagado": {
+            "type": "boolean",
+            "title": "Conteudo Apagado",
+            "description": "A retenção já apagou o texto e o arquivo desta versão (ADR 0004)."
+          },
+          "erro": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErroAnaliseSaida"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "etapas",
+          "criado_em",
+          "iniciado_em",
+          "concluido_em",
+          "curriculo",
+          "vaga",
+          "modo_demonstracao",
+          "provedor",
+          "modelos",
+          "custo_usd",
+          "nota",
+          "decomposicao",
+          "requisitos",
+          "resumo",
+          "lacunas",
+          "reescritas",
+          "reescritas_descartadas",
+          "palavras_chave",
+          "o_que_aprender",
+          "avisos",
+          "ignorado",
+          "conteudo_apagado",
+          "erro"
+        ],
+        "title": "AnaliseDetalhe"
+      },
+      "AnaliseResumo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "concluido_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concluido Em"
+          },
+          "curriculo": {
+            "$ref": "#/components/schemas/CurriculoRef"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "provedor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provedor"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "nota",
+          "criado_em",
+          "concluido_em",
+          "curriculo",
+          "vaga",
+          "provedor"
+        ],
+        "title": "AnaliseResumo"
+      },
+      "AprenderIA": {
+        "properties": {
+          "competencia": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Competencia"
+          },
+          "sugestao": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Sugestao"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "competencia",
+          "sugestao"
+        ],
+        "title": "AprenderIA"
+      },
+      "Aviso": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo",
+            "description": "texto_oculto, instrucao_para_ia, pdf_sem_texto, comentario_nao_lido, formulario_nao_lido, nome_nao_identificado ou calculo.",
+            "examples": [
+              "texto_oculto"
+            ]
+          },
+          "origem": {
+            "type": "string",
+            "enum": [
+              "curriculo",
+              "vaga",
+              "calculo"
+            ],
+            "title": "Origem"
+          },
+          "motivo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo"
+          },
+          "trecho": {
+            "type": "string",
+            "title": "Trecho",
+            "description": "Trecho já anonimizado.",
+            "default": ""
+          },
+          "pagina": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pagina"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "origem"
+        ],
+        "title": "Aviso"
+      },
+      "AvisoAnonimo": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "origem": {
+            "type": "string",
+            "title": "Origem"
+          },
+          "motivo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "origem"
+        ],
+        "title": "AvisoAnonimo",
+        "description": "Alerta na visão do recrutador: tipo e motivo, nunca o trecho."
+      },
+      "Body_enviar_analises_post": {
+        "properties": {
+          "arquivo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/octet-stream"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arquivo",
+            "description": "Currículo em PDF ou DOCX (até 5 MB)."
+          },
+          "texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Texto",
+            "description": "Ou o texto do currículo, colado."
+          },
+          "vaga_texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vaga Texto",
+            "description": "O texto da vaga."
+          },
+          "vaga_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vaga Id",
+            "description": "Ou o id de uma vaga sua."
+          },
+          "curriculo_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Curriculo Id",
+            "description": "Opcional: nova versão deste currículo."
+          }
+        },
+        "type": "object",
+        "title": "Body_enviar_analises_post"
+      },
+      "Body_enviar_candidato_processos__processo_id__candidatos_post": {
+        "properties": {
+          "arquivo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "contentMediaType": "application/octet-stream"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arquivo",
+            "description": "Currículo em PDF ou DOCX."
+          },
+          "texto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Texto",
+            "description": "Ou o texto do currículo."
+          }
+        },
+        "type": "object",
+        "title": "Body_enviar_candidato_processos__processo_id__candidatos_post"
+      },
+      "Cadastro": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "title": "Email",
+            "examples": [
+              "pessoa@example.com"
+            ]
+          },
+          "senha": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Senha",
+            "examples": [
+              "uma senha longa"
+            ]
+          },
+          "aceito_consentimento": {
+            "type": "boolean",
+            "title": "Aceito Consentimento",
+            "description": "Concordância com o texto de `GET /privacidade` (LGPD). Obrigatória."
+          },
+          "versao_consentimento": {
+            "type": "string",
+            "title": "Versao Consentimento",
+            "description": "A `versao_texto` de `GET /privacidade` que a pessoa leu.",
+            "examples": [
+              "2026-11-16"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "senha",
+          "aceito_consentimento",
+          "versao_consentimento"
+        ],
+        "title": "Cadastro"
+      },
+      "CampoInvalido": {
+        "properties": {
+          "campo": {
+            "type": "string",
+            "title": "Campo",
+            "examples": [
+              "corpo.email"
+            ]
+          },
+          "motivo": {
+            "type": "string",
+            "title": "Motivo",
+            "examples": [
+              "valor inválido"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "campo",
+          "motivo"
+        ],
+        "title": "CampoInvalido"
+      },
+      "CandidatoCriado": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "rotulo": {
+            "type": "string",
+            "title": "Rotulo"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "eventos_url": {
+            "type": "string",
+            "title": "Eventos Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "rotulo",
+          "status",
+          "eventos_url"
+        ],
+        "title": "CandidatoCriado"
+      },
+      "CandidatoDetalhe": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "rotulo": {
+            "type": "string",
+            "title": "Rotulo",
+            "examples": [
+              "Candidato A"
+            ]
+          },
+          "posicao": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posicao",
+            "description": "Ordem por nota (empates na ordem de envio)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          },
+          "decomposicao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decomposicao"
+          },
+          "parcelas": {
+            "items": {
+              "$ref": "#/components/schemas/Parcela"
+            },
+            "type": "array",
+            "title": "Parcelas"
+          },
+          "requisitos": {
+            "items": {
+              "$ref": "#/components/schemas/RequisitoResumo"
+            },
+            "type": "array",
+            "title": "Requisitos"
+          },
+          "explicacao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explicacao",
+            "examples": [
+              "Atende 4 de 6 obrigatórios e 1 de 3 desejáveis; senioridade 4 de 5 anos."
+            ]
+          },
+          "decisao": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecisaoSaida"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A última decisão humana; nula = nenhuma."
+          },
+          "eventos_url": {
+            "type": "string",
+            "title": "Eventos Url",
+            "description": "Progresso da análise (SSE), na visão anonimizada."
+          },
+          "tabela": {
+            "items": {
+              "$ref": "#/components/schemas/LinhaRequisito"
+            },
+            "type": "array",
+            "title": "Tabela"
+          },
+          "lacunas": {
+            "items": {
+              "$ref": "#/components/schemas/LacunaIA"
+            },
+            "type": "array",
+            "title": "Lacunas"
+          },
+          "avisos": {
+            "items": {
+              "$ref": "#/components/schemas/AvisoAnonimo"
+            },
+            "type": "array",
+            "title": "Avisos"
+          },
+          "decisoes": {
+            "items": {
+              "$ref": "#/components/schemas/DecisaoSaida"
+            },
+            "type": "array",
+            "title": "Decisoes",
+            "description": "Histórico, da mais antiga à mais recente."
+          },
+          "identidade_revelada_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identidade Revelada Em"
+          },
+          "auditoria": {
+            "items": {
+              "$ref": "#/components/schemas/RegistroAuditoria"
+            },
+            "type": "array",
+            "title": "Auditoria",
+            "description": "Cada revelação e cada download do arquivo original (quem e quando)."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "rotulo",
+          "posicao",
+          "status",
+          "nota",
+          "decomposicao",
+          "parcelas",
+          "requisitos",
+          "explicacao",
+          "decisao",
+          "eventos_url",
+          "tabela",
+          "lacunas",
+          "avisos",
+          "decisoes",
+          "identidade_revelada_em",
+          "auditoria"
+        ],
+        "title": "CandidatoDetalhe"
+      },
+      "CandidatoRanking": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "rotulo": {
+            "type": "string",
+            "title": "Rotulo",
+            "examples": [
+              "Candidato A"
+            ]
+          },
+          "posicao": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posicao",
+            "description": "Ordem por nota (empates na ordem de envio)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "na_fila",
+              "processando",
+              "concluida",
+              "erro"
+            ],
+            "title": "Status"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          },
+          "decomposicao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decomposicao"
+          },
+          "parcelas": {
+            "items": {
+              "$ref": "#/components/schemas/Parcela"
+            },
+            "type": "array",
+            "title": "Parcelas"
+          },
+          "requisitos": {
+            "items": {
+              "$ref": "#/components/schemas/RequisitoResumo"
+            },
+            "type": "array",
+            "title": "Requisitos"
+          },
+          "explicacao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explicacao",
+            "examples": [
+              "Atende 4 de 6 obrigatórios e 1 de 3 desejáveis; senioridade 4 de 5 anos."
+            ]
+          },
+          "decisao": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecisaoSaida"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A última decisão humana; nula = nenhuma."
+          },
+          "eventos_url": {
+            "type": "string",
+            "title": "Eventos Url",
+            "description": "Progresso da análise (SSE), na visão anonimizada."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "rotulo",
+          "posicao",
+          "status",
+          "nota",
+          "decomposicao",
+          "parcelas",
+          "requisitos",
+          "explicacao",
+          "decisao",
+          "eventos_url"
+        ],
+        "title": "CandidatoRanking"
+      },
+      "Comparacao": {
+        "properties": {
+          "curriculo_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Curriculo Id"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "versoes": {
+            "items": {
+              "$ref": "#/components/schemas/PontoDaComparacao"
+            },
+            "type": "array",
+            "title": "Versoes",
+            "description": "Uma análise concluída por versão."
+          },
+          "de": {
+            "$ref": "#/components/schemas/PontoDaComparacao"
+          },
+          "para": {
+            "$ref": "#/components/schemas/PontoDaComparacao"
+          },
+          "diferenca": {
+            "type": "integer",
+            "title": "Diferenca"
+          },
+          "frase": {
+            "type": "string",
+            "title": "Frase",
+            "examples": [
+              "A nota subiu de 58 para 76."
+            ]
+          },
+          "mudancas": {
+            "items": {
+              "$ref": "#/components/schemas/MudancaDeRequisito"
+            },
+            "type": "array",
+            "title": "Mudancas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "curriculo_id",
+          "vaga",
+          "versoes",
+          "de",
+          "para",
+          "diferenca",
+          "frase",
+          "mudancas"
+        ],
+        "title": "Comparacao"
+      },
+      "ConsentimentoSaida": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "lgpd_titular",
+              "recrutador_base_legal"
+            ],
+            "title": "Tipo"
+          },
+          "versao_texto": {
+            "type": "string",
+            "title": "Versao Texto"
+          },
+          "aceito_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Aceito Em"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "versao_texto",
+          "aceito_em"
+        ],
+        "title": "ConsentimentoSaida"
+      },
+      "CurriculoDetalhe": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "versoes": {
+            "items": {
+              "$ref": "#/components/schemas/VersaoResumo"
+            },
+            "type": "array",
+            "title": "Versoes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "criado_em",
+          "versoes"
+        ],
+        "title": "CurriculoDetalhe"
+      },
+      "CurriculoRef": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "versao": {
+            "type": "integer",
+            "title": "Versao",
+            "description": "Número da versão deste currículo (1, 2, 3…)."
+          },
+          "origem": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "docx",
+              "texto"
+            ],
+            "title": "Origem"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "versao",
+          "origem"
+        ],
+        "title": "CurriculoRef"
+      },
+      "DadosApagados": {
+        "properties": {
+          "mensagem": {
+            "type": "string",
+            "title": "Mensagem"
+          },
+          "apagado": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Apagado",
+            "examples": [
+              {
+                "analises": 3,
+                "curriculo_versoes": 3,
+                "curriculos": 2,
+                "usuarios": 1
+              }
+            ]
+          },
+          "arquivos": {
+            "type": "integer",
+            "title": "Arquivos",
+            "description": "Arquivos apagados do disco."
+          },
+          "chaves_redis": {
+            "type": "integer",
+            "title": "Chaves Redis",
+            "description": "Chaves apagadas do Redis (eventos, fila, limites)."
+          }
+        },
+        "type": "object",
+        "required": [
+          "mensagem",
+          "apagado",
+          "arquivos",
+          "chaves_redis"
+        ],
+        "title": "DadosApagados"
+      },
+      "DecisaoSaida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "decisao": {
+            "type": "string",
+            "enum": [
+              "avancar",
+              "nao_avancar",
+              "pendente"
+            ],
+            "title": "Decisao"
+          },
+          "justificativa": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Justificativa",
+            "description": "Nula depois da retenção (RETENCAO_DIAS): ficam a decisão, quem e quando."
+          },
+          "justificativa_apagada_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Justificativa Apagada Em"
+          },
+          "usuario_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Usuario Id",
+            "description": "Quem decidiu."
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "decisao",
+          "justificativa",
+          "usuario_id",
+          "criado_em"
+        ],
+        "title": "DecisaoSaida"
+      },
+      "Decomposicao": {
+        "properties": {
+          "texto": {
+            "type": "string",
+            "title": "Texto",
+            "description": "A linha da tela, calculada em código (ADR 0003).",
+            "examples": [
+              "obrigatórios 4,5 de 6 → 52,5 · desejáveis 1 de 3 → 6,7 · senioridade 4/5 anos → 8,0 · nota 67"
+            ]
+          },
+          "parcelas": {
+            "items": {
+              "$ref": "#/components/schemas/Parcela"
+            },
+            "type": "array",
+            "title": "Parcelas"
+          },
+          "anos_relevantes": {
+            "type": "number",
+            "title": "Anos Relevantes"
+          },
+          "anos_minimos": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anos Minimos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "texto",
+          "parcelas",
+          "anos_relevantes",
+          "anos_minimos"
+        ],
+        "title": "Decomposicao"
+      },
+      "ErroAnaliseSaida": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "title": "Codigo",
+            "examples": [
+              "vaga_sem_requisitos"
+            ]
+          },
+          "mensagem": {
+            "type": "string",
+            "title": "Mensagem"
+          }
+        },
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensagem"
+        ],
+        "title": "ErroAnaliseSaida"
+      },
+      "EtapaFeita": {
+        "properties": {
+          "etapa": {
+            "type": "string",
+            "title": "Etapa",
+            "examples": [
+              "leitura"
+            ]
+          },
+          "texto": {
+            "type": "string",
+            "title": "Texto",
+            "examples": [
+              "lendo o arquivo"
+            ]
+          },
+          "em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Em"
+          }
+        },
+        "type": "object",
+        "required": [
+          "etapa",
+          "texto",
+          "em"
+        ],
+        "title": "EtapaFeita"
+      },
+      "Eu": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "consentimentos": {
+            "items": {
+              "$ref": "#/components/schemas/ConsentimentoSaida"
+            },
+            "type": "array",
+            "title": "Consentimentos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "criado_em",
+          "consentimentos"
+        ],
+        "title": "Eu"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Ignorado": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo",
+            "examples": [
+              "email"
+            ]
+          },
+          "mascarado": {
+            "type": "string",
+            "title": "Mascarado",
+            "examples": [
+              "m•••@•••.com"
+            ]
+          },
+          "ocorrencias": {
+            "type": "integer",
+            "title": "Ocorrencias"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "mascarado",
+          "ocorrencias"
+        ],
+        "title": "Ignorado"
+      },
+      "ItemGuardado": {
+        "properties": {
+          "dado": {
+            "type": "string",
+            "title": "Dado"
+          },
+          "por_quanto_tempo": {
+            "type": "string",
+            "title": "Por Quanto Tempo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dado",
+          "por_quanto_tempo"
+        ],
+        "title": "ItemGuardado"
+      },
+      "LacunaIA": {
+        "properties": {
+          "requisito": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Requisito",
+            "description": "A descrição do requisito, exatamente como na tabela."
+          },
+          "comentario": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Comentario"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "requisito",
+          "comentario"
+        ],
+        "title": "LacunaIA"
+      },
+      "LinhaRequisito": {
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "title": "Descricao"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "obrigatorio",
+              "desejavel"
+            ],
+            "title": "Tipo"
+          },
+          "competencia_pedida": {
+            "type": "string",
+            "title": "Competencia Pedida",
+            "description": "Canônica da taxonomia, ou o termo da vaga."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "atende",
+              "parcial",
+              "nao_atende"
+            ],
+            "title": "Status"
+          },
+          "valor": {
+            "type": "string",
+            "title": "Valor",
+            "description": "Valor da linha como fração exata: '1', '1/2' ou '0'."
+          },
+          "regra": {
+            "type": "string",
+            "enum": [
+              "mesma_competencia",
+              "sinonimo_na_taxonomia",
+              "relacionada_na_taxonomia",
+              "similaridade",
+              "sem_evidencia"
+            ],
+            "title": "Regra"
+          },
+          "competencia_casada": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Competencia Casada",
+            "description": "O item do currículo que comprova (como escrito)."
+          },
+          "similaridade": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similaridade",
+            "description": "Cosseno do embedding, quando a regra foi por similaridade."
+          },
+          "evidencia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidencia",
+            "description": "O trecho ancorado do currículo."
+          },
+          "anos_pedidos": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anos Pedidos"
+          },
+          "anos_comprovados": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anos Comprovados"
+          },
+          "nivel_pedido": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "basico",
+                  "intermediario",
+                  "avancado",
+                  "fluente"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nivel Pedido"
+          },
+          "nivel_declarado": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "basico",
+                  "intermediario",
+                  "avancado",
+                  "fluente"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nivel Declarado"
+          },
+          "motivo": {
+            "type": "string",
+            "title": "Motivo",
+            "description": "Explicação legível em pt-BR."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "descricao",
+          "tipo",
+          "competencia_pedida",
+          "status",
+          "valor",
+          "regra",
+          "motivo"
+        ],
+        "title": "LinhaRequisito",
+        "description": "Uma linha da tabela da nota: um requisito da vaga e como o código o decidiu (ADR 0003)."
+      },
+      "Login": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "title": "Email",
+            "examples": [
+              "demo@curriculo.dev"
+            ]
+          },
+          "senha": {
+            "type": "string",
+            "maxLength": 128,
+            "title": "Senha",
+            "examples": [
+              "demo1234"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "senha"
+        ],
+        "title": "Login"
+      },
+      "MudancaDeRequisito": {
+        "properties": {
+          "requisito": {
+            "type": "string",
+            "title": "Requisito"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "obrigatorio",
+              "desejavel"
+            ],
+            "title": "Tipo"
+          },
+          "de": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "atende",
+                  "parcial",
+                  "nao_atende"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "De"
+          },
+          "para": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "atende",
+                  "parcial",
+                  "nao_atende"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Para"
+          }
+        },
+        "type": "object",
+        "required": [
+          "requisito",
+          "tipo",
+          "de",
+          "para"
+        ],
+        "title": "MudancaDeRequisito"
+      },
+      "NovaDecisao": {
+        "properties": {
+          "decisao": {
+            "type": "string",
+            "enum": [
+              "avancar",
+              "nao_avancar",
+              "pendente"
+            ],
+            "title": "Decisao"
+          },
+          "justificativa": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Justificativa",
+            "description": "Obrigatória: por que esta decisão (fica registrada com quem e quando).",
+            "examples": [
+              "Tem a experiência com SAE e COREN ativo; falta UTI, a avaliar na entrevista."
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "decisao",
+          "justificativa"
+        ],
+        "title": "NovaDecisao"
+      },
+      "NovoProcesso": {
+        "properties": {
+          "titulo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Titulo"
+          },
+          "vaga_texto": {
+            "type": "string",
+            "maxLength": 60000,
+            "minLength": 1,
+            "title": "Vaga Texto"
+          },
+          "declaro_base_legal": {
+            "type": "boolean",
+            "title": "Declaro Base Legal",
+            "description": "Quem envia currículos de terceiros declara ter base legal (LGPD) para tratá-los. Obrigatório."
+          }
+        },
+        "type": "object",
+        "required": [
+          "vaga_texto",
+          "declaro_base_legal"
+        ],
+        "title": "NovoProcesso"
+      },
+      "PaginaAnalises": {
+        "properties": {
+          "itens": {
+            "items": {
+              "$ref": "#/components/schemas/AnaliseResumo"
+            },
+            "type": "array",
+            "title": "Itens"
+          },
+          "proximo_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proximo Cursor",
+            "description": "Passe em `cursor` para a próxima página; nulo na última."
+          }
+        },
+        "type": "object",
+        "required": [
+          "itens",
+          "proximo_cursor"
+        ],
+        "title": "PaginaAnalises"
+      },
+      "PalavraChave": {
+        "properties": {
+          "termo": {
+            "type": "string",
+            "title": "Termo"
+          },
+          "no_curriculo": {
+            "type": "boolean",
+            "title": "No Curriculo",
+            "description": "O termo aparece no texto do currículo."
+          }
+        },
+        "type": "object",
+        "required": [
+          "termo",
+          "no_curriculo"
+        ],
+        "title": "PalavraChave"
+      },
+      "Parcela": {
+        "properties": {
+          "componente": {
+            "type": "string",
+            "enum": [
+              "obrigatorios",
+              "desejaveis",
+              "senioridade"
+            ],
+            "title": "Componente"
+          },
+          "peso": {
+            "type": "string",
+            "title": "Peso",
+            "description": "Peso original (fração exata: '7/10')."
+          },
+          "valor": {
+            "type": "string",
+            "title": "Valor",
+            "description": "Valor do componente em [0, 1], fração exata."
+          },
+          "pontos": {
+            "type": "string",
+            "title": "Pontos",
+            "description": "100 × peso × valor ÷ soma dos pesos presentes, exato."
+          },
+          "pontos_exibicao": {
+            "type": "string",
+            "title": "Pontos Exibicao",
+            "description": "Os pontos com uma casa, meio para cima ('52,5')."
+          },
+          "resumo": {
+            "type": "string",
+            "title": "Resumo",
+            "description": "Texto da tela: 'obrigatórios 4,5 de 6 → 52,5'."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "componente",
+          "peso",
+          "valor",
+          "pontos",
+          "pontos_exibicao",
+          "resumo"
+        ],
+        "title": "Parcela",
+        "description": "Um componente da nota já renormalizado: as parcelas presentes somam a nota (antes do\narredondamento)."
+      },
+      "PontoDaComparacao": {
+        "properties": {
+          "versao": {
+            "type": "integer",
+            "title": "Versao"
+          },
+          "analise_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Analise Id"
+          },
+          "nota": {
+            "type": "integer",
+            "title": "Nota"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          }
+        },
+        "type": "object",
+        "required": [
+          "versao",
+          "analise_id",
+          "nota",
+          "criado_em"
+        ],
+        "title": "PontoDaComparacao"
+      },
+      "Privacidade": {
+        "properties": {
+          "versao_texto": {
+            "type": "string",
+            "title": "Versao Texto"
+          },
+          "texto_consentimento": {
+            "type": "string",
+            "title": "Texto Consentimento"
+          },
+          "retencao_dias": {
+            "type": "integer",
+            "title": "Retencao Dias"
+          },
+          "o_que_guardamos": {
+            "items": {
+              "$ref": "#/components/schemas/ItemGuardado"
+            },
+            "type": "array",
+            "title": "O Que Guardamos"
+          },
+          "o_que_vai_para_a_ia": {
+            "type": "string",
+            "title": "O Que Vai Para A Ia"
+          },
+          "o_que_nunca_guardamos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "O Que Nunca Guardamos"
+          },
+          "como_apagar": {
+            "type": "string",
+            "title": "Como Apagar"
+          }
+        },
+        "type": "object",
+        "required": [
+          "versao_texto",
+          "texto_consentimento",
+          "retencao_dias",
+          "o_que_guardamos",
+          "o_que_vai_para_a_ia",
+          "o_que_nunca_guardamos",
+          "como_apagar"
+        ],
+        "title": "Privacidade"
+      },
+      "Problema": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "examples": [
+              "https://curriculo.dev/erros/sem_texto"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "examples": [
+              "O currículo não pode ser lido"
+            ]
+          },
+          "status": {
+            "type": "integer",
+            "title": "Status",
+            "examples": [
+              422
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "examples": [
+              "O PDF não tem texto selecionável (parece escaneado), e o OCR não está disponível nesta versão. Exporte o currículo do editor de texto como PDF ou cole o texto."
+            ]
+          },
+          "codigo": {
+            "type": "string",
+            "title": "Codigo",
+            "examples": [
+              "sem_texto"
+            ]
+          },
+          "instance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instance",
+            "examples": [
+              "/analises"
+            ]
+          },
+          "id_requisicao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id Requisicao"
+          },
+          "campos": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CampoInvalido"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Campos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "codigo"
+        ],
+        "title": "Problema",
+        "description": "Corpo de todo erro (RFC 9457)."
+      },
+      "ProcessoDetalhe": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "candidatos": {
+            "type": "integer",
+            "title": "Candidatos"
+          },
+          "limite_candidatos": {
+            "type": "integer",
+            "title": "Limite Candidatos"
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso",
+            "examples": [
+              "O sistema ordena e explica; não descarta ninguém. Avançar ou não é decisão sua, registrada com justificativa."
+            ]
+          },
+          "ranking": {
+            "items": {
+              "$ref": "#/components/schemas/CandidatoRanking"
+            },
+            "type": "array",
+            "title": "Ranking"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "titulo",
+          "vaga",
+          "criado_em",
+          "candidatos",
+          "limite_candidatos",
+          "aviso",
+          "ranking"
+        ],
+        "title": "ProcessoDetalhe"
+      },
+      "ProcessoResumo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "vaga": {
+            "$ref": "#/components/schemas/VagaResumo"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "candidatos": {
+            "type": "integer",
+            "title": "Candidatos"
+          },
+          "limite_candidatos": {
+            "type": "integer",
+            "title": "Limite Candidatos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "titulo",
+          "vaga",
+          "criado_em",
+          "candidatos",
+          "limite_candidatos"
+        ],
+        "title": "ProcessoResumo"
+      },
+      "Reescrita": {
+        "properties": {
+          "antes": {
+            "type": "string",
+            "title": "Antes"
+          },
+          "depois": {
+            "type": "string",
+            "title": "Depois"
+          },
+          "competencias": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Competencias",
+            "description": "Competências que a reescrita cita (declaradas pela IA e detectadas no texto)."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "antes",
+          "depois",
+          "competencias"
+        ],
+        "title": "Reescrita",
+        "description": "Uma reescrita entregue (passou pelo filtro da evidência)."
+      },
+      "RegistroAuditoria": {
+        "properties": {
+          "acao": {
+            "type": "string",
+            "enum": [
+              "revelar",
+              "baixar_arquivo"
+            ],
+            "title": "Acao"
+          },
+          "usuario_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Usuario Id"
+          },
+          "em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Em"
+          }
+        },
+        "type": "object",
+        "required": [
+          "acao",
+          "usuario_id",
+          "em"
+        ],
+        "title": "RegistroAuditoria"
+      },
+      "RequisitoResumo": {
+        "properties": {
+          "descricao": {
+            "type": "string",
+            "title": "Descricao"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "obrigatorio",
+              "desejavel"
+            ],
+            "title": "Tipo"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "atende",
+              "parcial",
+              "nao_atende"
+            ],
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "descricao",
+          "tipo",
+          "status"
+        ],
+        "title": "RequisitoResumo"
+      },
+      "Revelacao": {
+        "properties": {
+          "candidato_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Candidato Id"
+          },
+          "identidade_revelada_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Identidade Revelada Em"
+          },
+          "arquivo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arquivo Url",
+            "description": "O arquivo original, agora liberado."
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidato_id",
+          "identidade_revelada_em",
+          "arquivo_url"
+        ],
+        "title": "Revelacao"
+      },
+      "Saude": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          },
+          "versao": {
+            "type": "string",
+            "title": "Versao"
+          },
+          "provedor_ia": {
+            "type": "string",
+            "enum": [
+              "regras",
+              "falso",
+              "anthropic"
+            ],
+            "title": "Provedor Ia"
+          },
+          "modo_demonstracao": {
+            "type": "boolean",
+            "title": "Modo Demonstracao"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "versao",
+          "provedor_ia",
+          "modo_demonstracao"
+        ],
+        "title": "Saude"
+      },
+      "TokenCsrf": {
+        "properties": {
+          "csrf": {
+            "type": "string",
+            "title": "Csrf",
+            "description": "Copie no cabeçalho `X-CSRF-Token` das rotas que mudam estado."
+          }
+        },
+        "type": "object",
+        "required": [
+          "csrf"
+        ],
+        "title": "TokenCsrf"
+      },
+      "VagaResumo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "titulo"
+        ],
+        "title": "VagaResumo"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VersaoResumo": {
+        "properties": {
+          "versao": {
+            "type": "integer",
+            "title": "Versao"
+          },
+          "origem": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "docx",
+              "texto"
+            ],
+            "title": "Origem"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Criado Em"
+          },
+          "expira_em": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expira Em"
+          },
+          "conteudo_apagado": {
+            "type": "boolean",
+            "title": "Conteudo Apagado"
+          }
+        },
+        "type": "object",
+        "required": [
+          "versao",
+          "origem",
+          "criado_em",
+          "expira_em",
+          "conteudo_apagado"
+        ],
+        "title": "VersaoResumo"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Cadastro (com consentimento LGPD), login, logout e sessão."
+    },
+    {
+      "name": "análises",
+      "description": "Envio, fila, eventos em tempo real, resultado e PDF."
+    },
+    {
+      "name": "currículos",
+      "description": "Currículos, versões e comparação contra a mesma vaga."
+    },
+    {
+      "name": "recrutador",
+      "description": "Processo com uma vaga e até 20 currículos: ranking explicado, visão anonimizada e decisão humana registrada (sem rejeição automática)."
+    },
+    {
+      "name": "privacidade",
+      "description": "O que guardamos, por quanto tempo, e apagar tudo."
+    },
+    {
+      "name": "infra",
+      "description": "Saúde do serviço."
+    }
+  ]
+}

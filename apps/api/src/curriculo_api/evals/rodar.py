@@ -123,7 +123,9 @@ def criar_pipeline(
     """O `Analisador` da API. Com o provedor falso, o embutidor é o falso (sem baixar modelo e
     sem rede; as gravações usam nomes da taxonomia, então o embedding quase nunca decide); com o
     real, o fastembed do ADR 0002."""
-    embutidor = EmbutidorFalso() if provedor_ia.nome == "falso" else None
+    # Com o de regras também: as evals não baixam modelo (D-31), e a linha de base do modo
+    # demonstração fica reproduzível no CI (ADR 0006). Termos fora da taxonomia não casam.
+    embutidor = EmbutidorFalso() if provedor_ia.nome in ("falso", "regras") else None
     return PipelineCompleto(
         criar_analisador(
             provedor_ia, settings, embutidor=embutidor, orcamento_pai=orcamento_execucao
@@ -159,7 +161,9 @@ def rodar(
 ) -> int:
     pasta_evals = raiz / "evals"
     pasta_resultados = pasta_resultados or pasta_evals / "resultados"
-    caminho_relatorio = caminho_relatorio or raiz / "docs" / "evals.md"
+    caminho_relatorio = caminho_relatorio or raiz / "docs" / (
+        "evals-regras.md" if provedor == "regras" else "evals.md"
+    )
     settings = settings or obter_settings()
 
     try:
@@ -180,15 +184,15 @@ def rodar(
         except ProvedorIndisponivel as exc:
             escrever(str(exc))
             return SAIDA_PROVEDOR_INDISPONIVEL
-        if provedor != "falso" and teto is None:
+        if provedor == "anthropic" and teto is None:
             escrever(MENSAGEM_SEM_TETO)
             return SAIDA_PROVEDOR_INDISPONIVEL
         if teto is not None:
             orcamento = Orcamento(teto, escopo="execucao")
         pipeline = criar_pipeline(provedor_ia, settings, orcamento)
 
-    if provedor == "falso":
-        modelos = {"extracao": "falso", "feedback": "falso"}
+    if provedor in ("falso", "regras"):
+        modelos: dict[str, str] = {"extracao": provedor, "feedback": provedor}
         esforco: dict[str, str] | None = None
     else:
         modelos = {
@@ -212,7 +216,7 @@ def rodar(
             modelos=modelos,
             esforco=esforco,
             tau={"alto": settings.tau_alto, "baixo": settings.tau_baixo},
-            guardar_extracoes=provedor != "falso",
+            guardar_extracoes=provedor == "anthropic",
         )
     )
     execucao = execucao.model_copy(
@@ -264,12 +268,18 @@ def main(argv: list[str] | None = None) -> int:
     if isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Roda as evals do analisador de currículos.")
-    parser.add_argument("--provedor", choices=["falso", "anthropic"], default="falso")
+    parser.add_argument("--provedor", choices=["falso", "regras", "anthropic"], default="falso")
     parser.add_argument("--raiz", type=Path, default=None, help="raiz do repositório")
     parser.add_argument("--casos", default=None, help="ids separados por vírgula (b01,b02)")
     parser.add_argument("--teto-usd", default=None, help="teto de custo da execução, em US$")
     args = parser.parse_args(argv)
-    provedor: NomeProvedor = "anthropic" if args.provedor == "anthropic" else "falso"
+    provedor: NomeProvedor = (
+        "anthropic"
+        if args.provedor == "anthropic"
+        else "regras"
+        if args.provedor == "regras"
+        else "falso"
+    )
     return rodar(args.raiz or localizar_raiz(), provedor, casos=args.casos, teto_usd=args.teto_usd)
 
 

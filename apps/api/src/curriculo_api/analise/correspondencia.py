@@ -276,7 +276,8 @@ class Correspondente:
                     if meses < 12 * requisito.anos_minimos:
                         status = "parcial"
                         motivo += (
-                            f"; mas só {_anos(meses)} de {requisito.anos_minimos} anos "
+                            f"; mas só {_anos(meses)} de {requisito.anos_minimos} "
+                            f"{'ano' if requisito.anos_minimos == 1 else 'anos'} "
                             f"comprovados com {item.nome}: vale parcial"
                         )
                 nivel_pedido = requisito.nivel

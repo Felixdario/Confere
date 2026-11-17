@@ -15,10 +15,23 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    ambiente: Literal["dev", "teste", "producao"] = Field(
+        default="dev", description="Fora de dev/teste o cookie de sessão sai com `Secure`."
+    )
     database_url: str = "postgresql+asyncpg://curriculo:curriculo@localhost:5434/curriculo"
     redis_url: str = "redis://localhost:6381/0"
+    redis_prefixo: str = Field(
+        default="curriculo",
+        description="Prefixo de toda chave do Redis desta aplicação (fila, eventos, limites).",
+    )
 
-    # Sem chave, a API usa o provedor falso (respostas gravadas) — ver ADR 0001.
+    # Provedor da análise (ADR 0006): `regras` é o modo demonstração, sem IA e sem custo; `falso`
+    # responde só os textos gravados das evals (testes e seed); `anthropic` exige a chave e só
+    # roda quando pedido explicitamente (D-46: este portfólio não gasta com a API).
+    provedor_ia: Literal["regras", "falso", "anthropic"] = "regras"
+    pasta_gravacoes: Path = Path("evals/gravacoes")
+
+    # Sem chave, o provedor real não existe — ver ADR 0001.
     anthropic_api_key: SecretStr | None = None
     claude_modelo_extracao: str = "claude-haiku-5-5"
     claude_modelo_feedback: str = "claude-opus-5-5"
@@ -69,9 +82,56 @@ class Settings(BaseSettings):
     ingestao_tempo_max_por_pagina_s: float = Field(default=5.0, gt=0)
     ingestao_documento_xml_max_bytes: int = Field(default=5 * 1024 * 1024, ge=1)
 
+    # Sessão e CSRF (ADR 0007).
+    sessao_dias: int = Field(default=7, ge=1, le=90)
+    versao_consentimento: str = Field(
+        default="2026-11-16", description="Versão do texto de consentimento (LGPD) em vigor."
+    )
+    cors_origens: tuple[str, ...] = ("http://localhost:3010",)
+
+    # Abuso (ADR 0004): janelas fixas no Redis.
+    limite_login_por_email: int = Field(default=5, ge=1, description="Tentativas a cada 15 min.")
+    limite_login_por_ip: int = Field(default=30, ge=1, description="Tentativas a cada 15 min.")
+    limite_cadastro_por_ip: int = Field(default=10, ge=1, description="Cadastros por hora.")
+    limite_analises_por_usuario: int = Field(default=30, ge=1, description="Análises por hora.")
+    limite_analises_por_ip: int = Field(default=60, ge=1, description="Análises por hora.")
+    max_candidatos_por_processo: int = Field(default=20, ge=1, le=100)
+
+    # CSRF ligado à sessão (ADR 0007): HMAC com esta chave. Sem ela, cada processo sorteia uma
+    # (os tokens deixam de valer num reinício; com mais de um processo da API, defina a chave).
+    chave_csrf: SecretStr | None = None
+
+    # SSE e fila (ADR 0007).
+    limite_sse_por_usuario: int = Field(default=5, ge=1, description="Conexões SSE simultâneas.")
+    limite_sse_por_ip: int = Field(default=10, ge=1, description="Conexões SSE simultâneas.")
+    redis_max_conexoes: int = Field(default=50, ge=4, description="Teto do pool da API.")
+    sse_duracao_max_s: float | None = Field(
+        default=None, gt=0, description="Teto de uma conexão SSE; padrão TEMPO_MAX_ANALISE_S + 120."
+    )
+    sse_heartbeat_s: float = Field(default=15.0, gt=0)
+    eventos_ttl_s: int = Field(default=24 * 3600, ge=60)
+    tempo_max_analise_s: int = Field(default=300, ge=10)
+
+    # Embeddings: `make modelos` baixa o modelo para PASTA_MODELOS; sem ele, o worker não baixa no
+    # meio de uma análise (a correspondência fica só na taxonomia, com aviso).
+    baixar_modelo_na_analise: bool = False
+
+    @property
+    def duracao_max_sse_s(self) -> float:
+        return self.sse_duracao_max_s or float(self.tempo_max_analise_s + 120)
+
     @property
     def usa_provedor_falso(self) -> bool:
+        """Sem chave da Anthropic (o provedor real não pode existir)."""
         return self.anthropic_api_key is None or not self.anthropic_api_key.get_secret_value()
+
+    @property
+    def cookie_seguro(self) -> bool:
+        return self.ambiente not in ("dev", "teste")
+
+    @property
+    def modo_demonstracao(self) -> bool:
+        return self.provedor_ia != "anthropic"
 
 
 @lru_cache

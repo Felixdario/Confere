@@ -343,3 +343,77 @@ da extração pelo modelo, descartes por trecho inválido, nota na faixa com o m
 injection, diferença contrafactual com o modelo, custo, latência, acerto do prompt caching e a
 calibração de τ (continua 0,85/0,70). Nenhum número desses aparece em lugar nenhum como medido. Quem
 tiver chave roda `make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=1.00` e depois os 30 casos.
+
+## D-47 — Modo demonstração por regras é o padrão (2026-11-16)
+`PROVEDOR_IA=regras|falso|anthropic`, padrão `regras` (ADR 0006): qualquer currículo, sem IA, sem
+rede e sem custo, pela mesma ancoragem, nota e filtro. O `anthropic` só roda pedido explicitamente
+(D-46). `/saude` passou a dizer `regras` e `modo_demonstracao`. `make eval PROVEDOR=regras` grava
+o relatório em `docs/evals-regras.md` (o `docs/evals.md` continua o do falso); o contrafactual tem
+limite 0 com regras, que é determinístico; as evals com regras usam o embutidor falso (D-31).
+
+## D-48 — Dependências da fase 4 (2026-11-16)
+Instaladas só no projeto (`uv add`): **alembic** 1.20 (MIT), **argon2-cffi** 25.1 (MIT),
+**python-multipart** 0.0.34 (Apache-2.0, upload no FastAPI). **reportlab** passou de dependência de
+desenvolvimento para dependência da API (relatório em PDF no servidor; BSD, D-21).
+
+## D-49 — Pipeline com leitura e anonimização separadas (2026-11-16)
+`Analisador.eventos` emite `leitura` e `anonimizacao` em vez de `ingestao` (o SSE mostra as duas),
+e a leitura de PDF/DOCX e a anonimização rodam em `asyncio.to_thread`, para o worker seguir
+publicando eventos. `ingerir_curriculo` continua igual (agora é `ler_curriculo` +
+`anonimizar_documento`). O `Comparador` ganhou o gancho assíncrono `preparar`, usado pelo
+`ComparadorPgvector` (ADR 0007).
+
+## D-50 — Ingestão duas vezes por envio (2026-11-16)
+`POST /analises` lê e anonimiza na hora, para que "PDF sem texto" ou "arquivo inválido" saiam em
+problem+json; o worker lê de novo do arquivo em disco, para as etapas reais no SSE e porque o
+banco não guarda o texto original. Custa alguns segundos a mais por PDF grande.
+
+## D-51 — CSRF também no login e no cadastro (2026-11-16)
+Toda rota que muda estado exige o double submit, inclusive login e cadastro (contra login CSRF); o
+token vem de `GET /auth/csrf`. O logout apaga os dois cookies.
+
+## D-52 — Seed (2026-11-16)
+`make seed` (depois de `make migrar`) recria `demo@curriculo.dev` / `demo1234`: b02 (texto) e i05
+(PDF com texto oculto e instrução) pelo falso; histórico do b01 com a versão 1 reduzida (sem
+habilidades nem as linhas de Next.js, Jest e GraphQL) por regras e a versão 2 completa pelo falso
+(nota 62 → 90 na primeira execução); processo de recrutador com 4 candidatos por regras e uma
+decisão. Idempotente: apaga a conta pelo mesmo caminho do "apagar meus dados" e recria.
+
+## D-53 — Integração no Windows e no CI (2026-11-16)
+`make test-integracao` (`pytest -m integracao`) precisa do Compose; `make check` roda só o resto
+(`-m "not integracao"`). No CI, um job com os services pgvector/pgvector:pg17 e redis:7 nas portas
+5434 e 6381. O `close()` do worker do arq usa SIGUSR1, que não existe no Windows: os testes param o
+worker pelo tratador de SIGTERM. Os dois `conftest.py` fora de pacote colidem no mypy: o da
+integração só reexporta `fixtures_integracao.py` e fica fora do mypy.
+## D-54 — Rodada 1 da revisão da fase 4 (2026-11-17)
+Oito falhas do Validador corrigidas, com regressões em `tests/integracao/test_revisao_fase4.py`
+(ADR 0007, seção "Rodada 1"):
+- um assinante pub/sub por processo no SSE;
+- pool Redis bloqueante com teto;
+- limite de conexões SSE por pessoa e por IP;
+- SSE que sempre fecha (reenvia o terminal) e tem duração máxima;
+- marca de análise apagada para o worker abortar;
+- `keep_result=0`;
+- `409 conta_apagada` no envio concorrente;
+- teto diário com reserva atômica;
+- títulos de vaga sem `:`;
+- `/analises` só para o próprio currículo;
+- auditoria do recrutador;
+- `400` para ids de evento e cursores estranhos.
+
+Endurecimentos:
+- CSRF com HMAC da sessão (`CHAVE_CSRF`);
+- retenção das justificativas;
+- `make modelos`, sem download no meio de uma análise.
+
+Migração `0002`. O recrutador não recebe mais `analise_id` (o progresso do candidato tem rota
+própria). A intermitência da integração era o `close()` do arq relançando `CancelledError` no fim
+de um teste, e não a janela do rate limit; os dois estão corrigidos.
+
+## D-55 — "N anos de experiência com <área>" continua sendo a senioridade da vaga (2026-11-17)
+O Validador pediu para tratar "1 ano de experiência com análise de dados" como requisito de anos
+daquela competência. Mantive como o tempo mínimo da vaga: é como o gabarito anotado e as gravações
+modelam essas linhas (b01, b03, b07: anos da vaga, sem requisito a mais), e o oráculo da nota
+(ADR 0003) conta esse tempo pela componente S. A falha real era o singular "ano" não ser
+reconhecido, o que criava um requisito duplicado; com ele reconhecido, nada se duplica. "React (3+
+anos)", com o termo antes do número, segue como requisito de anos da competência.

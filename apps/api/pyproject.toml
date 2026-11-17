@@ -5,7 +5,9 @@ description = "API do analisador de currículos: ingestão, extração com IA, n
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "alembic>=1.20.1",
     "anthropic>=2.8.0",
+    "argon2-cffi>=25.1.0",
     "arq>=0.28.0",
     "asyncpg>=0.32.0",
     "fastapi>=0.163.1",
@@ -17,7 +19,9 @@ dependencies = [
     "pydantic-settings>=2.16.3",
     "pypdfium2>=5.15.2",
     "python-docx>=1.2.0",
+    "python-multipart>=0.0.34",
     "pyyaml>=6.0.3",
+    "reportlab>=5.1.0",
     "sqlalchemy[asyncio]>=2.1.8",
     "uvicorn[standard]>=0.54.0",
 ]
@@ -33,7 +37,6 @@ dev = [
     "mypy>=2.4.1",
     "pytest>=9.2.0",
     "pytest-asyncio>=1.5.0",
-    "reportlab>=5.1.0",
     "ruff>=0.17.5",
     "types-pyyaml>=6.0.12.20261113",
     "types-reportlab>=5.1.0.20261104",
@@ -62,7 +65,7 @@ select = [
 ignore = ["RUF001", "RUF002", "RUF003"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101"]
+"tests/**" = ["S101", "ASYNC240"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -72,10 +75,13 @@ strict = true
 python_version = "3.12"
 mypy_path = "src"
 files = ["src", "tests", "scripts"]
+# O conftest da integração só reexporta `fixtures_integracao` (checado); dois `conftest.py` fora
+# de pacote têm o mesmo nome de módulo para o mypy.
+exclude = ['^tests/integracao/conftest\.py$']
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
-module = ["fastembed.*", "arq.*", "pgvector.*", "pdfplumber.*", "docx.*", "pypdfium2.*"]
+module = ["fastembed.*", "arq.*", "pgvector.*", "pdfplumber.*", "docx.*", "pypdfium2.*", "asyncpg.*"]
 ignore_missing_imports = true
 
 [tool.pydantic-mypy]

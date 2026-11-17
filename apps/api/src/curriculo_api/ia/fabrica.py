@@ -1,4 +1,5 @@
-"""Escolha do provedor (ADR 0001). O real só existe com `ANTHROPIC_API_KEY` definida."""
+"""Escolha do provedor (ADR 0001 e 0006). O real só existe com `ANTHROPIC_API_KEY` definida; o
+de regras (modo demonstração) e o falso (gravações) não precisam de rede nem de chave."""
 
 from __future__ import annotations
 
@@ -11,7 +12,7 @@ from curriculo_api.ia.precos import PrecoDesconhecido
 from curriculo_api.ia.provedor import ProvedorIA, ProvedorIndisponivel
 from curriculo_api.taxonomia import carregar_taxonomia
 
-NomeProvedor = Literal["falso", "anthropic"]
+NomeProvedor = Literal["falso", "regras", "anthropic"]
 
 MENSAGEM_SEM_CHAVE = (
     "ANTHROPIC_API_KEY não está definida, então o provedor real não pode rodar. Defina a chave "
@@ -25,6 +26,10 @@ def criar_provedor(
 ) -> ProvedorIA:
     if nome == "falso":
         return ProvedorFalso(pasta_gravacoes)
+    if nome == "regras":
+        from curriculo_api.ia.regras import ProvedorRegras
+
+        return ProvedorRegras(carregar_taxonomia())
     settings = settings or obter_settings()
     if settings.usa_provedor_falso or settings.anthropic_api_key is None:
         raise ProvedorIndisponivel(MENSAGEM_SEM_CHAVE)

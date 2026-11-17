@@ -1,4 +1,4 @@
-"""A análise completa (ADR 0003): ingestão → anonimização → extração → ancoragem →
+"""A análise completa (ADR 0003): leitura → anonimização → extração → ancoragem →
 correspondência → nota → feedback.
 
 `Analisador.eventos` é um iterador assíncrono de `EventoAnalise` para o SSE da fase 4:
@@ -37,11 +37,25 @@ from curriculo_api.ia.modelos import (
 )
 from curriculo_api.ia.orcamento import Orcamento
 from curriculo_api.ia.provedor import ProvedorIA, SaidaInvalida
-from curriculo_api.ingestao import CurriculoIngerido, VagaIngerida, ingerir_curriculo, ingerir_vaga
+from curriculo_api.ingestao import CurriculoIngerido, VagaIngerida, ingerir_vaga
+from curriculo_api.ingestao.ingerir import anonimizar_documento, ler_curriculo
 from curriculo_api.taxonomia import Taxonomia
 
+
+def termos_fora_da_taxonomia(
+    curriculo: CurriculoExtraido, vaga: VagaExtraida, taxonomia: Taxonomia
+) -> list[str]:
+    """Os nomes que a correspondência pode mandar para o embedding (ADR 0002)."""
+    nomes = [r.competencia for r in vaga.requisitos]
+    nomes += [c.nome for c in curriculo.competencias]
+    nomes += [i.idioma for i in curriculo.idiomas]
+    nomes += [c.nome for c in curriculo.certificacoes]
+    return sorted({n for n in nomes if taxonomia.canonica_de(n) is None})
+
+
 NomeEtapa = Literal[
-    "ingestao",
+    "leitura",
+    "anonimizacao",
     "extracao",
     "ancoragem",
     "correspondencia",
@@ -49,13 +63,15 @@ NomeEtapa = Literal[
     "feedback",
 ]
 ROTULOS: dict[NomeEtapa, str] = {
-    "ingestao": "lendo e anonimizando o currículo",
+    "leitura": "lendo o arquivo",
+    "anonimizacao": "anonimizando os dados pessoais",
     "extracao": "extraindo currículo e vaga",
     "ancoragem": "conferindo cada trecho no texto",
     "correspondencia": "comparando requisitos e evidências",
     "nota": "calculando a nota",
-    "feedback": "escrevendo o feedback",
+    "feedback": "escrevendo as sugestões",
 }
+ETAPAS: tuple[NomeEtapa, ...] = tuple(ROTULOS)
 
 
 @dataclass(frozen=True)
@@ -109,6 +125,10 @@ class Analisador:
         self._teto = teto_analise_usd
         self._orcamento_pai = orcamento_pai
 
+    @property
+    def comparador(self) -> Comparador:
+        return self._comparador
+
     def _etapa(self, nome: NomeEtapa) -> EventoAnalise:
         return EventoAnalise(tipo="etapa", etapa=nome, texto=ROTULOS[nome])
 
@@ -116,13 +136,19 @@ class Analisador:
         orcamento = Orcamento(self._teto, escopo="analise", pai=self._orcamento_pai)
         usos: list[RegistroUso] = []
 
-        yield self._etapa("ingestao")
-        curriculo = ingerir_curriculo(
+        yield self._etapa("leitura")
+        # A leitura de PDF e DOCX é CPU (pdfium, zip): fora do laço de eventos, para o worker
+        # seguir publicando eventos e respondendo.
+        documento = await asyncio.to_thread(
+            ler_curriculo,
             texto=entrada.texto_curriculo,
             arquivo=entrada.arquivo_curriculo,
             nome_arquivo=entrada.nome_arquivo,
         )
         vaga_ingerida = ingerir_vaga(entrada.texto_vaga)
+
+        yield self._etapa("anonimizacao")
+        curriculo = await asyncio.to_thread(anonimizar_documento, documento)
         texto = curriculo.texto_para_ia
 
         yield self._etapa("extracao")
@@ -144,6 +170,11 @@ class Analisador:
         ancorado = ancorar(extraido.saida, texto, self._taxonomia, curriculo.alertas)
 
         yield self._etapa("correspondencia")
+        # Com o banco (fase 4), o vizinho mais próximo na taxonomia vem do pgvector; os termos
+        # que podem precisar dele são buscados de uma vez, antes da correspondência (síncrona).
+        await self._comparador.preparar(
+            termos_fora_da_taxonomia(ancorado.mantido, vaga.saida, self._taxonomia)
+        )
         correspondente = Correspondente(
             self._taxonomia, self._comparador, self.limiares, entrada.data_referencia
         )

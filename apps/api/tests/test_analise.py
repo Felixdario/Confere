@@ -149,7 +149,15 @@ async def test_eventos_para_o_sse(raiz: Path, dataset: Dataset, taxonomia: Taxon
     caso = dataset.por_id()["b01-frontend-senior"]
     eventos = [e async for e in _analisador(raiz, taxonomia).eventos(_entrada(caso, dataset))]
     etapas = [e.etapa for e in eventos if e.tipo == "etapa"]
-    assert etapas == ["ingestao", "extracao", "ancoragem", "correspondencia", "nota", "feedback"]
+    assert etapas == [
+        "leitura",
+        "anonimizacao",
+        "extracao",
+        "ancoragem",
+        "correspondencia",
+        "nota",
+        "feedback",
+    ]
     assert any(e.tipo == "texto" for e in eventos)
     assert eventos[-1].tipo == "final" and eventos[-1].resultado is not None
 

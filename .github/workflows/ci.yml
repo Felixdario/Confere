@@ -34,7 +34,51 @@ jobs:
 
       - run: uv run mypy
 
-      - run: uv run pytest
+      - run: uv run pytest -m "not integracao"
+
+  # Integração (ADR 0007): Postgres com pgvector e Redis nas mesmas portas do Compose, então a
+  # configuração padrão (DATABASE_URL e REDIS_URL) vale sem nada a mais. Os testes criam um banco
+  # isolado, rodam as migrações nele e o apagam no fim.
+  api-integracao:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_DB: curriculo
+          POSTGRES_USER: curriculo
+          POSTGRES_PASSWORD: curriculo
+        ports:
+          - 5434:5432
+        options: >-
+          --health-cmd "pg_isready -U curriculo -d curriculo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      redis:
+        image: redis:7
+        ports:
+          - 6381:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.8"
+          enable-cache: true
+          cache-dependency-glob: apps/api/uv.lock
+
+      - run: uv sync --locked
+
+      - run: uv run pytest -m integracao
 
   web:
     runs-on: ubuntu-latest

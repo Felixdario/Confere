@@ -32,14 +32,16 @@ def criar_analisador(
     taxonomia: Taxonomia | None = None,
     embutidor: Embutidor | None = None,
     orcamento_pai: Orcamento | None = None,
+    comparador: Comparador | None = None,
 ) -> Analisador:
+    """`comparador` permite o do pgvector (`vetores_pg.ComparadorPgvector`, no worker)."""
     taxonomia = taxonomia or carregar_taxonomia()
     pasta = resolver_pasta(settings.pasta_modelos)
     embutidor = embutidor or EmbutidorFastEmbed(settings.modelo_embeddings, pasta)
     return Analisador(
         provedor,
         taxonomia,
-        Comparador(taxonomia, embutidor, pasta),
+        comparador or Comparador(taxonomia, embutidor, pasta),
         Limiares(alto=settings.tau_alto, baixo=settings.tau_baixo),
         Decimal(str(settings.teto_custo_analise_usd)),
         orcamento_pai=orcamento_pai,

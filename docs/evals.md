@@ -4,17 +4,17 @@
 
 | | |
 | - | - |
-| Execução | 2026-11-16 18:49:32 UTC |
+| Execução | 2026-11-17 16:44:15 UTC |
 | Provedor | falso (pipeline `completo-fase-3`) |
-| Código | `7207daf-dirty` |
+| Código | `1515969-dirty` |
 | Modelos | extração `falso` · feedback `falso` |
 | Esforço | — |
 | τ | alto 0,85 · baixo 0,70 |
 | Taxonomia | versão 2 |
 | Data de referência | 2026-11-01 |
 | Casos | 30 (16 base, 8 contrafactual, 6 injection) |
-| Resultado bruto | `evals/resultados/2026-11-16T184932-falso.json` |
-| Anterior (mesmo provedor) | `evals/resultados/2026-11-16T184926-falso.json` (2026-11-16 18:49:26 UTC, `7207daf-dirty`) |
+| Resultado bruto | `evals/resultados/2026-11-17T164415-falso.json` |
+| Anterior (mesmo provedor) | `evals/resultados/2026-11-16T232927-falso.json` (2026-11-16 23:29:27 UTC, `1515969-dirty`) |
 
 **Resultado: todas as metas aplicáveis passaram** (0 pendentes, 2 n/a).
 

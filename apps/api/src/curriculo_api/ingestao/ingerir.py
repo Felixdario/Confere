@@ -194,12 +194,29 @@ def ingerir_curriculo(
     limites: Limites | None = None,
 ) -> CurriculoIngerido:
     """Arquivo (se houver) ou texto colado → documento lido → anonimização."""
+    documento = ler_curriculo(
+        texto=texto, arquivo=arquivo, nome_arquivo=nome_arquivo, limites=limites
+    )
+    return anonimizar_documento(documento)
+
+
+def ler_curriculo(
+    *,
+    texto: str | None = None,
+    arquivo: bytes | None = None,
+    nome_arquivo: str | None = None,
+    limites: Limites | None = None,
+) -> DocumentoLido:
+    """Só a leitura (primeira metade de `ingerir_curriculo`), para o SSE mostrar as duas etapas."""
     if arquivo is not None:
-        documento = ler_arquivo(arquivo, nome_arquivo, limites)
-    elif texto is not None:
-        documento = ler_texto_colado(texto, limites)
-    else:
-        raise ValueError("passe `texto` ou `arquivo`")
+        return ler_arquivo(arquivo, nome_arquivo, limites)
+    if texto is not None:
+        return ler_texto_colado(texto, limites)
+    raise ValueError("passe `texto` ou `arquivo`")
+
+
+def anonimizar_documento(documento: DocumentoLido) -> CurriculoIngerido:
+    """A segunda metade de `ingerir_curriculo`: anonimização e alertas com trechos anonimizados."""
     inicio = time.perf_counter()
     anonimizacao = anonimizar(documento.texto, imagens=len(documento.imagens))
     log.info(

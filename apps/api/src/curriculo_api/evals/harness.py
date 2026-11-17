@@ -799,7 +799,9 @@ def calcular_metricas(
             max(n for n in notas if n is not None) - min(n for n in notas if n is not None)
             for notas in grupos.values()
         ]
-        limite = 0 if falso else 2
+        # Provedores determinísticos (falso e regras, ADR 0006): o texto anonimizado é o mesmo
+        # entre as identidades, então a nota também tem de ser.
+        limite = 0 if provedor in ("falso", "regras") else 2
         metricas.append(
             _metrica(
                 "contrafactual",

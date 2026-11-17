@@ -297,10 +297,23 @@ com caplog sobre os 30 casos.
 - **Consentimento:** é explícito antes do upload. O texto diz o que é enviado à IA (texto anonimizado),
   por quanto tempo guardamos e como apagar. No modo recrutador, quem envia declara ter base legal para
   tratar os currículos.
-- **Retenção:** `RETENCAO_DIAS`, padrão **30**. Um job arq diário apaga currículos, arquivos de
-  `PASTA_ARQUIVOS`, extrações e feedbacks mais antigos. Ficam só métricas agregadas, sem conteúdo.
-- **"Apagar meus dados":** apaga na hora tudo da conta, inclusive arquivos em disco, e responde com o
-  que foi apagado. Há teste de integração que verifica banco e disco depois.
+- **Retenção (concreta na fase 4):** `RETENCAO_DIAS`, padrão **30**, gravado em
+  `curriculo_versoes.expira_em` no envio. `servicos/privacidade.limpar_vencidos` (cron do arq às
+  03:00 UTC e `make limpar-vencidos`) apaga, de cada versão vencida, o arquivo do disco, o texto
+  anonimizado, a lista do que foi removido e os alertas; das análises dela, a tabela requisito ×
+  evidência, o feedback e os avisos (que citam trechos), e o stream de eventos no Redis. Ficam a
+  nota, a decomposição numérica, o status, o custo e as datas (métricas sem conteúdo); a tela
+  mostra `conteudo_apagado: true`. Também apaga sessões vencidas. O relógio é injetável e há teste
+  (dia 29 nada sai; dia 31 o conteúdo sai e a nota fica).
+- **"Apagar meus dados" (concreto na fase 4):** `DELETE /eu/dados` (com sessão e CSRF) conta as
+  linhas de cada tabela, apaga o usuário (o resto vai em cascata), a pasta dele em
+  `PASTA_ARQUIVOS`, e no Redis os streams e canais das análises, os jobs e resultados do arq e os
+  contadores de limite do usuário e do e-mail; encerra a sessão e responde com as contagens. O
+  teste de integração confere depois que nenhuma tabela, arquivo ou chave tem o id do usuário ou
+  de uma análise dele.
+- **O que guardamos:** `GET /privacidade` (público) lista, a partir da configuração, o que fica e
+  por quanto tempo, o que vai para a IA e o que nunca é guardado, com o texto e a versão do
+  consentimento (`VERSAO_CONSENTIMENTO`), que o cadastro exige e registra em `consentimentos`.
 - **Logs sem currículo:** os logs estruturados levam IDs, etapa, duração, tokens e custo. Nunca o texto,
   o trecho, o nome do arquivo original ou a resposta da IA. Um teste injeta um currículo com marcador
   único e procura o marcador na saída capturada dos logs.
@@ -311,7 +324,14 @@ com caplog sobre os 30 casos.
 - Até 20 currículos por vaga, com a visão **anonimizada por padrão** (candidato A, B, C…). Revelar a
   identidade é uma ação explícita, registrada com quem e quando.
 - **Sem rejeição automática:** o sistema ordena e explica, mas não descarta ninguém nem sugere
-  "reprovar". Avançar ou não é uma **decisão humana registrada** (quem, quando, justificativa opcional).
+  "reprovar". Avançar ou não é uma **decisão humana registrada** (quem, quando e justificativa
+  **obrigatória**, decidido na fase 4: `avancar`, `nao_avancar` ou `pendente`, com histórico). Só
+  `POST .../decisoes` escreve em `decisoes_humanas`; um teste confere que, com as análises
+  prontas, a tabela continua vazia.
+- **Revelar a identidade** (`POST .../revelar`) registra quando e só então libera o arquivo
+  original; antes, `403 identidade_nao_revelada`. O ranking nunca expõe arquivo, nome ou contato.
+- Quem cria um processo declara ter base legal para tratar os currículos (`declaro_base_legal`),
+  registrado como consentimento `recrutador_base_legal`.
 - A nota não usa nenhum atributo protegido, porque eles foram removidos antes da extração.
 
 ### Upload e abuso (fase 4)
@@ -326,7 +346,11 @@ com caplog sobre os 30 casos.
 - **Rate limit** por usuário e por IP, com janela no Redis.
 - **Teto de custo diário:** `TETO_CUSTO_DIARIO_USD`, somado dos registros de custo por chamada
   (ADR 0001). Quando é atingido, novas análises com o provedor real são recusadas com mensagem clara até
-  a virada do dia (UTC). O modo demo com o provedor falso segue funcionando.
+  a virada do dia (UTC). Os modos de demonstração (regras e falso, ADR 0006) custam zero e nunca
+  chegam ao teto; o caminho é o mesmo e é testado com um custo simulado.
+- **Limites concretos (fase 4, ADR 0007):** login 5 por e-mail e 30 por IP a cada 15 min, cadastro
+  10 por IP por hora, análises 30 por usuário e 60 por IP por hora, 20 currículos por processo (o
+  21º recebe `422 limite_candidatos`).
 
 ### Viés: tolerância contrafactual
 
@@ -381,3 +405,9 @@ continua 0. O texto do feedback, que cita o cargo, fica fora dessa garantia e é
 - **Reserva perto do teto:** num currículo muito longo, o pior caso reservado (entrada inteira ao
   preço da escrita em cache mais `max_tokens`) pode passar do teto e a análise **para** em vez de
   tentar com menos tokens. Preferimos parar a gastar além do combinado.
+
+### Rodada 1 da revisão da fase 4 (2026-11-17)
+
+- **Justificativas sobre terceiros** (modo recrutador) seguem a retenção (`RETENCAO_DIAS`). Depois do prazo ficam a decisão, quem decidiu e quando, e o texto da justificativa é apagado (`justificativa_apagada_em`). `GET /privacidade` lista as duas coisas.
+- **Auditoria do recrutador:** toda revelação de identidade (inclusive a segunda) e todo download do arquivo original ficam em `auditoria_recrutador` (quem, candidato, ação, instante). Na visão anonimizada, os alertas aparecem sem o trecho.
+- **"Apagar meus dados" durante uma análise** não deixa nada no Redis nem no banco (marca de análise apagada, ADR 0007). O teto diário passou a ter reserva atômica.
