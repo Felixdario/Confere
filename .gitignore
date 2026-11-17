@@ -32,3 +32,9 @@ data/
 Thumbs.db
 .idea/
 .vscode/
+
+# Playwright e inspeções de design (saídas locais)
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/e2e/.sessao/
+.taste-skill/inspect/

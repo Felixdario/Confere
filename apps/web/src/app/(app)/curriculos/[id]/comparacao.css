@@ -1,0 +1,64 @@
+.versus {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 16px 32px;
+  align-items: end;
+  padding: 24px 28px;
+  background: var(--papel);
+  max-width: 820px;
+}
+
+.versus__lado {
+  display: grid;
+  gap: 8px;
+}
+
+.versus__rotulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.versus select {
+  border: 1px solid #c9c7c0;
+  border-radius: 0;
+  background: var(--folha);
+  padding: 8px 10px;
+  font-size: 0.9375rem;
+  max-width: 260px;
+}
+
+.versus__nota {
+  font-size: clamp(3.5rem, 2rem + 4vw, 6rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.versus__lado--antes .versus__nota {
+  opacity: 0.6;
+}
+
+.versus__seta {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--carimbo);
+  padding-bottom: 8px;
+}
+
+.mudancas__nome {
+  display: block;
+}
+
+.mudancas__antes .carimbo {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .versus {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .versus__seta {
+    padding: 0;
+  }
+}

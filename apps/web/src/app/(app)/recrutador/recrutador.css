@@ -1,0 +1,164 @@
+.recrutador {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.recrutador__link {
+  display: block;
+  font-weight: 600;
+}
+
+.recrutador__nova {
+  background: var(--papel);
+  padding: 20px 22px 24px;
+}
+
+.formulario {
+  display: grid;
+  gap: 16px;
+}
+
+.formulario .botao {
+  justify-self: start;
+}
+
+.formulario__erro {
+  background: var(--nao-consta-fundo);
+  color: var(--nao-consta);
+  padding: 10px 14px;
+}
+
+.envio-lote {
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+}
+
+.envio-lote input:focus-visible + .botao {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+.triagem__aviso {
+  margin: -16px 0 24px;
+  max-width: 80ch;
+}
+
+.triagem {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.ranking__nome {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-weight: 600;
+  color: var(--carimbo);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.ranking__nome:disabled {
+  color: var(--suave);
+  text-decoration: none;
+  cursor: default;
+}
+
+.ranking__linha--ativa td {
+  background: var(--carimbo-fundo);
+}
+
+.ranking__nota {
+  font-weight: 700;
+}
+
+.triagem__detalhe {
+  background: var(--papel);
+  padding: 20px 22px 24px;
+  position: sticky;
+  top: 16px;
+}
+
+.candidato__cabeca {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.candidato__nota {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.bloco-curto {
+  margin-top: 24px;
+}
+
+.candidato .tabela td {
+  background-color: transparent;
+}
+
+.decisao {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.decisao__opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  background: var(--folha);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.decisao__opcao input {
+  accent-color: var(--carimbo);
+}
+
+.decisao__opcao--ativa {
+  background: var(--tinta);
+  color: var(--folha);
+}
+
+.decisoes {
+  list-style: none;
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.decisoes li {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .recrutador,
+  .triagem {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .triagem__detalhe {
+    position: static;
+  }
+  .envio-lote {
+    justify-items: start;
+  }
+}

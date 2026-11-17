@@ -9,6 +9,7 @@
     "dev": "corepack pnpm --filter @curriculo/web dev",
     "build": "corepack pnpm --filter @curriculo/web build",
     "lint": "corepack pnpm --filter @curriculo/web lint",
-    "typecheck": "corepack pnpm --filter @curriculo/web typecheck"
+    "typecheck": "corepack pnpm --filter @curriculo/web typecheck",
+    "test:e2e": "corepack pnpm --filter @curriculo/web test:e2e"
   }
 }

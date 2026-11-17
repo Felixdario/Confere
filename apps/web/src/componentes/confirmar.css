@@ -1,0 +1,55 @@
+.dialogo__fundo {
+  position: fixed;
+  inset: 0;
+  background: rgb(14 20 38 / 0.45);
+  transition: opacity 200ms ease;
+}
+
+.dialogo__fundo[data-starting-style],
+.dialogo__fundo[data-ending-style] {
+  opacity: 0;
+}
+
+.dialogo {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: min(calc(100vw - 32px), 480px);
+  background: var(--folha);
+  color: var(--tinta);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgb(14 20 38 / 0.25);
+  display: grid;
+  gap: 14px;
+  transition:
+    opacity 200ms var(--curva-saida),
+    transform 200ms var(--curva-saida);
+}
+
+.dialogo[data-starting-style],
+.dialogo[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.dialogo__titulo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dialogo__texto {
+  display: grid;
+  gap: 10px;
+  font-size: 0.9375rem;
+}
+
+.dialogo__acoes {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}

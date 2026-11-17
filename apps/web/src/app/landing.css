@@ -1,0 +1,1018 @@
+/* Landing do Confere: direção one-motif, o carimbo como forma única. Ver docs/design/direcao.md. */
+
+.landing {
+  --margem: 16px;
+  --entre-secoes: 96px;
+  background: var(--papel);
+  overflow-x: clip;
+}
+
+@media (min-width: 1024px) {
+  .landing {
+    --margem: 24px;
+    --entre-secoes: 176px;
+  }
+}
+
+/* A faixa de segurança do selo: barras de 28 px alternando tinta e papel. */
+.faixa {
+  display: flex;
+  height: 56px;
+  overflow: hidden;
+}
+
+.faixa span {
+  flex: 0 0 28px;
+  background: var(--tinta);
+}
+
+.faixa span:nth-child(even) {
+  background: var(--papel);
+}
+
+.faixa--larga {
+  height: 28px;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: var(--margem);
+  min-height: 100svh;
+}
+
+.hero__cartao {
+  min-width: 0;
+  background: var(--folha);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - 2 * var(--margem));
+}
+
+.hero__miolo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 40px 32px;
+}
+
+.marca {
+  margin-bottom: 48px;
+}
+
+.marca .carimbo {
+  font-size: var(--passo-destaque);
+  padding: 0.3em 0.5em 0.26em;
+}
+
+.hero__titulo {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: var(--passo-hero);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.hero__frase {
+  margin-top: 36px;
+  max-width: 30ch;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-destaque);
+  line-height: 1.4;
+  line-height: 1.55;
+}
+
+.enviar {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.botao--carimbo {
+  min-height: 56px;
+  padding: 0 1.75rem;
+  font-size: var(--passo-texto);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.enviar input:focus-visible + .botao {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+.enviar__dica {
+  font-size: var(--passo-pequeno);
+  color: var(--tinta);
+  max-width: 34ch;
+}
+
+.enviar__dica strong {
+  font-weight: 600;
+}
+
+.enviar__erro {
+  background: var(--nao-consta-fundo);
+  color: var(--nao-consta);
+  padding: 8px 12px;
+  font-size: var(--passo-pequeno);
+}
+
+.hero__links {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  font-size: var(--passo-pequeno);
+}
+
+.hero__links a {
+  color: var(--tinta);
+  padding: 6px 0;
+}
+
+.hero__sala {
+  position: sticky;
+  top: var(--margem);
+  height: calc(100svh - 2 * var(--margem));
+  background: var(--moldura);
+  overflow: hidden;
+  display: grid;
+  place-items: start center;
+  padding: 48px 40px;
+}
+
+.hero__gigante {
+  position: absolute;
+  bottom: 9%;
+  left: 14%;
+  width: 120vh;
+  height: auto;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+.hero__gigante rect {
+  fill: var(--carimbo);
+}
+
+.hero__gigante text {
+  fill: var(--moldura);
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.folha-exemplo {
+  position: relative;
+  width: min(100%, 520px);
+  background: var(--folha);
+  padding: 28px 96px 22px 32px;
+}
+
+.folha-exemplo__cabecalho {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: var(--passo-pequeno);
+  font-weight: 600;
+  background: var(--papel);
+  padding: 10px 12px;
+  margin: 0 -12px 14px;
+}
+
+.folha-exemplo__cabecalho strong {
+  font-size: var(--passo-texto);
+  color: var(--carimbo);
+}
+
+.folha-exemplo__texto {
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-pequeno);
+  line-height: 1.5;
+  display: grid;
+  gap: 5px;
+}
+
+.folha-exemplo__texto p {
+  position: relative;
+}
+
+.folha-exemplo__secao {
+  font-family: var(--fonte-display);
+  font-weight: 600;
+  font-size: var(--passo-pequeno);
+  margin-top: 6px;
+}
+
+.folha-exemplo__removida {
+  color: var(--suave);
+}
+
+.folha-exemplo__carimbo {
+  position: absolute;
+  right: -112px;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: var(--passo-texto);
+}
+
+.folha-exemplo__legenda {
+  margin-top: 16px;
+  font-size: var(--passo-pequeno);
+  color: var(--suave);
+}
+
+/* ---------- Seções ---------- */
+
+.secao {
+  margin-top: var(--entre-secoes);
+  padding-inline: var(--margem);
+}
+
+.secao--noite {
+  background: var(--noite);
+  color: var(--noite-tinta);
+  padding-block: clamp(64px, 9vw, 144px);
+}
+
+.secao--carimbo {
+  background: var(--carimbo);
+  color: var(--folha);
+  padding-block: clamp(64px, 9vw, 144px);
+}
+
+.titulo-secao {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: var(--passo-titulo);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  max-width: 18ch;
+}
+
+.texto-secao {
+  margin-top: 24px;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  max-width: 48ch;
+}
+
+/* ---------- Showcase: Confira você mesmo ---------- */
+
+.confira {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.confira__titulo {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: var(--passo-titulo);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  max-width: 14ch;
+}
+
+.confira__frase {
+  margin-top: 24px;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  color: var(--noite-suave);
+  max-width: 40ch;
+}
+
+.confira__requisitos {
+  list-style: none;
+  margin-top: 40px;
+  display: grid;
+  gap: 4px;
+}
+
+.confira__requisito {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  padding: 14px 18px;
+  border: 0;
+  background: var(--noite-superficie);
+  color: var(--noite-tinta);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 90ms ease-out;
+}
+
+.confira__requisito:active {
+  transform: scale(0.98);
+}
+
+.confira__requisito:focus-visible {
+  outline-color: var(--noite-tinta);
+}
+
+.confira__descricao {
+  font-size: var(--passo-destaque);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.confira__tipo {
+  font-size: var(--passo-pequeno);
+  color: var(--noite-suave);
+}
+
+.confira__requisito--ativo {
+  background: var(--folha);
+  color: var(--tinta);
+}
+
+.confira__requisito--ativo .confira__tipo {
+  color: var(--suave);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .confira__requisito:not(.confira__requisito--ativo):hover {
+    background: #222c4c;
+  }
+}
+
+.confira__folha {
+  position: sticky;
+  top: 24px;
+  background: var(--folha);
+  color: var(--tinta);
+  display: grid;
+  grid-template-columns: 132px 1fr;
+}
+
+.confira__margem {
+  background: var(--moldura);
+  position: relative;
+}
+
+.confira__nao-consta {
+  position: absolute;
+  top: 40%;
+  left: 12px;
+  right: 12px;
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.confira__nao-consta .carimbo {
+  white-space: normal;
+  font-size: var(--passo-destaque);
+  line-height: 0.95;
+}
+
+.confira__nao-consta p {
+  font-size: var(--passo-pequeno);
+  line-height: 1.35;
+}
+
+.confira__documento {
+  padding: 28px 112px 20px 28px;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-pequeno);
+  line-height: 1.5;
+  display: grid;
+  gap: 4px;
+}
+
+.confira__secao {
+  font-family: var(--fonte-display);
+  font-weight: 600;
+  font-size: var(--passo-pequeno);
+  margin-top: 8px;
+}
+
+.confira__linha {
+  position: relative;
+  padding: 2px 6px;
+  margin-inline: -6px;
+}
+
+.confira__linha--removida {
+  color: var(--suave);
+}
+
+.confira__linha--marcada {
+  background: var(--carimbo-fundo);
+}
+
+.confira__linha--parcial {
+  background: var(--parcial-fundo);
+}
+
+.confira__carimbo {
+  position: absolute;
+  right: -104px;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.confira__legenda {
+  grid-column: 1 / -1;
+  padding: 16px 28px 24px 160px;
+  font-size: var(--passo-pequeno);
+  background: var(--papel);
+}
+
+.tabela-estatica {
+  margin-top: 32px;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--folha);
+  color: var(--tinta);
+}
+
+.tabela-estatica th,
+.tabela-estatica td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--borda-folha);
+}
+
+/* ---------- Como: painéis tingidos ---------- */
+
+.como {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.como__cabeca {
+  position: sticky;
+  top: 48px;
+}
+
+.paineis {
+  display: grid;
+}
+
+.painel {
+  background: var(--tom);
+  color: var(--tinta-painel);
+}
+
+.painel__nome {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 24px;
+  font-size: var(--passo-destaque);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.painel__nome::-webkit-details-marker {
+  display: none;
+}
+
+.painel__nome::after {
+  content: "+";
+  font-weight: 400;
+  transition: transform 160ms var(--curva-saida);
+}
+
+.painel[open] .painel__nome::after {
+  transform: rotate(45deg);
+}
+
+.painel__nome:focus-visible {
+  outline-color: currentColor;
+  outline-offset: -4px;
+}
+
+.painel__corpo {
+  padding: 0 24px 28px;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+.conta {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--fonte-display);
+  font-size: var(--passo-texto);
+}
+
+.conta span {
+  background: rgb(255 255 255 / 0.14);
+  padding: 6px 10px;
+}
+
+.conta .conta__nota {
+  background: var(--folha);
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+/* ---------- Recursos: frases com chaves ---------- */
+
+.recursos {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.chaves {
+  list-style: none;
+  margin-top: 40px;
+  display: grid;
+  gap: 4px;
+}
+
+.chaves__faixa {
+  background: var(--moldura);
+  transition: background-color 200ms ease;
+}
+
+.chaves__botao {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 22px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chaves__frase {
+  font-size: var(--passo-destaque);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.chaves__chave {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 28px;
+  background: var(--tinta);
+  position: relative;
+}
+
+.chaves__pino {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--folha);
+  transition: transform 200ms var(--curva-saida);
+}
+
+.chaves__faixa--ligada {
+  background: var(--carimbo);
+  color: var(--folha);
+}
+
+.chaves__faixa--ligada .chaves__chave {
+  background: var(--folha);
+}
+
+.chaves__faixa--ligada .chaves__pino {
+  background: var(--carimbo);
+  transform: translateX(24px);
+}
+
+.chaves__botao:focus-visible {
+  outline-color: currentColor;
+  outline-offset: -4px;
+}
+
+.chaves__fato {
+  padding: 0 22px 22px;
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.5;
+  max-width: 56ch;
+}
+
+.recursos__acervo {
+  position: sticky;
+  top: 24px;
+}
+
+.acervo__quadro {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--moldura);
+}
+
+.acervo__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 1.6s ease,
+    transform 7s linear;
+}
+
+.acervo__foto--atual {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.acervo__legenda {
+  margin-top: 12px;
+  font-size: var(--passo-pequeno);
+  color: var(--suave);
+  max-width: 48ch;
+}
+
+/* ---------- Prova: ladrilhos ---------- */
+
+.ladrilhos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ladrilho {
+  background: var(--moldura);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 240px;
+}
+
+.ladrilho--duplo {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: var(--carimbo);
+  color: var(--folha);
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ladrilho--duplo p {
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+.ladrilho__valor {
+  display: block;
+  font-size: var(--passo-titulo);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.ladrilho__texto {
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.4;
+}
+
+.ladrilho {
+  position: relative;
+}
+
+.ladrilho__linha {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.ladrilho--nao-medido {
+  background: var(--nao-consta-fundo);
+}
+
+/* ---------- Dúvidas: fichas com abas ---------- */
+
+.duvidas {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.duvidas__lado {
+  display: grid;
+  gap: 40px;
+}
+
+.video-carimbo video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 55% 70%;
+  background: var(--moldura);
+}
+
+.fichas__abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fichas__aba {
+  border: 0;
+  background: var(--moldura);
+  padding: 12px 16px 10px;
+  font-size: var(--passo-pequeno);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.fichas__aba[data-active],
+.fichas__aba[aria-selected="true"] {
+  background: var(--folha);
+  color: var(--carimbo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fichas__aba:not([aria-selected="true"]):hover {
+    background: var(--borda-folha);
+  }
+}
+
+.fichas__ficha {
+  background: var(--folha);
+  padding: clamp(28px, 4vw, 56px);
+  min-height: 320px;
+}
+
+.fichas__ficha:focus-visible {
+  outline-offset: -4px;
+}
+
+.fichas__titulo {
+  font-size: var(--passo-destaque);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.fichas__texto {
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.fichas__texto + .fichas__texto {
+  margin-top: 16px;
+}
+
+/* ---------- CTA ---------- */
+
+.cta {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: stretch;
+}
+
+.cta__texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.cta__titulo {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  font-size: var(--passo-hero);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.cta__frase {
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  max-width: 40ch;
+}
+
+.cta__caixa {
+  background: var(--folha);
+  color: var(--tinta);
+  padding: clamp(20px, 3vw, 40px);
+}
+
+/* ---------- Rodapé ---------- */
+
+.rodape {
+  background: var(--noite);
+  color: var(--noite-tinta);
+  padding: clamp(48px, 6vw, 96px) var(--margem) 32px;
+}
+
+.rodape__marca {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: clamp(96px, 18vw, 280px);
+}
+
+.rodape__marca span {
+  flex: 1;
+  height: var(--altura);
+  background: var(--folha);
+  color: var(--noite);
+  display: grid;
+  place-items: end center;
+  font-weight: 700;
+  font-size: clamp(3rem, 13vw, 13.5rem);
+  line-height: 0.78;
+  overflow: hidden;
+}
+
+.rodape__linhas {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px 48px;
+  font-size: var(--passo-pequeno);
+  color: var(--noite-suave);
+}
+
+.rodape__linhas nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.rodape__linhas a {
+  color: var(--noite-tinta);
+}
+
+/* ---------- Entrada por seção: só com script e sem movimento reduzido; nunca fica escondido ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js-revela [data-revela] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--curva-saida),
+      transform 900ms var(--curva-saida);
+    transition-delay: calc(var(--i, 0) * 75ms);
+  }
+  .js-revela [data-revela].dentro {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Celular e tablet ---------- */
+
+@media (max-width: 1023px) {
+  .confira,
+  .como,
+  .recursos,
+  .duvidas,
+  .cta {
+    grid-template-columns: 1fr;
+  }
+  .como__cabeca,
+  .recursos__acervo,
+  .confira__folha {
+    position: static;
+  }
+  .ladrilhos {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rodape__linhas {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero__sala {
+    order: -1;
+    position: relative;
+    top: 0;
+    height: auto;
+    padding: 20px 20px 96px;
+    place-items: start center;
+  }
+  .folha-exemplo__texto p:nth-child(n + 8) {
+    display: none;
+  }
+  .hero__cartao {
+    min-height: 0;
+    margin-top: -24px;
+    margin-inline: 12px;
+    position: relative;
+  }
+  .faixa {
+    height: 40px;
+  }
+  .hero__miolo {
+    padding: 40px 20px 24px;
+  }
+  .marca {
+    margin-bottom: 32px;
+  }
+  .hero__gigante {
+    bottom: 4%;
+    left: 4%;
+  }
+  .hero__gigante,
+  .hero__sala .folha-exemplo {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .folha-exemplo {
+    padding: 18px 20px;
+  }
+  .folha-exemplo__texto p:nth-child(3),
+  .folha-exemplo__texto p:nth-child(4),
+  .folha-exemplo__legenda {
+    display: none;
+  }
+  .hero__sala {
+    padding-bottom: 72px;
+  }
+  .folha-exemplo__carimbo {
+    position: static;
+    translate: none;
+    display: flex;
+    width: max-content;
+    margin-top: 6px;
+    font-size: var(--passo-pequeno);
+  }
+  .confira__folha {
+    grid-template-columns: 1fr;
+  }
+  .confira__nao-consta {
+    position: static;
+    padding: 16px 20px 0;
+  }
+  .confira__documento {
+    padding: 20px 64px 16px 20px;
+    font-size: var(--passo-pequeno);
+  }
+  .confira__carimbo {
+    right: -58px;
+    font-size: var(--passo-texto);
+  }
+  .confira__legenda {
+    padding: 14px 20px 20px;
+  }
+  .ladrilhos {
+    grid-template-columns: 1fr;
+  }
+  .ladrilho--duplo {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .ladrilho {
+    min-height: 0;
+  }
+}

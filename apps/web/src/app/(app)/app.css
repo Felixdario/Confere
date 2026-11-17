@@ -1,0 +1,411 @@
+/* Telas do app: estilo framed-sheet. Cor só nos estados, na aba ativa e na ação principal. */
+
+.moldura {
+  --lateral: 228px;
+  --topo: 48px;
+  min-height: 100svh;
+  background: var(--moldura);
+  display: grid;
+  grid-template-columns: var(--lateral) minmax(0, 1fr);
+  grid-template-rows: var(--topo) minmax(0, 1fr);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Barra lateral ---------- */
+
+.lateral {
+  grid-row: 1 / -1;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px 16px;
+}
+
+.lateral__marca {
+  display: inline-flex;
+  padding: 2px 8px 22px;
+  text-decoration: none;
+}
+
+.lateral__marca .carimbo {
+  font-size: 1rem;
+}
+
+.lateral__nav {
+  display: grid;
+  gap: 2px;
+}
+
+.lateral__item {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  color: var(--tinta);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 160ms ease;
+}
+
+.lateral__item--ativo {
+  background: var(--borda-folha);
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lateral__item:not(.lateral__item--ativo):hover {
+    background: #e9e8e3;
+  }
+}
+
+.lateral__pe {
+  margin-top: auto;
+  display: grid;
+  gap: 4px;
+  padding: 0 10px;
+}
+
+.lateral__conta {
+  font-size: 0.8125rem;
+  color: var(--suave);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lateral__sair {
+  justify-self: start;
+  border: 0;
+  background: none;
+  padding: 6px 0;
+  font-size: 0.875rem;
+  color: var(--tinta);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+/* ---------- Barra de cima ---------- */
+
+.topo {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 0 24px 0 16px;
+}
+
+.topo__menu,
+.topo__marca {
+  display: none;
+}
+
+.topo__selo {
+  font-size: 0.8125rem;
+}
+
+/* ---------- A folha ---------- */
+
+.folha {
+  grid-column: 2;
+  background: var(--folha);
+  margin: 0 8px 8px 0;
+  border: 1px solid var(--borda-folha);
+  border-radius: 16px;
+  padding: 28px clamp(20px, 3vw, 40px) 48px;
+  min-width: 0;
+  outline: none;
+}
+
+.titulo-tela {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.subtitulo-tela {
+  margin-top: 6px;
+  font-size: 1rem;
+  color: var(--tinta);
+  max-width: 70ch;
+}
+
+.cabeca-tela {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px 24px;
+  margin-bottom: 28px;
+}
+
+.cabeca-tela__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bloco {
+  margin-top: 40px;
+}
+
+.bloco__titulo {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.nota-rodape {
+  font-size: 0.8125rem;
+  color: var(--suave);
+}
+
+/* O documento é sempre em serifa. */
+.trecho,
+.documento {
+  font-family: var(--fonte-texto);
+}
+
+.trecho {
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.trecho::before {
+  content: "“";
+}
+
+.trecho::after {
+  content: "”";
+}
+
+/* ---------- Estados ---------- */
+
+.estado {
+  padding: 32px 0;
+  color: var(--suave);
+}
+
+.estado--erro {
+  color: var(--nao-consta);
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.vazio {
+  padding: 40px 0;
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  max-width: 52ch;
+}
+
+.vazio p {
+  color: var(--tinta);
+}
+
+.aviso {
+  background: var(--aviso-fundo);
+  color: var(--aviso-tinta);
+  padding: 12px 16px;
+  display: grid;
+  gap: 2px;
+}
+
+.aviso + .aviso {
+  margin-top: 4px;
+}
+
+.aviso strong {
+  font-weight: 600;
+}
+
+.aviso p {
+  color: var(--tinta);
+}
+
+/* ---------- Tabela ---------- */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.tabela th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--suave);
+  padding: 0 12px 10px;
+  border-bottom: 1px solid var(--borda-folha);
+}
+
+.tabela td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--borda-folha);
+  vertical-align: top;
+}
+
+.tabela th:first-child,
+.tabela td:first-child {
+  padding-left: 0;
+}
+
+.tabela .numeros,
+.tabela .direita {
+  text-align: right;
+}
+
+.tabela tr[data-estado="parcial"] td {
+  background: color-mix(in srgb, var(--parcial-fundo) 55%, transparent);
+}
+
+.tabela tr[data-estado="nao_atende"] td {
+  background: color-mix(in srgb, var(--nao-consta-fundo) 55%, transparent);
+}
+
+.tabela a {
+  color: var(--tinta);
+}
+
+.rolagem-x {
+  overflow-x: auto;
+}
+
+/* ---------- Campos ---------- */
+
+.campo {
+  display: grid;
+  gap: 6px;
+}
+
+.campo label,
+.campo legend {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  width: 100%;
+  border: 1px solid #c9c7c0;
+  border-radius: 0;
+  background: var(--folha);
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+.campo textarea {
+  font-family: var(--fonte-texto);
+  resize: vertical;
+}
+
+.campo input:focus-visible,
+.campo textarea:focus-visible,
+.campo select:focus-visible {
+  outline: 2px solid var(--carimbo);
+  outline-offset: 0;
+  border-color: var(--carimbo);
+}
+
+.campo__dica {
+  font-size: 0.8125rem;
+  color: var(--suave);
+}
+
+.marcar {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.9375rem;
+}
+
+.marcar input {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--carimbo);
+}
+
+.selo-celular {
+  display: none;
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 860px) {
+  .moldura {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .lateral {
+    position: fixed;
+    inset: 48px 0 auto 0;
+    height: auto;
+    z-index: 20;
+    background: var(--moldura);
+    padding: 8px 12px 16px;
+    display: none;
+    box-shadow: 0 12px 24px rgb(22 24 42 / 0.12);
+  }
+  .moldura--menu .lateral {
+    display: flex;
+  }
+  .lateral__marca {
+    display: none;
+  }
+  .lateral__item {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+  .lateral__pe {
+    margin-top: 12px;
+  }
+  .topo {
+    grid-column: 1;
+    position: sticky;
+    top: 0;
+    z-index: 21;
+    background: var(--moldura);
+    min-height: 48px;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+  .topo__menu {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 0;
+    background: var(--borda-folha);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .topo__marca {
+    display: inline-flex;
+    text-decoration: none;
+  }
+  .topo__selo {
+    display: none;
+  }
+  .selo-celular {
+    display: block;
+    font-size: 0.8125rem;
+    margin-bottom: 16px;
+  }
+  .folha {
+    grid-column: 1;
+    margin: 0 6px 6px;
+    border-radius: 12px;
+    padding: 20px 16px 40px;
+  }
+}

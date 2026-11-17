@@ -1,0 +1,80 @@
+.entrar {
+  min-height: 100svh;
+  background: var(--moldura);
+  padding: 16px 16px 48px;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 24px;
+}
+
+.entrar__marca {
+  justify-self: start;
+  text-decoration: none;
+}
+
+.entrar__folha {
+  width: min(100%, 520px);
+  background: var(--folha);
+  border: 1px solid var(--borda-folha);
+  border-radius: 16px;
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.entrar__demo {
+  margin: 24px 0 28px;
+  padding: 16px 18px;
+  background: var(--carimbo-fundo);
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.entrar__form {
+  display: grid;
+  gap: 18px;
+  padding-top: 20px;
+}
+
+.entrar__form .botao {
+  justify-self: start;
+}
+
+.entrar__consentimento {
+  display: grid;
+  gap: 12px;
+  font-size: 0.875rem;
+  padding: 14px 16px;
+  background: var(--papel);
+}
+
+.entrar__erro {
+  margin: 0;
+  background: var(--nao-consta-fundo);
+  color: var(--nao-consta);
+  padding: 10px 14px;
+}
+
+.abas {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--borda-folha);
+}
+
+.abas__aba {
+  border: 0;
+  background: none;
+  padding: 10px 2px;
+  margin-right: 16px;
+  margin-bottom: -2px;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--suave);
+  cursor: pointer;
+}
+
+.abas__aba[aria-selected="true"] {
+  color: var(--tinta);
+  border-bottom-color: var(--carimbo);
+}

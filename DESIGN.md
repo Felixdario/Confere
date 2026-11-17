@@ -30,7 +30,7 @@ radius:
   landing: 0
   folha: 16
   controle: 0
-status: contrato de partida (fase 5); revisar a partir do que for construído no fim da fase 6
+status: revisado na fase 6 a partir do que foi construído (landing e telas do app)
 ---
 
 # Design — Confere
@@ -47,10 +47,10 @@ com o texto vazado em caixa alta**. É o carimbo visto de perto.
 
 | Escala | Onde | Como |
 | - | - | - |
-| Gigante | Hero da landing | "CONFERE COM O ORIGINAL" a ~120vh de largura, cortado pela borda, inclinado a −3°, atrás da folha de exemplo. |
+| Gigante | Hero da landing | "CONFERE COM O ORIGINAL" em SVG (retângulo + texto), 120vh de largura, inclinado a −3°, saindo por baixo da folha de exemplo e cortado pela borda direita da sala. É forma, não título: `aria-hidden`. |
 | Grande | Estado do requisito no showcase, nota no resultado | Carimbo de 64–120 px de altura, inclinado de −2° a −4° (ângulo fixo por item, nunca aleatório a cada renderização). |
 | Texto | Estado na tabela, marcador de lista, botões | Retângulo reto, sem inclinação, para não atrapalhar a leitura em linhas. |
-| Faixa | Divisão da landing, topo do cartão do hero | Faixa de segurança do selo: barras de 28 px alternando tinta e papel. |
+| Faixa | Topo do cartão do hero (56 px; 40 px no celular) e divisão entre o exemplo e "como funciona" (28 px) | Faixa de segurança do selo: barras de 28 px alternando tinta e papel. |
 
 Nunca um segundo motivo (círculo, selo redondo, blob). O carimbo é sempre preenchido. Uma moldura de
 carimbo em linha fina é proibida pelas regras da casa.
@@ -109,7 +109,7 @@ exceção de inspetor para isso.
   --passo-texto: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --passo-destaque: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --passo-titulo: clamp(2rem, 1.3rem + 3.2vw, 4rem);
-  --passo-hero: clamp(3rem, 1rem + 7vw, 8.5rem);
+  --passo-hero: clamp(2.25rem, 0.5rem + 4vw, 5rem); /* o h1 mora em meia tela */
 }
 ```
 
@@ -119,8 +119,8 @@ exceção de inspetor para isso.
 
 ## 4. Espaço e forma
 
-- Landing: um grid de 12 colunas, margens externas iguais de 12 px (≥ 1024 px: 24 px) e 120–240 px
-  entre seções. Cantos retos em tudo; a folha de exemplo do hero também é reta.
+- Landing: um grid de 12 colunas, margens externas iguais de 16 px (≥ 1024 px: 24 px) e 96 px
+  (celular) a 176 px entre seções. Cantos retos em tudo; a folha de exemplo do hero também é reta.
 - App (`framed-sheet`): moldura em L com barra lateral de 228 px e barra superior de 48 px no mesmo tom,
   sem fio entre elas. A folha `folha` fica com 8 px de recuo das bordas direita e inferior, canto de
   16 px, borda de 1 px em `borda-folha` e nenhuma sombra. Dentro dela, 24 px de respiro e no máximo três
@@ -138,27 +138,38 @@ exceção de inspetor para isso.
   para a posição no texto do currículo.
 - **Linha de requisito.** Requisito, obrigatório ou desejável, carimbo, valor, trecho. As tabelas podem
   ter fios (são tabelas de verdade), em `borda-folha`.
-- **A conta da nota.** Uma linha com as parcelas, `obrigatórios 4,5 de 6 → 52,5 · desejáveis 1 de 3 →
-  6,7 · senioridade 4/5 anos → 8,0 · nota 67`, montada com os mesmos números da tabela, nunca digitada à
-  parte.
+- **A conta da nota.** No resultado, um recibo: uma linha por parcela (`obrigatórios 5 de 5 … 70,0`)
+  e o total sob um fio de 2 px em `tinta`, ao lado da nota. Na landing, as mesmas parcelas em
+  pastilhas dentro do painel "Nota". Sempre montada com os números da API (`decomposicao.parcelas`),
+  nunca digitada à parte.
 - **Reescrita antes/depois.** Duas colunas na folha: antes em `suave`, depois em `tinta`, e embaixo o
   trecho que autoriza a reescrita.
 - **Selo do modo.** "Modo demonstração: análise por regras, sem IA", sempre visível e em texto, não ícone.
 - **Avisos.** Faixa em `aviso-fundo` com texto em `aviso-tinta`: texto oculto, injection, PDF sem texto,
   embeddings ausentes. Diz o que aconteceu e o que foi feito.
-- **Versões.** Folhas empilhadas com 6 px de deslocamento; as anteriores com a opacidade do texto em
-  0,6, como papel térmico velho, mas ainda legíveis.
+- **Versões.** No histórico, a versão mais recente é a folha de cima; até duas folhas em `papel`
+  aparecem atrás, deslocadas 6 e 12 px. As versões anteriores ficam listadas embaixo com opacidade 0,6
+  (1 no foco ou no hover), como papel térmico velho, mas ainda legíveis. Na comparação, a nota antiga
+  e o carimbo antigo também ficam em 0,6.
+- **Moldura do app.** Barra lateral de 228 px e barra de cima de 48 px em `moldura`; item ativo com
+  fundo `borda-folha` e peso 600. No celular (≤ 860 px), a lateral vira um menu sob a barra de cima, e
+  o selo do modo desce para o topo da folha.
+- **Confirmação.** Diálogo base-ui (cantos de 16 px, a única sombra do produto, porque flutua) para
+  revelar identidade e apagar dados; a ação destrutiva em `nao-consta`.
+- **Candidato.** Na triagem, "Candidato A", "Candidato B"… (o rótulo da API), sem nenhum dado removido.
 
 ## 6. Movimento
 
 - **Assinatura: o carimbo cai.** A escala vai de 1,15 a 1, a opacidade de 0 a 1 e a rotação de −6° ao
   ângulo final, em 180 ms com `cubic-bezier(0.2, 0.9, 0.3, 1)`, e mais um abaixamento de 1 px no
   impacto. Só `transform` e `opacity`.
-- Etapas da análise: cada etapa é carimbada ao terminar, com o mesmo gesto menor (120 ms).
-- Revelação da nota: os algarismos ficam em casas fixas e se acertam da esquerda para a direita, num
-  evento visível só.
-- Landing: entrada por seção (título, texto e figura, defasados em 60–90 ms, subindo 24 px) e um
-  crossfade lento entre as fotos de acervo.
+- Etapas da análise: as sete etapas da API num eixo vertical; o ponto da etapa atual pulsa e cada
+  etapa é carimbada "Feito" ao terminar, com o mesmo gesto menor (120 ms).
+- Revelação da nota: os algarismos ficam em casas fixas e se acertam de 0 até a nota (NumberFlow),
+  uma vez, ao abrir o resultado.
+- Landing: entrada por seção (só o que está abaixo da dobra; sobe 24 px, defasado 75 ms; nada fica
+  escondido sem script), crossfade lento (1,6 s a cada 5,6 s, pausa com a aba escondida) entre as três
+  imagens de acervo e um vídeo mudo em laço de um carimbo descendo sobre a folha.
 - Com `prefers-reduced-motion`, nada se desloca: o carimbo aparece direto no lugar, e o conteúdo nunca
   depende da animação para existir.
 

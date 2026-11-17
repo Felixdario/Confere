@@ -1,0 +1,133 @@
+/* A caixa de nova análise (tela /nova e fim da landing). Peça de interface: campos com borda. */
+
+.nova {
+  display: grid;
+  gap: 28px;
+  font-family: var(--fonte-display);
+  color: var(--tinta);
+}
+
+.nova--compacta {
+  gap: 20px;
+}
+
+.nova__bloco {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.nova__rotulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.nova__modos {
+  display: flex;
+  gap: 2px;
+}
+
+.nova__modos button {
+  border: 0;
+  background: var(--moldura);
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.nova__modos button[aria-pressed="true"] {
+  background: var(--tinta);
+  color: var(--folha);
+}
+
+.nova__soltar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  padding: 20px;
+  border: 1px dashed #c9c7c0;
+  background: var(--papel);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.nova__soltar--ativo {
+  background: var(--carimbo-fundo);
+  border-color: var(--carimbo);
+}
+
+.nova__soltar--cheio {
+  border-style: solid;
+  border-color: var(--borda-folha);
+  background: var(--folha);
+}
+
+.nova__soltar input:focus-visible + * + .botao,
+.nova__soltar input:focus-visible ~ .botao {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+.nova__vazio {
+  font-size: 0.9375rem;
+  color: var(--suave);
+}
+
+.nova__arquivo {
+  font-size: 0.9375rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.nova__nome-arquivo {
+  font-weight: 600;
+}
+
+.nova__campo {
+  width: 100%;
+  border: 1px solid #c9c7c0; /* taste-skill-ignore: campo de formulário */
+  border-radius: 0;
+  background: var(--folha);
+  padding: 12px 14px;
+  resize: vertical;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.nova__campo--documento {
+  font-family: var(--fonte-texto);
+}
+
+.nova__campo:focus-visible {
+  outline: 2px solid var(--carimbo);
+  outline-offset: 0;
+  border-color: var(--carimbo);
+}
+
+.nova__dica {
+  font-size: 0.8125rem;
+  color: var(--suave);
+  line-height: 1.4;
+}
+
+.nova__erro {
+  background: var(--nao-consta-fundo);
+  color: var(--nao-consta);
+  padding: 10px 14px;
+  font-size: 0.9375rem;
+}
+
+.nova__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}

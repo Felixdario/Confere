@@ -1,0 +1,379 @@
+/* Progresso e resultado da análise. */
+
+/* ---------- Progresso: eixo vertical ---------- */
+
+.progresso {
+  max-width: 760px;
+}
+
+.progresso__cabeca {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.progresso__agora {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.progresso__tempo {
+  font-size: 1.25rem;
+  color: var(--suave);
+}
+
+.eixo {
+  list-style: none;
+  position: relative;
+}
+
+.eixo::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: var(--borda-folha);
+}
+
+.eixo__etapa {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 92px;
+  gap: 16px;
+  align-items: start;
+  padding: 12px 0;
+}
+
+.eixo__ponto {
+  margin-top: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--folha);
+  border: 2px solid var(--borda-folha);
+  position: relative;
+  z-index: 1;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.eixo__etapa--agora .eixo__ponto {
+  border-color: var(--tinta);
+  animation: pulso 1.2s ease-in-out infinite;
+}
+
+.eixo__etapa--feita .eixo__ponto {
+  background: var(--carimbo);
+  border-color: var(--carimbo);
+}
+
+@keyframes pulso {
+  50% {
+    transform: scale(0.8);
+  }
+}
+
+.eixo__nome {
+  font-weight: 600;
+  color: var(--suave);
+}
+
+.eixo__etapa--agora .eixo__nome,
+.eixo__etapa--feita .eixo__nome {
+  color: var(--tinta);
+}
+
+.eixo__descricao {
+  font-size: 0.875rem;
+  color: var(--suave);
+}
+
+.eixo__marca {
+  justify-self: end;
+  padding-top: 2px;
+}
+
+.eixo__marca .carimbo--cai {
+  animation-duration: 120ms;
+}
+
+.eixo__agora {
+  font-size: 0.8125rem;
+  color: var(--tinta);
+}
+
+.progresso__feedback {
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+.analise-erro {
+  margin-top: 20px;
+  background: var(--nao-consta-fundo);
+  color: var(--nao-consta);
+}
+
+/* ---------- Resultado ---------- */
+
+.placar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: center;
+  padding: 24px 28px;
+  background: var(--papel);
+}
+
+.nota {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.nota__numero {
+  font-size: clamp(5rem, 3rem + 5vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta);
+}
+
+.nota__de {
+  font-size: 1rem;
+  color: var(--suave);
+}
+
+.placar__rotulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.conta-linhas {
+  list-style: none;
+  max-width: 420px;
+  display: grid;
+  gap: 2px;
+  font-size: 1rem;
+}
+
+.conta-linhas li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.conta-linhas__pontos {
+  font-weight: 600;
+}
+
+.conta-linhas__total {
+  border-top: 2px solid var(--tinta);
+  margin-top: 4px;
+  padding-top: 8px !important;
+  font-weight: 700;
+}
+
+.placar .nota-rodape {
+  margin-top: 12px;
+  max-width: 60ch;
+}
+
+.requisitos__nome {
+  min-width: 180px;
+}
+
+.requisitos__nome span {
+  display: block;
+}
+
+.requisitos__tipo {
+  font-size: 0.8125rem;
+  color: var(--suave);
+}
+
+.requisitos__trecho {
+  min-width: 260px;
+  max-width: 560px;
+}
+
+.requisitos__trecho q {
+  display: block;
+  quotes: none;
+}
+
+.requisitos__falta {
+  display: block;
+  font-family: var(--fonte-texto);
+}
+
+.requisitos__motivo {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  color: var(--suave);
+}
+
+.duas-colunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 48px;
+}
+
+.lista-marcada {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.lista-marcada li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.lista-marcada li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--tinta);
+}
+
+.lista-marcada strong {
+  font-weight: 600;
+}
+
+.reescritas {
+  display: grid;
+  gap: 16px;
+}
+
+.reescrita {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
+  padding: 16px 20px;
+  background: var(--papel);
+}
+
+.reescrita__rotulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.reescrita__antes {
+  color: var(--suave);
+}
+
+.reescrita__base {
+  grid-column: 1 / -1;
+}
+
+.palavras {
+  list-style: none;
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.palavras li {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 6px 10px;
+  background: var(--carimbo-fundo);
+}
+
+.palavras li[data-tem="false"] {
+  background: var(--moldura);
+}
+
+.palavras__estado {
+  font-size: 0.8125rem;
+  color: var(--suave);
+}
+
+.removidos {
+  list-style: none;
+  display: grid;
+  gap: 2px;
+}
+
+.removidos li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--borda-folha);
+}
+
+.removidos__mascara {
+  color: var(--suave);
+}
+
+.resumo {
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+@media (max-width: 860px) {
+  .placar {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .duas-colunas,
+  .reescrita {
+    grid-template-columns: 1fr;
+  }
+  .eixo__etapa {
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+  }
+}
+
+/* No celular, cada requisito vira um bloco: nome e estado em cima, o trecho embaixo. */
+@media (max-width: 640px) {
+  .requisitos thead {
+    position: absolute;
+    width: 1px;
+    height: 1px; /* taste-skill-ignore */
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .requisitos,
+  .requisitos tbody {
+    display: block;
+  }
+  .requisitos tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--borda-folha);
+  }
+  .requisitos td {
+    border: 0;
+    padding: 0;
+    background: none !important;
+  }
+  .requisitos .requisitos__trecho {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .requisitos__nome {
+    min-width: 0;
+  }
+}

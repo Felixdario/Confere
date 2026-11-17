@@ -24,28 +24,27 @@ Analisador de currículos com IA, projeto 4 de 4 do portfólio. O plano completo
 | 2 Ingestão, texto oculto, injection, anonimização | feita | `7207daf` |
 | 3 Pipeline de IA | feita com o provedor falso; evals reais não rodadas (D-46) | `1515969` |
 | 4 API (auth, fila, SSE, recrutador, LGPD, demo) | feita | `b38d6b9` |
-| 5 Direção de design | feita: nome Confere, mundo de cartório | (este commit) |
-| **6 Front** | **próxima** | — |
-| 7 Polimento | pendente | — |
+| 5 Direção de design | feita: nome Confere, mundo de cartório | `0dec746` |
+| 6 Front | feita: landing + 6 telas na API real, Playwright do fluxo | (este commit) |
+| **7 Polimento** | **próxima** | — |
 | 8 Portfólio (README) | pendente | — |
 
-Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-57 em `docs/decisoes.md`.
+Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-62 em `docs/decisoes.md`.
 
-## Próximo passo: fase 6 — front
+## Próximo passo: fase 7 — polimento
 
-- Ler primeiro: `PRODUCT.md`, `DESIGN.md`, `docs/design/direcao.md` e o brief da landing
-  (`apps/web/.impeccable/surfaces/apps-web-src-app-page-tsx.md`). O nome é **Confere** (D-56) e o mundo
-  é "Confere com o original" (D-57).
-- Antes: `make modelos` (embeddings, ~220 MB, gratuito).
-- Skills: `pick-ui-library` (gráficos, upload, tabelas, toasts; ler à mão), `impeccable` e
-  `design-taste-frontend` (landing: `draw.mjs --show` reimprime a direção salva em `.taste-skill/`),
-  `animate` (o carimbo caindo, as etapas, a revelação da nota). Carregar uma de cada vez.
-- Telas: landing (com "Confira você mesmo" sobre o caso b01), nova análise + progresso por SSE,
-  resultado, histórico e comparação, recrutador, privacidade, todas na API real; seed
-  `demo@curriculo.dev`; Playwright do fluxo principal (`corepack pnpm test:e2e`).
-- Checagens de design: `lint.mjs` e `inspect.mjs` (landing; `--app` nas telas) na build de produção.
-- No fim da fase: revisar o `DESIGN.md` a partir do que foi construído.
-- Aceite: fluxo principal no Playwright, `make check` verde, commit `feat(web): ...`.
+- O que existe: landing (`apps/web/src/app/page.tsx`, "Confira você mesmo" sobre o b01), `/entrar`
+  (com "Entrar na demonstração"), `/nova`, `/analises/[id]` (progresso por SSE e resultado),
+  `/historico`, `/curriculos/[id]` (comparação), `/recrutador` e `/recrutador/[id]`, `/privacidade`.
+  O front fala com a API por `/api/*` (rewrite do Next, D-59).
+- Checar com axe (WCAG 2.2 AA) todas as telas; leitores de tela no progresso (região viva) e nos
+  carimbos (`role="img"` com rótulo).
+- `inspect.mjs --app` não entra com sessão: as telas do app foram revisadas por capturas do Playwright.
+  Avaliar um jeito de passar o cookie ao inspetor.
+- Pendências herdadas da fase 3 (listadas abaixo) e o `break-ui` nas telas (nomes longos, vaga sem
+  requisitos, 20 candidatos).
+- Decidir com o usuário: as duas imagens descartadas em `apps/web/public/acervo/` (fora do commit).
+- Aceite: axe sem violações, `make check` e `corepack pnpm test:e2e` verdes.
 
 ## Como verificar
 
@@ -58,7 +57,9 @@ make eval PROVEDOR=regras
 make seed
 ```
 
-`make check` = ruff, mypy estrito, ESLint, tsc e testes rápidos (834). `make test-integracao` precisa
+`make check` = ruff, mypy estrito, ESLint, tsc e testes rápidos (834). `corepack pnpm test:e2e` roda o
+Playwright (landing, fluxo principal e recrutador, no desktop e no celular) com a API, o worker e o
+seed de pé; ele entra uma vez na conta demo, porque a API limita 5 logins a cada 15 min por e-mail. `make test-integracao` precisa
 do Compose de pé (36 testes). Na última execução, todos passaram.
 
 ## Ambiente (Windows 11)
@@ -76,12 +77,11 @@ do Compose de pé (36 testes). Na última execução, todos passaram.
 ## Pendências e riscos
 
 - CI de integração escrito mas nunca rodado no GitHub (nada foi enviado).
-- Modelo de embeddings (~220 MB, gratuito) não baixado: `make modelos`. Sem ele o demo usa só a taxonomia
-  e avisa na análise. Precisa para a fase 6.
+- Modelo de embeddings (~220 MB) baixado em `data/modelos` nesta máquina (fora do git); em outra, rode
+  `make modelos`. Sem ele, o demo usa só a taxonomia e avisa na análise.
 - Não medidos (D-46): extração pelo modelo, custo, latência, cache e calibração de τ.
 - Para a fase 7: fontes muito finas perto do limiar do detector de texto oculto; lista de lugares e
   empresas protegidos curta; negação detectada por oração; filtro de reescritas descarta algumas legítimas.
-- Eventos `texto` do SSE são fragmentos do JSON estruturado; a fase 6 decide como mostrar.
 - `CHAVE_CSRF` precisa ser definida se houver mais de um processo da API.
 - A página de decisão do impeccable (`serve-question --start`) trava neste terminal; usar as perguntas da sessão.
 - Depois da fase 8, com autorização: atualizar o README de perfil em `C:\Users\eduar\perfil-github`.

@@ -441,3 +441,46 @@ vaga é sempre em serifa, e a interface em grotesco. Detalhes em `docs/design/di
 escrevê-lo a partir do que foi construído, então ele é revisado no fim da fase 6. A página de decisão
 local do impeccable não abriu neste terminal (o comando ficou preso sem saída), e a escolha foi feita
 pelas perguntas da sessão.
+
+## D-58 — Bibliotecas do front (2026-11-17)
+Escolhidas pela lista da `pick-ui-library`, só onde há tarefa real: **base-ui** (`@base-ui/react`) para
+abas e diálogos de confirmação (foco preso, Esc, volta do foco), **Sonner** para avisos curtos do
+recrutador, **NumberFlow** para a revelação da nota (os algarismos se acertam em casas fixas) e
+**clsx** para classes condicionais. CSS puro com tokens continua (D-04): sem Tailwind e sem
+biblioteca de animação, porque o carimbo e as entradas são `transform`/`opacity` em CSS. Upload,
+tabelas e gráficos ficaram sem biblioteca: o upload é um `input` com arrastar e soltar, as tabelas são
+`<table>` de verdade e não há gráfico (o histórico usa as folhas empilhadas da direção, não uma linha
+do tempo). Os tipos da API saem do `docs/openapi.json` com `openapi-typescript`
+(`pnpm gerar-tipos`). O pacote antigo `@base-ui-components/react` está descontinuado; usei o novo.
+
+## D-59 — Como o front fala com a API (2026-11-17)
+O Next reescreve `/api/*` para a API (`API_URL`, padrão `http://localhost:8010`). Assim o cookie de
+sessão (httpOnly, SameSite=Lax) e o CSRF valem na mesma origem, sem CORS, e o SSE passa pelo mesmo
+proxy (com `compress: false`, para o fluxo não ficar retido). O token CSRF fica em memória e é pedido
+de novo depois do login, do logout ou de uma recusa `csrf`. As telas são componentes de cliente com
+TanStack Query; a landing é estática.
+
+## D-60 — O SSE na tela de progresso (2026-11-17)
+O evento `etapa X` marca o começo de X, então a etapa anterior é carimbada "feito" quando a próxima
+chega, e todas no `final`. No modo regras, os eventos `texto` são frases do feedback, não JSON: a tela
+os junta num parágrafo corrido que se escreve sozinho, sem mostrar o fluxo cru. Ao terminar, a tela
+busca o resultado completo em `GET /analises/{id}` e troca de modo (sem recarregar). Reconexão: o
+`EventSource` manda o `Last-Event-ID` sozinho; enquanto estiver fora, a tela avisa. As etapas na tela
+são as sete da API (a direção falava em seis; ancoragem virou "Conferência do trecho").
+
+## D-61 — Imagens de acervo e o exemplo da landing (2026-11-17)
+O exemplo "Confira você mesmo" usa o caso b01 com o texto anonimizado pela própria `anonimizar()` e os
+requisitos, a conta e a nota copiados da resposta da API no modo regras (nota 90), não digitados à
+parte (`apps/web/src/dados/exemplo-b01.ts`). As imagens reais da landing vêm do Wikimedia Commons, com
+crédito no rodapé: um carimbo do Museu Paulista (CC BY-SA 4.0), uma caderneta tcheca de 1984 coberta
+de carimbos (CC0), uma Olympia Simplex (CC BY 4.0) e um vídeo de 7 s de um carimbo sobre a folha (CC
+BY-SA 4.0). Duas outras baixadas na busca (uma encadernação antiga e um fichário com a ficha
+"Prisons") foram descartadas e não entram no commit. Na API, os candidatos do recrutador se chamam
+"Candidato A", "B"…, e a interface segue isso (a direção dizia "Candidato 07").
+
+## D-62 — Avisos do inspetor de design mantidos (2026-11-17)
+O `inspect.mjs` da landing, na build de produção, termina com 0 FAIL e três avisos que mantenho:
+`palette-cream` (o `papel` #F7F7F4 é o branco-gelo do `DESIGN.md`, com croma quase nulo, não um creme
+amarelo), `off-centre` a 1440 px (a diferença de 17 px é a barra de rolagem do navegador do
+inspetor) e `blank-gap` no rodapé (é o campo azul-noite com a marca em blocos, um descanso
+deliberado).
