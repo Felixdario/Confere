@@ -46,28 +46,6 @@
   "saved": "2026-11-17T18:17:30.652Z"
  },
  {
-  "file": "apps/web/public/acervo/notarial-documents-manuscript-on-paper.jpg",
-  "media": "image",
-  "ref": "commons:43074472",
-  "title": "Notarial documents [Manuscript on paper]",
-  "creator": "Unspecified",
-  "creatorUrl": null,
-  "date": "Binding: 16c",
-  "license": "CC0",
-  "licenseCode": "cc0",
-  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
-  "creditRequired": false,
-  "page": "https://commons.wikimedia.org/wiki/File:Notarial_documents_-Manuscript_on_paper-_-_Upper_cover_(Davis870).jpg",
-  "via": "Wikimedia Commons",
-  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Notarial_documents_-Manuscript_on_paper-_-_Upper_cover_%28Davis870%29.jpg/1920px-Notarial_documents_-Manuscript_on_paper-_-_Upper_cover_%28Davis870%29.jpg",
-  "width": 1920,
-  "height": 2460,
-  "bytes": 1155267,
-  "credit": "\"Notarial documents [Manuscript on paper]\" by Unspecified, CC0, via Wikimedia Commons",
-  "notes": [],
-  "saved": "2026-11-17T18:17:30.871Z"
- },
- {
   "file": "apps/web/public/acervo/olympia-simplex.jpg",
   "media": "image",
   "ref": "commons:81215010",
@@ -88,30 +66,6 @@
   "credit": "\"Olympia Simplex\" by Sammlung der Medien und Wissenschaft, CC BY 4.0, via Wikimedia Commons",
   "notes": [],
   "saved": "2026-11-17T18:17:31.052Z"
- },
- {
-  "file": "apps/web/public/acervo/card-catalog-at-the-indiana-state-library.jpg",
-  "media": "image",
-  "ref": "commons:153582894",
-  "title": "Card catalog at the Indiana State Library - interior view of catalog cards",
-  "creator": "TBurmeister (WMF)",
-  "creatorUrl": null,
-  "date": "2024-10-04",
-  "license": "CC BY-SA 4.0",
-  "licenseCode": "by-sa",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "creditRequired": true,
-  "page": "https://commons.wikimedia.org/wiki/File:Card_catalog_at_the_Indiana_State_Library_-_interior_view_of_catalog_cards.jpg",
-  "via": "Wikimedia Commons",
-  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Card_catalog_at_the_Indiana_State_Library_-_interior_view_of_catalog_cards.jpg/1920px-Card_catalog_at_the_Indiana_State_Library_-_interior_view_of_catalog_cards.jpg",
-  "width": 1920,
-  "height": 2560,
-  "bytes": 980054,
-  "credit": "\"Card catalog at the Indiana State Library - interior view of catalog cards\" by TBurmeister (WMF), CC BY-SA 4.0, via Wikimedia Commons",
-  "notes": [
-   "Share-alike: an altered version (recoloured, combined with other pictures) must be shared under the same licence."
-  ],
-  "saved": "2026-11-17T18:17:31.253Z"
  },
  {
   "file": "apps/web/public/acervo/the-very-first-wikipassport-the-stamp.webm",

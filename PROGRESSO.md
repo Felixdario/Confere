@@ -43,7 +43,6 @@ Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-62 em `docs/decisoes.md`.
   Avaliar um jeito de passar o cookie ao inspetor.
 - Pendências herdadas da fase 3 (listadas abaixo) e o `break-ui` nas telas (nomes longos, vaga sem
   requisitos, 20 candidatos).
-- Decidir com o usuário: as duas imagens descartadas em `apps/web/public/acervo/` (fora do commit).
 - Aceite: axe sem violações, `make check` e `corepack pnpm test:e2e` verdes.
 
 ## Como verificar

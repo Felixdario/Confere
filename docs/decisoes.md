@@ -475,7 +475,7 @@ parte (`apps/web/src/dados/exemplo-b01.ts`). As imagens reais da landing vêm do
 crédito no rodapé: um carimbo do Museu Paulista (CC BY-SA 4.0), uma caderneta tcheca de 1984 coberta
 de carimbos (CC0), uma Olympia Simplex (CC BY 4.0) e um vídeo de 7 s de um carimbo sobre a folha (CC
 BY-SA 4.0). Duas outras baixadas na busca (uma encadernação antiga e um fichário com a ficha
-"Prisons") foram descartadas e não entram no commit. Na API, os candidatos do recrutador se chamam
+"Prisons") foram descartadas e apagadas, com a autorização do usuário. Na API, os candidatos do recrutador se chamam
 "Candidato A", "B"…, e a interface segue isso (a direção dizia "Candidato 07").
 
 ## D-62 — Avisos do inspetor de design mantidos (2026-11-17)
