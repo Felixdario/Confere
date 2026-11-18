@@ -35,8 +35,9 @@ Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-66 em `docs/decisoes.md`.
 
 O projeto está completo nas 8 fases. O que sobra depende do usuário:
 
-- Atualizar o README de perfil em `C:\Users\eduar\perfil-github` (pedir autorização).
-- Publicar no GitHub (push; aí o CI roda pela primeira vez).
+- Publicar no GitHub **como `Felixdario/Confere`** (push; aí o CI roda pela primeira vez). O README de
+  perfil (`C:\Users\eduar\perfil-github`, commit `888e9d8`, não enviado) já aponta para esse nome; os
+  12 links do Confere dão 404 até lá (`node scripts/check-links.mjs` lá confere).
 - Com chave da Anthropic: `make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=1.00` e, depois, os 30
   casos; preencher os ADRs 0001–0005 com números medidos.
 - Capturas do README: `make seed` e, com a API, o worker e o web de pé,
@@ -83,4 +84,4 @@ do Compose de pé (36 testes). Na última execução, todos passaram.
   (`a2f42afb…`) foi criada à mão na conta demo e saiu no `make seed` da fase 8; o seed não a recria.
 - `CHAVE_CSRF` precisa ser definida se houver mais de um processo da API.
 - A página de decisão do impeccable (`serve-question --start`) trava neste terminal; usar as perguntas da sessão.
-- README de perfil em `C:\Users\eduar\perfil-github` ainda não atualizado (pedir autorização).
+- README de perfil atualizado com o Confere (`888e9d8` no perfil-github), mas nada foi enviado.
