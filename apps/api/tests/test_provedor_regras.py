@@ -226,3 +226,25 @@ def test_seis_formatos_de_titulo_de_vaga(obrigatorios: str, desejaveis: str) -> 
         ("Kubernetes", "desejavel"),
     ]
     assert vaga.anos_minimos == 1
+
+
+def test_comentario_parcial_e_concordancia() -> None:
+    """Parcial pela mesma competência não diz "próxima de si mesma" (fase 8)."""
+    from curriculo_api.ia.modelos import LinhaRequisito
+    from curriculo_api.ia.regras import _comentario
+
+    def linha(casada: str | None) -> LinhaRequisito:
+        return LinhaRequisito(
+            descricao="Inglês avançado",
+            tipo="desejavel",
+            competencia_pedida="Inglês",
+            competencia_casada=casada,
+            status="parcial",
+            valor="1/2",
+            regra="mesma_competencia",
+            motivo="nível intermediário",
+        )
+
+    assert "próxima" not in _comentario(linha("Inglês"))
+    assert "abaixo do tempo ou do nível" in _comentario(linha("Inglês"))
+    assert "Vue, que é próxima de Inglês" in _comentario(linha("Vue"))

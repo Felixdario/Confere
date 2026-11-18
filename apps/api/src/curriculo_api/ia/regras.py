@@ -568,8 +568,10 @@ class ProvedorRegras:
         desejaveis = [linha for linha in tabela.linhas if linha.tipo == "desejavel"]
         lacunas = [linha for linha in tabela.linhas if linha.status != "atende"]
 
-        def com_evidencia(linhas: list[LinhaRequisito]) -> int:
-            return sum(1 for linha in linhas if linha.status == "atende")
+        def com_evidencia(linhas: list[LinhaRequisito]) -> str:
+            # Concordância: "1 tem", "2 têm".
+            n = sum(1 for linha in linhas if linha.status == "atende")
+            return f"{n} tem" if n == 1 else f"{n} têm"
 
         frases = [
             "Esta análise foi feita por regras, sem IA (modo demonstração): as competências "
@@ -579,12 +581,11 @@ class ProvedorRegras:
         if obrigatorios:
             frases.append(
                 f"Dos {len(obrigatorios)} requisitos obrigatórios da vaga, "
-                f"{com_evidencia(obrigatorios)} têm evidência clara no currículo."
+                f"{com_evidencia(obrigatorios)} evidência clara no currículo."
             )
         if desejaveis:
             frases.append(
-                f"Dos {len(desejaveis)} diferenciais, {com_evidencia(desejaveis)} têm evidência "
-                "clara."
+                f"Dos {len(desejaveis)} diferenciais, {com_evidencia(desejaveis)} evidência clara."
             )
         if tabela.anos_minimos:
             anos = decimal_br(
@@ -668,7 +669,8 @@ def _comentario(linha: LinhaRequisito) -> str:
     competencia = linha.competencia_pedida
     casada = linha.competencia_casada
     status = linha.status
-    if status == "parcial" and casada:
+    # Parcial pela mesma competência (nível ou tempo abaixo) não é "próxima de si mesma".
+    if status == "parcial" and casada and casada.casefold() != competencia.casefold():
         return (
             f"O currículo mostra {casada}, que é próxima de {competencia}, mas não a mesma "
             "competência ou não no tempo ou nível pedidos."

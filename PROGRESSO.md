@@ -26,20 +26,22 @@ Analisador de currículos com IA, projeto 4 de 4 do portfólio. O plano completo
 | 4 API (auth, fila, SSE, recrutador, LGPD, demo) | feita | `b38d6b9` |
 | 5 Direção de design | feita: nome Confere, mundo de cartório | `0dec746` |
 | 6 Front | feita: landing + 6 telas na API real, Playwright do fluxo | `9aed011` |
-| 7 Polimento | feita: axe sem violações, break-ui corrigido | (este commit) |
-| **8 Portfólio (README)** | **próxima** | — |
+| 7 Polimento | feita: axe sem violações, break-ui corrigido | `9bef471` |
+| 8 Portfólio (README) | feita: README pt-BR e en, capturas, validação independente | (este commit) |
 
-Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-65 em `docs/decisoes.md`.
+Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-66 em `docs/decisoes.md`.
 
-## Próximo passo: fase 8 — portfólio
+## Próximo passo
 
-- README do repositório para quem chega pelo GitHub: o que o Confere faz, capturas (landing, resultado,
-  comparação, recrutador), como rodar (o bloco "Como verificar" abaixo), arquitetura em um diagrama,
-  as decisões que mais dizem sobre o projeto (nota calculada em código, trecho obrigatório,
-  anonimização antes da leitura, modo demonstração sem IA e o porquê, D-46) e o que não foi medido.
-- Capturas: Playwright com a sessão salva (`e2e/.sessao/demo.json`), como em D-63.
-- A validação independente do fim do projeto (modo econômico) entra nesta fase.
-- Depois, com autorização: o README de perfil em `C:\Users\eduar\perfil-github`.
+O projeto está completo nas 8 fases. O que sobra depende do usuário:
+
+- Atualizar o README de perfil em `C:\Users\eduar\perfil-github` (pedir autorização).
+- Publicar no GitHub (push; aí o CI roda pela primeira vez).
+- Com chave da Anthropic: `make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=1.00` e, depois, os 30
+  casos; preencher os ADRs 0001–0005 com números medidos.
+- Capturas do README: `make seed` e, com a API, o worker e o web de pé,
+  `CAPTURAS=1 corepack pnpm test:e2e --project=desktop capturas` em `apps/web`. O worker precisa ser
+  reiniciado depois de mudar o código da análise (o arq não recarrega).
 
 ## Como verificar
 
@@ -52,7 +54,7 @@ make eval PROVEDOR=regras
 make seed
 ```
 
-`make check` = ruff, mypy estrito, ESLint, tsc e testes rápidos (834). `corepack pnpm test:e2e` roda o
+`make check` = ruff, mypy estrito, ESLint, tsc e testes rápidos (835). `corepack pnpm test:e2e` roda o
 Playwright (axe em todas as telas nos dois temas, landing, fluxo principal e recrutador, no desktop e no celular) com a API, o worker e o
 seed de pé; ele entra uma vez na conta demo, porque a API limita 5 logins a cada 15 min por e-mail. `make test-integracao` precisa
 do Compose de pé (36 testes). Na última execução, todos passaram.
@@ -78,7 +80,7 @@ do Compose de pé (36 testes). Na última execução, todos passaram.
 - Limiares aceitos (D-65): fonte mínima de 4,5 pt no detector de texto oculto, lista curta de termos
   protegidos (ampliar vaza nomes), negação por oração, filtro de reescritas que descarta algumas legítimas.
 - break-ui: seletor de dados só em dev (`?dados=pior|um|cheio`, D-64). A análise "só desejáveis"
-  (`a2f42afb…`) foi criada à mão na conta demo deste banco; o seed não a recria.
+  (`a2f42afb…`) foi criada à mão na conta demo e saiu no `make seed` da fase 8; o seed não a recria.
 - `CHAVE_CSRF` precisa ser definida se houver mais de um processo da API.
 - A página de decisão do impeccable (`serve-question --start`) trava neste terminal; usar as perguntas da sessão.
-- Depois da fase 8, com autorização: atualizar o README de perfil em `C:\Users\eduar\perfil-github`.
+- README de perfil em `C:\Users\eduar\perfil-github` ainda não atualizado (pedir autorização).

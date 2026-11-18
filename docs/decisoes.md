@@ -515,3 +515,15 @@ gente demais; a cidade já fica quando vem colada a outra palavra capitalizada o
 segue só com homônimos raros como nome de pessoa. As outras pendências da fase 3 (fonte mínima de
 4,5 pt, negação por oração, filtro de reescritas) são limiares documentados (ADR 0003, D-43, D-44) e
 não mudam sem evals reais (D-46).
+
+## D-66 — README, capturas e validação final (2026-11-18)
+O README tem duas versões (`README.md` em pt-BR, `README.en.md` em inglês) e diz o que não foi
+medido (D-46) no mesmo nível do que foi. As capturas saem de `apps/web/e2e/capturas.spec.ts`
+(`CAPTURAS=1`, só no desktop, com movimento reduzido), que esconde o indicador do Next e o seletor de
+dados de dev (D-64). A captura do resultado é de uma análise por regras, o padrão de quem roda o
+repositório; as do provedor falso trazem reescritas, que o modo regras não faz. A validação
+independente do fim do projeto reprovou uma frase ("um prompt não muda a nota"), que prometia sobre o
+modelo o que não foi medido; virou "a IA só influencia a nota pelo que extrai, com citação
+conferida". Ela também achou dois erros de texto do provedor por regras, corrigidos com teste: a
+concordância "1 tem / 2 têm" e o parcial pela mesma competência, que dizia "Inglês, que é próxima de
+Inglês".
