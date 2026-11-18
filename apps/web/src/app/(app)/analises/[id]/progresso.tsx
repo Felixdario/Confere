@@ -84,7 +84,7 @@ export function Progresso({ analise, aoTerminar }: { analise: AnaliseDetalhe; ao
               ? "Na fila"
               : (ETAPAS[indiceAtual]?.nome ?? "Em andamento")}
         </p>
-        <p className="progresso__tempo numeros" aria-label={`Tempo decorrido: ${segundos} segundos`}>
+        <p className="progresso__tempo numeros" role="timer" aria-label={`Tempo decorrido: ${segundos} segundos`}>
           {mm}:{ss}
         </p>
       </div>
@@ -102,7 +102,11 @@ export function Progresso({ analise, aoTerminar }: { analise: AnaliseDetalhe; ao
           const feita = terminou || i < indiceAtual;
           const agora = !terminou && i === indiceAtual;
           return (
-            <li key={e.id} className={clsx("eixo__etapa", feita && "eixo__etapa--feita", agora && "eixo__etapa--agora")}>
+            <li
+              key={e.id}
+              className={clsx("eixo__etapa", feita && "eixo__etapa--feita", agora && "eixo__etapa--agora")}
+              aria-current={agora ? "step" : undefined}
+            >
               <span className="eixo__ponto" aria-hidden="true" />
               <div className="eixo__texto">
                 <p className="eixo__nome">{e.nome}</p>

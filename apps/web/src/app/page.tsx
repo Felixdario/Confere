@@ -52,7 +52,7 @@ export default function Landing() {
             ))}
           </div>
           <div className="hero__miolo">
-            <p className="marca" aria-label="Confere">
+            <p className="marca">
               <CarimboTexto estado="neutro">Confere</CarimboTexto>
             </p>
             <h1 className="hero__titulo">
@@ -184,7 +184,7 @@ export default function Landing() {
                 <div className="painel__corpo">
                   <p>{e.texto}</p>
                   {e.id === "nota" && (
-                    <p className="conta numeros" aria-label="A conta do exemplo">
+                    <p className="conta numeros">
                       {contaExemplo.map((c) => (
                         <span key={c}>{c}</span>
                       ))}
@@ -270,7 +270,7 @@ export default function Landing() {
 
       {/* footer: a marca construída */}
       <footer className="rodape">
-        <p className="rodape__marca" aria-label="Confere">
+        <p className="rodape__marca" role="img" aria-label="Confere">
           {"CONFERE".split("").map((c, i) => (
             <span key={i} style={{ "--altura": `${[100, 86, 94, 78, 100, 88, 96][i]}%` } as React.CSSProperties}>
               {c}

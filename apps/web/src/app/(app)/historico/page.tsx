@@ -99,7 +99,7 @@ export default function Historico() {
                       <h2 className="pilha__vaga">
                         <Link href={`/analises/${topo.id}`}>{g.vaga.titulo}</Link>
                       </h2>
-                      <p className="pilha__nota numeros" aria-label={topo.nota !== null ? `Nota ${topo.nota}` : ESTADO[topo.status]}>
+                      <p className="pilha__nota numeros" role="img" aria-label={topo.nota !== null ? `Nota ${topo.nota}` : ESTADO[topo.status]}>
                         {topo.nota ?? "—"}
                       </p>
                     </div>

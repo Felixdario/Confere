@@ -120,7 +120,7 @@ function Detalhe({ processoId, candidatoId, aoMudar }: { processoId: string; can
     <div className="candidato">
       <div className="candidato__cabeca">
         <h2 className="titulo-tela">{c.rotulo}</h2>
-        <p className="candidato__nota numeros" aria-label={c.nota !== null ? `Nota ${c.nota}` : "Sem nota"}>
+        <p className="candidato__nota numeros" role="img" aria-label={c.nota !== null ? `Nota ${c.nota}` : "Sem nota"}>
           {c.nota ?? "—"}
         </p>
       </div>
@@ -141,31 +141,33 @@ function Detalhe({ processoId, candidatoId, aoMudar }: { processoId: string; can
         <h3 id="cand-req" className="bloco__titulo">
           Requisitos
         </h3>
-        <table className="tabela requisitos">
-          <thead>
-            <tr>
-              <th scope="col">Requisito</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Trecho</th>
-            </tr>
-          </thead>
-          <tbody>
-            {c.tabela.map((r) => (
-              <tr key={`${r.tipo}-${r.descricao}`} data-estado={r.status}>
-                <td className="requisitos__nome">
-                  <span>{r.descricao}</span>
-                  <span className="requisitos__tipo">{ROTULO_DO_TIPO[r.tipo]}</span>
-                </td>
-                <td>
-                  <Carimbo estado={r.status} valor={r.valor} />
-                </td>
-                <td className="requisitos__trecho">
-                  {r.evidencia ? <q className="trecho">{r.evidencia}</q> : <span className="requisitos__falta">Nenhum trecho.</span>}
-                </td>
+        <div className="rolagem-x" role="region" aria-label="Requisitos do candidato" tabIndex={0}>
+          <table className="tabela requisitos">
+            <thead>
+              <tr>
+                <th scope="col">Requisito</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Trecho</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {c.tabela.map((r) => (
+                <tr key={`${r.tipo}-${r.descricao}`} data-estado={r.status}>
+                  <td className="requisitos__nome">
+                    <span>{r.descricao}</span>
+                    <span className="requisitos__tipo">{ROTULO_DO_TIPO[r.tipo]}</span>
+                  </td>
+                  <td>
+                    <Carimbo estado={r.status} valor={r.valor} />
+                  </td>
+                  <td className="requisitos__trecho">
+                    {r.evidencia ? <q className="trecho">{r.evidencia}</q> : <span className="requisitos__falta">Nenhum trecho.</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section className="bloco-curto" aria-labelledby="cand-decisao">
@@ -274,6 +276,14 @@ export default function Triagem({ params }: { params: Promise<{ id: string }> })
     const o = obrigatorios(c);
     return o.total > 0 && o.atende === o.total;
   }).length;
+  const n = p.ranking.length;
+  const semObrigatorios = prontos.length > 0 && prontos.every((c) => obrigatorios(c).total === 0);
+  const resumo =
+    n === 0
+      ? "Nenhum currículo ainda."
+      : semObrigatorios
+        ? `${n} ${n === 1 ? "currículo" : "currículos"}; a vaga não lista obrigatórios, a ordem vem dos desejáveis e da senioridade.`
+        : `${todos} de ${n} ${n === 1 ? "atende" : "atendem"} todos os obrigatórios.`;
   const escolhido = selecionado ?? prontos[0]?.id ?? null;
 
   return (
@@ -282,11 +292,7 @@ export default function Triagem({ params }: { params: Promise<{ id: string }> })
       <div className="cabeca-tela">
         <div>
           <h1 className="titulo-tela">{p.titulo}</h1>
-          <p className="subtitulo-tela numeros">
-            {p.ranking.length === 0
-              ? "Nenhum currículo ainda."
-              : `${todos} de ${p.ranking.length} atendem todos os obrigatórios.`}
-          </p>
+          <p className="subtitulo-tela numeros">{resumo}</p>
         </div>
         <EnviarCurriculos processo={p} aoEnviar={() => void q.refetch()} />
       </div>
@@ -298,9 +304,9 @@ export default function Triagem({ params }: { params: Promise<{ id: string }> })
         </div>
       ) : (
         <div className="triagem">
-          <div className="rolagem-x">
+          <div className="rolagem-x" role="region" aria-label="Ranking dos candidatos" tabIndex={0}>
             <table className="tabela ranking">
-              <caption className="so-leitor">Candidatos, do maior para o menor nota</caption>
+              <caption className="so-leitor">Candidatos, da maior para a menor nota</caption>
               <thead>
                 <tr>
                   <th scope="col">Candidato</th>

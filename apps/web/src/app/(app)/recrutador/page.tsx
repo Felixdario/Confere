@@ -68,35 +68,37 @@ export default function Recrutador() {
           {q.data.length === 0 ? (
             <p className="vazio">Nenhuma triagem ainda. Crie a primeira ao lado com a descrição da vaga.</p>
           ) : (
-            <table className="tabela">
-              <thead>
-                <tr>
-                  <th scope="col">Triagem</th>
-                  <th scope="col" className="direita">
-                    Currículos
-                  </th>
-                  <th scope="col" className="direita">
-                    Criada em
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {q.data.map((p) => (
-                  <tr key={p.id}>
-                    <td>
-                      <Link href={`/recrutador/${p.id}`} className="recrutador__link">
-                        {p.titulo}
-                      </Link>
-                      <span className="requisitos__tipo">{p.vaga.titulo}</span>
-                    </td>
-                    <td className="numeros">
-                      {p.candidatos} de {p.limite_candidatos}
-                    </td>
-                    <td className="numeros">{data(p.criado_em)}</td>
+            <div className="rolagem-x" role="region" aria-label="Triagens" tabIndex={0}>
+              <table className="tabela">
+                <thead>
+                  <tr>
+                    <th scope="col">Triagem</th>
+                    <th scope="col" className="direita">
+                      Currículos
+                    </th>
+                    <th scope="col" className="direita">
+                      Criada em
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {q.data.map((p) => (
+                    <tr key={p.id}>
+                      <td>
+                        <Link href={`/recrutador/${p.id}`} className="recrutador__link">
+                          {p.titulo}
+                        </Link>
+                        <span className="requisitos__tipo">{p.vaga.titulo}</span>
+                      </td>
+                      <td className="numeros">
+                        {p.candidatos} de {p.limite_candidatos}
+                      </td>
+                      <td className="numeros">{data(p.criado_em)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </section>
 

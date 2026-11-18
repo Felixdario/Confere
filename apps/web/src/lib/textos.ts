@@ -92,9 +92,16 @@ export function fraseDoAviso(tipo: string, motivo?: string | null): { titulo: st
         feito: "Cole a descrição completa, com a lista de requisitos.",
       };
     case "calculo":
+      // O mesmo tipo cobre o modelo de embeddings ausente e os pesos redistribuídos (nota.py).
+      if (!motivo || motivo.includes("embeddings")) {
+        return {
+          titulo: "Sem o modelo de similaridade",
+          feito: "A correspondência usou só a taxonomia; termos fora dela ficaram sem similaridade.",
+        };
+      }
       return {
-        titulo: "Sem o modelo de similaridade",
-        feito: "A correspondência usou só a taxonomia; termos fora dela ficaram sem similaridade.",
+        titulo: "A conta foi ajustada a esta vaga",
+        feito: `${motivo.charAt(0).toUpperCase()}${motivo.slice(1)}.`,
       };
     case "sem_texto":
       return { titulo: "Não encontramos texto no arquivo", feito: "Envie outro arquivo ou cole o texto." };

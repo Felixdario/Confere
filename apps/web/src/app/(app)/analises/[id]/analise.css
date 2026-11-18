@@ -321,6 +321,8 @@
 
 .removidos__mascara {
   color: var(--suave);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .resumo {
@@ -337,7 +339,7 @@
   }
   .duas-colunas,
   .reescrita {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .eixo__etapa {
     grid-template-columns: 16px minmax(0, 1fr) auto;
@@ -376,4 +378,16 @@
   .requisitos__nome {
     min-width: 0;
   }
+}
+
+/* Termos reais como "Integration/Continuous" não têm onde quebrar: sem isto, a coluna estoura. */
+.palavras li,
+.palavras li span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* "observabilidade" numa coluna de 100 px: hifeniza em português antes de estourar. */
+.requisitos__nome span {
+  hyphens: auto;
 }

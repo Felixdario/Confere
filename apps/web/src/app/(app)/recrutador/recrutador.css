@@ -33,7 +33,8 @@
 .envio-lote {
   display: grid;
   gap: 6px;
-  justify-items: end;
+  /* No começo: quando o título longo empurra o envio para a linha de baixo, ele não flutua no meio. */
+  justify-items: start;
 }
 
 .envio-lote input:focus-visible + .botao {
@@ -146,7 +147,8 @@
 
 .decisoes li {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  overflow-wrap: anywhere;
   gap: 12px;
 }
 

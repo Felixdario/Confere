@@ -171,6 +171,8 @@
 }
 
 .trecho {
+  /* Trechos reais trazem URLs e texto oculto sem espaços. */
+  overflow-wrap: anywhere;
   font-style: italic;
   font-size: 1rem;
   line-height: 1.45;

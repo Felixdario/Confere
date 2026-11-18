@@ -25,25 +25,21 @@ Analisador de currículos com IA, projeto 4 de 4 do portfólio. O plano completo
 | 3 Pipeline de IA | feita com o provedor falso; evals reais não rodadas (D-46) | `1515969` |
 | 4 API (auth, fila, SSE, recrutador, LGPD, demo) | feita | `b38d6b9` |
 | 5 Direção de design | feita: nome Confere, mundo de cartório | `0dec746` |
-| 6 Front | feita: landing + 6 telas na API real, Playwright do fluxo | (este commit) |
-| **7 Polimento** | **próxima** | — |
-| 8 Portfólio (README) | pendente | — |
+| 6 Front | feita: landing + 6 telas na API real, Playwright do fluxo | `9aed011` |
+| 7 Polimento | feita: axe sem violações, break-ui corrigido | (este commit) |
+| **8 Portfólio (README)** | **próxima** | — |
 
-Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-62 em `docs/decisoes.md`.
+Decisões: ADRs 0001–0007 em `docs/adr/` e D-01 a D-65 em `docs/decisoes.md`.
 
-## Próximo passo: fase 7 — polimento
+## Próximo passo: fase 8 — portfólio
 
-- O que existe: landing (`apps/web/src/app/page.tsx`, "Confira você mesmo" sobre o b01), `/entrar`
-  (com "Entrar na demonstração"), `/nova`, `/analises/[id]` (progresso por SSE e resultado),
-  `/historico`, `/curriculos/[id]` (comparação), `/recrutador` e `/recrutador/[id]`, `/privacidade`.
-  O front fala com a API por `/api/*` (rewrite do Next, D-59).
-- Checar com axe (WCAG 2.2 AA) todas as telas; leitores de tela no progresso (região viva) e nos
-  carimbos (`role="img"` com rótulo).
-- `inspect.mjs --app` não entra com sessão: as telas do app foram revisadas por capturas do Playwright.
-  Avaliar um jeito de passar o cookie ao inspetor.
-- Pendências herdadas da fase 3 (listadas abaixo) e o `break-ui` nas telas (nomes longos, vaga sem
-  requisitos, 20 candidatos).
-- Aceite: axe sem violações, `make check` e `corepack pnpm test:e2e` verdes.
+- README do repositório para quem chega pelo GitHub: o que o Confere faz, capturas (landing, resultado,
+  comparação, recrutador), como rodar (o bloco "Como verificar" abaixo), arquitetura em um diagrama,
+  as decisões que mais dizem sobre o projeto (nota calculada em código, trecho obrigatório,
+  anonimização antes da leitura, modo demonstração sem IA e o porquê, D-46) e o que não foi medido.
+- Capturas: Playwright com a sessão salva (`e2e/.sessao/demo.json`), como em D-63.
+- A validação independente do fim do projeto (modo econômico) entra nesta fase.
+- Depois, com autorização: o README de perfil em `C:\Users\eduar\perfil-github`.
 
 ## Como verificar
 
@@ -57,7 +53,7 @@ make seed
 ```
 
 `make check` = ruff, mypy estrito, ESLint, tsc e testes rápidos (834). `corepack pnpm test:e2e` roda o
-Playwright (landing, fluxo principal e recrutador, no desktop e no celular) com a API, o worker e o
+Playwright (axe em todas as telas nos dois temas, landing, fluxo principal e recrutador, no desktop e no celular) com a API, o worker e o
 seed de pé; ele entra uma vez na conta demo, porque a API limita 5 logins a cada 15 min por e-mail. `make test-integracao` precisa
 do Compose de pé (36 testes). Na última execução, todos passaram.
 
@@ -79,8 +75,10 @@ do Compose de pé (36 testes). Na última execução, todos passaram.
 - Modelo de embeddings (~220 MB) baixado em `data/modelos` nesta máquina (fora do git); em outra, rode
   `make modelos`. Sem ele, o demo usa só a taxonomia e avisa na análise.
 - Não medidos (D-46): extração pelo modelo, custo, latência, cache e calibração de τ.
-- Para a fase 7: fontes muito finas perto do limiar do detector de texto oculto; lista de lugares e
-  empresas protegidos curta; negação detectada por oração; filtro de reescritas descarta algumas legítimas.
+- Limiares aceitos (D-65): fonte mínima de 4,5 pt no detector de texto oculto, lista curta de termos
+  protegidos (ampliar vaza nomes), negação por oração, filtro de reescritas que descarta algumas legítimas.
+- break-ui: seletor de dados só em dev (`?dados=pior|um|cheio`, D-64). A análise "só desejáveis"
+  (`a2f42afb…`) foi criada à mão na conta demo deste banco; o seed não a recria.
 - `CHAVE_CSRF` precisa ser definida se houver mais de um processo da API.
 - A página de decisão do impeccable (`serve-question --start`) trava neste terminal; usar as perguntas da sessão.
 - Depois da fase 8, com autorização: atualizar o README de perfil em `C:\Users\eduar\perfil-github`.

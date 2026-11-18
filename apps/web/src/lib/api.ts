@@ -90,7 +90,13 @@ export async function api<T>(caminho: string, opcoes: { metodo?: string; corpo?:
   if (!r.ok) throw await erroDe(r);
   if (r.status === 204) return undefined as T;
   const tipo = r.headers.get("content-type") ?? "";
-  return (tipo.includes("json") ? await r.json() : await r.text()) as T;
+  const dados: unknown = tipo.includes("json") ? await r.json() : await r.text();
+  // Só em desenvolvimento: o seletor "Demo / Pior caso" troca os dados aqui (src/dev/pior-caso.ts).
+  if (process.env.NODE_ENV === "development" && metodo === "GET") {
+    const { modoAtual, transformar } = await import("@/dev/pior-caso");
+    return transformar(caminho, dados, modoAtual()) as T;
+  }
+  return dados as T;
 }
 
 /** Depois do login ou do logout, o token antigo deixa de valer. */

@@ -70,7 +70,7 @@ function Comparar({ id }: { id: string }) {
           </select>
           <p className="versus__nota numeros">{c.de.nota}</p>
         </div>
-        <p className="versus__seta numeros" aria-label={`Diferença de ${c.diferenca} pontos`}>
+        <p className="versus__seta numeros" role="img" aria-label={`Diferença de ${c.diferenca} pontos`}>
           {c.diferenca > 0 ? `+${c.diferenca}` : c.diferenca < 0 ? `−${Math.abs(c.diferenca)}` : "0"}
         </p>
         <div className="versus__lado">
@@ -95,7 +95,7 @@ function Comparar({ id }: { id: string }) {
         {c.mudancas.length === 0 ? (
           <p>Nenhum requisito mudou de estado entre as duas versões.</p>
         ) : (
-          <div className="rolagem-x">
+          <div className="rolagem-x" role="region" aria-label="Mudanças por requisito" tabIndex={0}>
             <table className="tabela mudancas">
               <thead>
                 <tr>

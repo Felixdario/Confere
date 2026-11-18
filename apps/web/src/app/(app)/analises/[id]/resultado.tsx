@@ -20,10 +20,45 @@ export function achadoDosObrigatorios(requisitos: LinhaRequisito[]): string {
   const obrig = requisitos.filter((r) => r.tipo === "obrigatorio");
   if (obrig.length === 0) return "A vaga não lista requisitos obrigatórios; a nota vem dos desejáveis e da senioridade.";
   const faltam = obrig.filter((r) => r.status !== "atende");
-  if (faltam.length === 0) return `Atende todos os ${obrig.length} obrigatórios, cada um com o trecho que comprova.`;
+  if (faltam.length === 0) {
+    return obrig.length === 1
+      ? "Atende o único obrigatório, com o trecho que comprova."
+      : `Atende todos os ${obrig.length} obrigatórios, cada um com o trecho que comprova.`;
+  }
   const nomes = faltam.map((r) => (r.status === "parcial" ? `${r.competencia_pedida} (em parte)` : r.competencia_pedida));
   const lista = nomes.length > 1 ? `${nomes.slice(0, -1).join(", ")} e ${nomes.at(-1)}` : nomes[0];
-  return `Faltam ${faltam.length} de ${obrig.length} obrigatórios: ${lista}.`;
+  const verbo = faltam.length === 1 ? "Falta" : "Faltam";
+  return `${verbo} ${faltam.length} de ${obrig.length} ${obrig.length === 1 ? "obrigatório" : "obrigatórios"}: ${lista}.`;
+}
+
+const NOME_DA_PARCELA: Record<string, string> = {
+  obrigatorios: "obrigatórios",
+  desejaveis: "desejáveis",
+  senioridade: "senioridade",
+};
+
+/**
+ * "Obrigatórios pesam 70 %, desejáveis 20 % e senioridade 10 %". A nota divide pelos pesos
+ * presentes (nota.py), então uma vaga sem obrigatórios mostra os pesos redistribuídos.
+ */
+export function frasePesos(parcelas: { componente: string; peso: string }[]): string {
+  const fracao = (p: string) => {
+    const [n, d] = p.split("/").map(Number);
+    return (n ?? 0) / (d ?? 1);
+  };
+  const soma = parcelas.reduce((t, p) => t + fracao(p.peso), 0);
+  const unica = parcelas[0];
+  if (soma === 0 || !unica) return "";
+  if (parcelas.length === 1) {
+    const nome = NOME_DA_PARCELA[unica.componente] ?? unica.componente;
+    return `A nota vem só ${unica.componente === "senioridade" ? "da" : "dos"} ${nome}`;
+  }
+  const fmt = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
+  const partes = parcelas.map(
+    (p) => `${NOME_DA_PARCELA[p.componente] ?? p.componente} ${fmt.format((100 * fracao(p.peso)) / soma)} %`,
+  );
+  const lista = `${partes.slice(0, -1).join(", ")} e ${partes.at(-1)}`;
+  return `${lista.charAt(0).toUpperCase()}${lista.slice(1)}`.replace(/^(\S+)/, "$1 pesam");
 }
 
 function Nota({ nota }: { nota: number }) {
@@ -34,7 +69,8 @@ function Nota({ nota }: { nota: number }) {
     return () => window.clearTimeout(t);
   }, [nota]);
   return (
-    <p className="nota" aria-label={`Nota ${nota} de 100`}>
+    // `role="img"`: o rótulo vale para o bloco inteiro (num `<p>`, o aria-label é proibido).
+    <p className="nota" role="img" aria-label={`Nota ${nota} de 100`}>
       <NumberFlow value={valor} className="nota__numero" aria-hidden="true" willChange />
       <span className="nota__de" aria-hidden="true">
         de 100
@@ -49,7 +85,7 @@ function Requisitos({ requisitos }: { requisitos: LinhaRequisito[] }) {
     (a, b) => (a.tipo === b.tipo ? ordem[a.status] - ordem[b.status] : a.tipo === "obrigatorio" ? -1 : 1),
   );
   return (
-    <div className="rolagem-x">
+    <div className="rolagem-x" role="region" aria-label="Requisitos da vaga" tabIndex={0}>
       <table className="tabela requisitos">
         <caption className="so-leitor">Requisitos da vaga, o estado de cada um e o trecho que comprova</caption>
         <thead>
@@ -134,7 +170,7 @@ export function Resultado({ a }: { a: AnaliseDetalhe }) {
             </ul>
           )}
           <p className="nota-rodape">
-            Obrigatórios pesam 70 %, desejáveis 20 % e senioridade 10 %
+            {d ? frasePesos(d.parcelas) : "Obrigatórios pesam 70 %, desejáveis 20 % e senioridade 10 %"}
             {d?.anos_minimos ? `; a vaga pede ${d.anos_minimos} anos` : ""}. Versão {a.curriculo.versao} ({ORIGEM[a.curriculo.origem]}),
             concluída em {a.concluido_em ? dataHora(a.concluido_em) : "—"}.
           </p>

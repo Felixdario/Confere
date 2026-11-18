@@ -484,3 +484,34 @@ O `inspect.mjs` da landing, na build de produção, termina com 0 FAIL e três a
 amarelo), `off-centre` a 1440 px (a diferença de 17 px é a barra de rolagem do navegador do
 inspetor) e `blank-gap` no rodapé (é o campo azul-noite com a marca em blocos, um descanso
 deliberado).
+
+## D-63 — Acessibilidade: axe no e2e, com a sessão (2026-11-18)
+`e2e/acessibilidade.spec.ts` roda o axe (WCAG 2.2 AA) em todas as telas, nos temas claro e escuro, no
+desktop e no celular, com a sessão salva pelo projeto `entrar` (o que resolve o inspetor sem cookie).
+Roda com `reducedMotion: "reduce"`: com a animação de entrada, o axe lê texto ainda em fade e acusa
+contraste falso. O progresso é testado com a API e o SSE simulados por `page.route` (o seed só tem
+análises concluídas). Correções: `aria-label` em `<p>` virou `role="img"` (notas, diferença, marca do
+rodapé) ou `role="timer"` (relógio); o carimbo "antes" da comparação é vazado em vez de esmaecido
+(2,82:1); as tabelas roláveis são regiões focáveis com nome; a etapa atual tem `aria-current="step"`.
+
+## D-64 — break-ui: seletor de dados só em desenvolvimento (2026-11-18)
+`src/dev/pior-caso.ts` troca as respostas reais da API dentro de `api()` (a mesma fronteira das telas)
+por casos extremos plausíveis: título de vaga e de triagem perto do limite de 200, competências e
+trechos longos, URL sem espaço, texto oculto colado, contagens de 1 e a triagem com os 20
+candidatos do limite. O seletor "Demo / Pior caso / Um / 20 candidatos" (ou `?dados=`) só existe com
+`NODE_ENV=development`; o import é dinâmico e cortado do build. Vaga sem requisitos nenhum já é
+recusada pela API (422); o caso real é a vaga só com desejáveis. Corrigidos: aviso `calculo` de pesos
+redistribuídos aparecia como "Sem o modelo de similaridade"; o rodapé da conta mostra os pesos
+efetivos; singular em "Falta 1 de 1 obrigatório" e "0 de 1 atende"; triagem sem obrigatórios ganha
+frase própria; transbordamentos a 320 px (histórico, tabela do candidato e da lista de triagens,
+trechos e justificativas sem espaço, palavras-chave como "Integration/Continuous"). Nenhuma tela rola
+na horizontal em 1280, 640 (zoom de 200 %) e 320 px, em nenhum modo.
+
+## D-65 — A lista de termos protegidos continua curta (2026-11-18)
+Testei ampliar `termos_protegidos.yaml` com homônimos comuns (Santos, Lima, Campos, Porto, Mariana,
+Marisa, Odebrecht…). Dois testes de invariância falham, com razão: quem se chama Lima ou Mariana teria
+o nome visível no corpo, e o texto anonimizado mudaria com a identidade. Sobrenome comum protegido vaza
+gente demais; a cidade já fica quando vem colada a outra palavra capitalizada ou com UF. A lista
+segue só com homônimos raros como nome de pessoa. As outras pendências da fase 3 (fonte mínima de
+4,5 pt, negação por oração, filtro de reescritas) são limiares documentados (ADR 0003, D-43, D-44) e
+não mudam sem evals reais (D-46).
