@@ -3,9 +3,34 @@
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from pydantic import Field, SecretStr
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_SSL_EXIGIDO = {"require", "verify-ca", "verify-full"}
+
+
+def normalizar_url_banco(url: str) -> str:
+    """Aceita a URL como os provedores a entregam (Neon, Render: `postgresql://...?sslmode=require`).
+
+    O driver é o asyncpg, que não conhece `sslmode` nem `channel_binding` vindos do SQLAlchemy:
+    o esquema vira `postgresql+asyncpg` e o SSL exigido vira `ssl=require`, que ele entende.
+    """
+    partes = urlsplit(url)
+    esquema = partes.scheme
+    if esquema in {"postgres", "postgresql"}:
+        esquema = "postgresql+asyncpg"
+    consulta = []
+    ssl = None
+    for chave, valor in parse_qsl(partes.query, keep_blank_values=True):
+        if chave == "sslmode":
+            ssl = "require" if valor in _SSL_EXIGIDO else ssl
+        elif chave != "channel_binding":
+            consulta.append((chave, valor))
+    if ssl and not any(chave == "ssl" for chave, _ in consulta):
+        consulta.append(("ssl", ssl))
+    return urlunsplit((esquema, partes.netloc, partes.path, urlencode(consulta), partes.fragment))
 
 
 class Settings(BaseSettings):
@@ -19,6 +44,12 @@ class Settings(BaseSettings):
         default="dev", description="Fora de dev/teste o cookie de sessão sai com `Secure`."
     )
     database_url: str = "postgresql+asyncpg://curriculo:curriculo@localhost:5434/curriculo"
+
+    @field_validator("database_url")
+    @classmethod
+    def _url_para_asyncpg(cls, valor: str) -> str:
+        return normalizar_url_banco(valor)
+
     redis_url: str = "redis://localhost:6381/0"
     redis_prefixo: str = Field(
         default="curriculo",
