@@ -73,6 +73,15 @@ LIMIAR_COR = 0.25
 entre texto e fundo, com RGB em 0–1 (o máximo é √3 ≈ 1,73)."""
 BRANCO = (1.0, 1.0, 1.0)
 MODOS_INVISIVEIS = frozenset({3, 7})
+TEXTO_MINIMO_POR_PAGINA = 200
+"""Menos caracteres visíveis que isso numa página com muito conteúdo visual: o texto da página
+está quase todo em imagem ou desenhado como vetor (currículo exportado do Canva e de editores de
+design). Uma página de currículo de verdade tem de 1.500 a 4.000 caracteres."""
+AREA_DE_IMAGEM_COM_TEXTO = 0.3
+"""Fração da área visível coberta por imagens que, com pouco texto, indica texto em imagem."""
+VETORES_COM_TEXTO = 300
+"""Curvas e linhas que, com pouco texto, indicam texto desenhado como vetor (cada letra vira um
+contorno); um currículo com texto real e algumas linhas de layout fica bem abaixo disso."""
 
 Objeto = dict[str, Any]
 Rgb = tuple[float, float, float]
@@ -190,6 +199,21 @@ def compressao(obj: Objeto) -> float:
 
 
 AREA_ESCANEADA = 0.8
+
+
+def conteudo_visual_de_texto(pagina: Any) -> bool:
+    """A página tem o conteúdo visual de um texto que não é texto: imagens cobrindo boa parte dela
+    ou contornos vetoriais em quantidade de letras. Só vale junto com pouco texto selecionável."""
+    x0, top, x1, bottom = _area_visivel(pagina)
+    area = max(1.0, (x1 - x0) * (bottom - top))
+    coberta = sum(
+        max(0.0, min(x1, i["x1"]) - max(x0, i["x0"]))
+        * max(0.0, min(bottom, i["bottom"]) - max(top, i["top"]))
+        for i in pagina.images
+    )
+    if coberta / area >= AREA_DE_IMAGEM_COM_TEXTO:
+        return True
+    return len(pagina.curves) + len(pagina.lines) >= VETORES_COM_TEXTO
 
 
 def pagina_escaneada(pagina: Any) -> bool:
@@ -574,7 +598,9 @@ def _ler_paginas(pdf: Any, limites: Limites, renderizador: Renderizador | None) 
             for i in pagina.images
         ]
         visiveis = [c for c in chars if motivo_de(c) is None and c.get("text", "").strip()]
-        if not visiveis and pagina.images:
+        if (not visiveis and pagina.images) or (
+            len(visiveis) < TEXTO_MINIMO_POR_PAGINA and conteudo_visual_de_texto(pagina)
+        ):
             sem_texto.append(numero)
         pagina.flush_cache()
         if time.perf_counter() - inicio > limites.tempo_max_por_pagina_s:

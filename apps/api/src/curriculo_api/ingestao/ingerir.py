@@ -115,6 +115,18 @@ def _alertas(
 
 
 def _exigir_texto(documento: DocumentoLido) -> None:
+    if (
+        documento.texto.strip()
+        and documento.paginas
+        and len(documento.paginas_sem_texto) == documento.paginas
+    ):
+        # Algum texto (contatos, um título), mas toda página tem o resto em imagem ou desenho:
+        # analisar isso daria nota perto de zero por falta de leitura, não por falta de requisito.
+        raise SemTexto(
+            "Quase nada deste PDF pôde ser lido: o texto parece estar como imagem ou desenho, "
+            "como acontece em currículos exportados do Canva e de editores de design. Exporte com "
+            "texto selecionável, envie em DOCX ou cole o texto do currículo."
+        )
     if documento.texto.strip():
         return
     if documento.paginas_sem_texto:

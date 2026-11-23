@@ -58,7 +58,11 @@ class DocumentoLido(_Modelo):
     imagens: tuple[ImagemEncontrada, ...] = ()
     paginas: int | None = Field(default=None, ge=0)
     paginas_sem_texto: tuple[int, ...] = Field(
-        default=(), description="Páginas do PDF só com imagem (escaneadas)."
+        default=(),
+        description=(
+            "Páginas do PDF cujo texto não é selecionável: só imagem (escaneadas) ou pouco texto"
+            " com o resto em imagem ou desenhado como vetor (exportação do Canva e afins)."
+        ),
     )
     comentarios_nao_lidos: int = Field(
         default=0, ge=0, description="Comentários do DOCX com texto (não são lidos)."

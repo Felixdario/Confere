@@ -100,6 +100,7 @@ def pdf_de_linhas(
     caixa_de_corte: tuple[float, float, float, float] | None = None,
     imagens: Sequence[tuple[int, float, float, float, float]] = (),
     retangulos: Sequence[tuple[int, float, float, float, float, tuple[float, float, float]]] = (),
+    vetores: Sequence[tuple[int, int]] = (),
     criptografar: str | None = None,
 ) -> bytes:
     """Desenha páginas de linhas com reportlab, de forma determinística (`invariant`).
@@ -107,7 +108,9 @@ def pdf_de_linhas(
     Linha larga demais tem a fonte reduzida até caber (mínimo 6 pt), para que nenhuma linha do
     Markdown seja quebrada (a ancoragem literal da fase 1 não junta linhas). `imagens` são
     retângulos cinza desenhados como imagem: (página, x, y, largura, altura); `retangulos` são
-    retângulos preenchidos desenhados antes do texto: (página, x, y, largura, altura, cor RGB).
+    retângulos preenchidos desenhados antes do texto: (página, x, y, largura, altura, cor RGB);
+    `vetores` são (página, quantidade) curvas pequenas em grade, como o texto que um editor de
+    design exporta em contornos (cada letra vira um desenho, nenhuma vira texto).
     A primeira linha de 10 pt fica com a linha de base em y ≈ 782 (A4).
     """
     from reportlab.lib.utils import ImageReader
@@ -134,6 +137,13 @@ def pdf_de_linhas(
             if pagina_ret == numero:
                 tela.setFillColorRGB(*cor)
                 tela.rect(x, y, w, h, stroke=0, fill=1)
+        for pagina_vet, quantidade in vetores:
+            if pagina_vet == numero:
+                por_linha = int(util // 8)
+                for i in range(quantidade):
+                    vx = MARGEM + (i % por_linha) * 8
+                    vy = altura - MARGEM - 60 - (i // por_linha) * 14
+                    tela.bezier(vx, vy, vx + 2, vy + 7, vx + 5, vy + 7, vx + 6, vy)
         y = altura - MARGEM
         for linha in linhas:
             y -= linha.espaco_antes

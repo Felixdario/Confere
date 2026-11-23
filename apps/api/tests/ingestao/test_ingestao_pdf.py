@@ -151,6 +151,39 @@ def test_pdf_parcialmente_escaneado_avisa_a_pagina() -> None:
     )
 
 
+CONTATOS = "ana@exemplo.com · (41) 99999-0000 · linkedin.com/in/ana"
+CORPO = [Linha([Trecho(VISIVEL)]) for _ in range(6)]  # ~250 caracteres: uma página de verdade
+
+
+def test_pdf_com_texto_desenhado_em_vetores_da_erro_claro() -> None:
+    """Exportação do Canva: só os contatos são texto; o resto são contornos de letras."""
+    conteudo = pdf_de_linhas([[Linha([Trecho(CONTATOS)])]], vetores=[(1, 600)])
+    with pytest.raises(SemTexto, match="como imagem ou desenho"):
+        ler_arquivo(conteudo, "cv.pdf")
+
+
+def test_pdf_com_texto_em_imagem_e_contatos_da_erro_claro() -> None:
+    conteudo = pdf_de_linhas([[Linha([Trecho(CONTATOS)])]], imagens=[(1, 40, 100, 500, 600)])
+    with pytest.raises(SemTexto, match="como imagem ou desenho"):
+        ler_arquivo(conteudo, "cv.pdf")
+
+
+def test_curriculo_com_texto_e_elementos_graficos_nao_e_marcado() -> None:
+    """Texto real de sobra: ícones, barras e foto não tornam a página "sem texto"."""
+    conteudo = pdf_de_linhas([CORPO], vetores=[(1, 400)], imagens=[(1, 40, 40, 120, 120)])
+    documento = ler_arquivo(conteudo, "cv.pdf")
+    assert documento.paginas_sem_texto == ()
+    assert not [a for a in documento.alertas if a.tipo == "pdf_sem_texto"]
+
+
+def test_so_uma_pagina_desenhada_avisa_sem_recusar() -> None:
+    conteudo = pdf_de_linhas([CORPO, [Linha([Trecho(CONTATOS)])]], vetores=[(2, 600)])
+    documento = ler_arquivo(conteudo, "cv.pdf")
+    assert documento.paginas_sem_texto == (2,)
+    alertas = [a for a in documento.alertas if a.tipo == "pdf_sem_texto"]
+    assert len(alertas) == 1 and alertas[0].pagina == 2
+
+
 def test_pdf_vazio_da_erro_claro() -> None:
     with pytest.raises(SemTexto, match="não tem texto"):
         ler_arquivo(pdf_de_linhas([[]]), "cv.pdf")
