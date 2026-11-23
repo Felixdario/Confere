@@ -6,6 +6,8 @@ comprova, ou a falta dele.
 [English](README.en.md) · [Decisões](docs/decisoes.md) · [ADRs](docs/adr/README.md) ·
 [Evals](docs/evals-regras.md) · [Design](DESIGN.md)
 
+**No ar:** [confere-six.vercel.app](https://confere-six.vercel.app) (planos grátis: a primeira visita pode levar até um minuto).
+
 ![Landing do Confere](docs/capturas/landing.png)
 
 > **Modo demonstração.** Este repositório roda, por padrão, uma análise por regras: sem IA, sem rede
@@ -211,3 +213,7 @@ Os limiares aceitos e as limitações conhecidas estão em [D-65](docs/decisoes.
 | [0007](docs/adr/0007-sessao-csrf-contrato-fila-e-sse.md) | Sessão, CSRF, contrato da API, fila e SSE |
 
 Os dados dos casos e da conta demo são fictícios.
+
+## Licença
+
+[MIT](LICENSE).

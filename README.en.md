@@ -6,6 +6,8 @@ line that proves it, or the lack of one.
 [Português](README.md) · [Decisions](docs/decisoes.md) · [ADRs](docs/adr/README.md) ·
 [Evals](docs/evals-regras.md) · [Design](DESIGN.md)
 
+**Live:** [confere-six.vercel.app](https://confere-six.vercel.app) (free plans: the first visit can take up to a minute).
+
 The product, the code comments and the docs are in Brazilian Portuguese; this page is a summary.
 
 ![Confere landing page](docs/capturas/landing.png)
@@ -188,3 +190,7 @@ tested. Accepted thresholds and known limitations are in [D-65](docs/decisoes.md
 | [0007](docs/adr/0007-sessao-csrf-contrato-fila-e-sse.md) | Session, CSRF, API contract, queue and SSE |
 
 All case data and the demo account are fictional.
+
+## License
+
+[MIT](LICENSE).
