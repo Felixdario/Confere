@@ -117,3 +117,4 @@ class WorkerSettings:
     queue_name = f"{_settings.redis_prefixo}:fila"
     max_jobs = 4
     keep_result = 0
+    poll_delay = _settings.worker_intervalo_s

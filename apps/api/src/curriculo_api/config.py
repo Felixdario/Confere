@@ -55,6 +55,15 @@ class Settings(BaseSettings):
         default="curriculo",
         description="Prefixo de toda chave do Redis desta aplicação (fila, eventos, limites).",
     )
+    worker_intervalo_s: float = Field(
+        default=0.5,
+        gt=0,
+        description=(
+            "De quanto em quanto tempo o worker (arq) consulta a fila. Num Redis cobrado por"
+            " comando (Upstash grátis), um intervalo maior gasta menos e só atrasa o início da"
+            " análise."
+        ),
+    )
 
     # Provedor da análise (ADR 0006): `regras` é o modo demonstração, sem IA e sem custo; `falso`
     # responde só os textos gravados das evals (testes e seed); `anthropic` exige a chave e só
