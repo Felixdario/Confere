@@ -70,7 +70,7 @@ make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=1.00
 ### Verificar
 
 ```bash
-make check              # ruff, mypy estrito, ESLint, tsc e 835 testes rápidos
+make check              # ruff, mypy estrito, ESLint, tsc e 846 testes rápidos
 make test-integracao    # com o Compose de pé: 36 testes com banco, worker e SSE reais
 make eval PROVEDOR=regras
 ```

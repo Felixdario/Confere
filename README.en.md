@@ -72,7 +72,7 @@ make eval PROVEDOR=anthropic CASOS=b01,b02 TETO_USD=1.00
 ### Checks
 
 ```bash
-make check              # ruff, strict mypy, ESLint, tsc and 835 fast tests
+make check              # ruff, strict mypy, ESLint, tsc and 846 fast tests
 make test-integracao    # with Compose up: 36 tests against a real database, worker and SSE
 make eval PROVEDOR=regras
 ```
